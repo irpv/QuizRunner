@@ -64,6 +64,7 @@ namespace QuizRunner
             IpbCreatorButton.Top = this.Height / 2 - IpbCreatorButton.Height / 2;
             IpbCreatorButton.MouseEnter += MainButtons_MouseEnter;
             IpbCreatorButton.MouseLeave += MainButtons_MouseLeave;
+            IpbCreatorButton.Click += IpbCreatorButton_Click;
             IttMainToolTip.SetToolTip(IpbCreatorButton, "Создать или отредактировать тест");
 
             var IpbQuizButton = new PictureBox
@@ -168,5 +169,12 @@ namespace QuizRunner
             IpbCreatorButton.Top += 10;
         }
 
+        private void IpbCreatorButton_Click(object sender, EventArgs e)
+        {
+            var ICreator = new IfrCreator();
+            ICreator.Show();
+            this.CanClose = true;
+            this.Close();
+        }
     }
 }
