@@ -63,9 +63,29 @@ namespace QuizRunner.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap BackPic {
+            get {
+                object obj = ResourceManager.GetObject("BackPic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap CreatorPic {
             get {
                 object obj = ResourceManager.GetObject("CreatorPic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap OpenPic {
+            get {
+                object obj = ResourceManager.GetObject("OpenPic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -86,6 +106,16 @@ namespace QuizRunner.Properties {
         internal static System.Drawing.Bitmap ResultPic {
             get {
                 object obj = ResourceManager.GetObject("ResultPic", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SavePic {
+            get {
+                object obj = ResourceManager.GetObject("SavePic", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

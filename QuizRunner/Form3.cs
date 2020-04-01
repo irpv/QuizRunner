@@ -29,7 +29,7 @@ namespace QuizRunner
                 Height = this.ClientSize.Height,
                 Parent =this
             };
-            
+
         }
     }
 }
