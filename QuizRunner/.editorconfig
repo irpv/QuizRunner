@@ -2,3 +2,6 @@
 
 # IDE0067: Ликвидировать объекты перед потерей области
 dotnet_diagnostic.IDE0067.severity = silent
+
+# IDE0069: Следует высвобождать высвобождаемые поля
+dotnet_diagnostic.IDE0069.severity = silent

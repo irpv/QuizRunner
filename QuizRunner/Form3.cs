@@ -20,6 +20,13 @@ namespace QuizRunner
             InitializeComponent();
         }
 
+        private readonly SaveFileDialog IsfdSaveDialog = new SaveFileDialog
+        {
+            Title = "Сохранить",
+            FileName = "Test.qrtf",
+            Filter = "QuizRunner Test File (*.qrtf)|*.qrtf"
+        };
+
         private void IfrCreator_Load(object sender, EventArgs e)
         {
             var IttCreatorToolTip = new ToolTip();
@@ -45,6 +52,7 @@ namespace QuizRunner
             };
             IpbSave.MouseEnter += MenuButtons_MouseEnter;
             IpbSave.MouseLeave += MenuButtons_MouseLeave;
+            IpbSave.Click += IpbSave_Click;
             IttCreatorToolTip.SetToolTip(IpbSave, "Сохранить...");
 
             var IpbOpen = new PictureBox
@@ -143,6 +151,19 @@ namespace QuizRunner
             var IStartPage = new IfrStartPage();
             IStartPage.Show();
             this.Close();
+        }
+
+        private void IpbSave_Click(object sender, EventArgs e)
+        {
+            Save();
+        }
+
+        private void Save()
+        {
+            if (IsfdSaveDialog.ShowDialog()==DialogResult.OK)
+            {
+                //Тут должна быть функция сохранения.
+            }
         }
     }
 }
