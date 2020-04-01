@@ -80,6 +80,21 @@ namespace QuizRunner
             IpbQuizButton.MouseEnter += MainButtons_MouseEnter;
             IpbQuizButton.MouseLeave += MainButtons_MouseLeave;
             IttMainToolTip.SetToolTip(IpbQuizButton, "Пройти тест");
+
+            var IpbResultButton = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Image = Properties.Resources.ResultPic,
+                Width = this.Width / 5,
+                Height = this.Width / 5,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = this
+            };
+            IpbResultButton.Left = this.Width / 2 + IpbResultButton.Width / 2 + 20;
+            IpbResultButton.Top = this.Height / 2 - IpbResultButton.Height / 2;
+            IpbResultButton.MouseEnter += MainButtons_MouseEnter;
+            IpbResultButton.MouseLeave += MainButtons_MouseLeave;
+            IttMainToolTip.SetToolTip(IpbResultButton, "Просмотреть результаты");
         }
 
         private void IfrStartPage_FormClosing(object sender, FormClosingEventArgs e)
