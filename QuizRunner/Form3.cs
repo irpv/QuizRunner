@@ -474,6 +474,7 @@ namespace QuizRunner
             if (IsfdSaveDialog.ShowDialog()==DialogResult.OK)
             {
                 //Тут должна быть функция сохранения.
+                Changed = false;
             }
         }
 
@@ -491,6 +492,7 @@ namespace QuizRunner
                     if (IofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
                         //Тут должна быть функция открытия.
+                        Changed = false;
                     }
                 }
             }
@@ -499,6 +501,7 @@ namespace QuizRunner
                 if (IofdOpenDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Тут должна быть функция открытия.
+                    Changed = false;
                 }
             }
         }
