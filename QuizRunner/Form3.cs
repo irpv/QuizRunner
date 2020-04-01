@@ -27,6 +27,13 @@ namespace QuizRunner
             Filter = "QuizRunner Test File (*.qrtf)|*.qrtf"
         };
 
+        private readonly OpenFileDialog IofdOpenDialog = new OpenFileDialog
+        {
+            Title = "Открыть",
+            FileName = "Test.qrtf",
+            Filter = "QuizRunner Test File (*.qrtf)|*.qrtf"
+        };
+
         private void IfrCreator_Load(object sender, EventArgs e)
         {
             var IttCreatorToolTip = new ToolTip();
@@ -68,6 +75,7 @@ namespace QuizRunner
             };
             IpbOpen.MouseEnter += MenuButtons_MouseEnter;
             IpbOpen.MouseLeave += MenuButtons_MouseLeave;
+            IpbOpen.Click += IpbOpen_Click;
             IttCreatorToolTip.SetToolTip(IpbOpen, "Открыть...");
 
             var IlbExit = new Label
@@ -158,11 +166,24 @@ namespace QuizRunner
             Save();
         }
 
+        private void IpbOpen_Click(object sender, EventArgs e)
+        {
+            Open();
+        }
+
         private void Save()
         {
             if (IsfdSaveDialog.ShowDialog()==DialogResult.OK)
             {
                 //Тут должна быть функция сохранения.
+            }
+        }
+
+        private void Open()
+        {
+            if (IofdOpenDialog.ShowDialog()==DialogResult.OK)
+            {
+                //Тут должна быть функция открытия.
             }
         }
     }
