@@ -113,6 +113,27 @@ namespace QuizRunner
             IpbBack.Click += IpbBack_Click;
             IttCreatorToolTip.SetToolTip(IpbBack, "Вернуться в меню");
 
+            var IpnUserVariable = new Panel
+            {
+                AutoScroll = true,
+                Width = this.ClientSize.Width / 9,
+                Height = this.ClientSize.Height,
+                BackColor = Color.FromArgb(18, 136, 235),
+                Left = this.ClientSize.Width - this.ClientSize.Width / 9,
+                Parent = this
+            };
+
+            var IlbUserVariableHeader = new Label
+            {
+                AutoSize = true,
+                Text = "Переменные",
+                Font = new Font("Verdana", 8, FontStyle.Bold),
+                ForeColor = Color.White,
+                Top = 5,
+                Parent = IpnUserVariable
+            };
+            IlbUserVariableHeader.Left = IpnUserVariable.Width / 2 - IlbUserVariableHeader.Width / 2;
+
         }
 
         private void MenuButtons_MouseEnter(object sender, EventArgs e)
