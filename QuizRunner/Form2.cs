@@ -49,6 +49,22 @@ namespace QuizRunner
                 ForeColor = Color.Gray,
                 Parent=this
             };
+
+            var IpbCreatorButton = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Image = Properties.Resources.CreatorPic,
+                Width = this.Width / 5,
+                Height = this.Width / 5,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = this
+            };
+            IpbCreatorButton.Left = this.Width / 2 - IpbCreatorButton.Width 
+                - IpbCreatorButton.Width/2 - 20;
+            IpbCreatorButton.Top = this.Height / 2 - IpbCreatorButton.Height / 2;
+            IpbCreatorButton.MouseEnter += IpbCreatorButton_MouseEnter;
+            IpbCreatorButton.MouseLeave += IpbCreatorButton_MouseLeave;
+            IttMainToolTip.SetToolTip(IpbCreatorButton, "Создать или отредактировать тест");
         }
 
         private void IfrStartPage_FormClosing(object sender, FormClosingEventArgs e)
@@ -65,14 +81,14 @@ namespace QuizRunner
 
         private void IlbExit_MouseEnter(object sender, EventArgs e)
         {
-            Label IlbExit = (Label)sender;
+            var IlbExit = (Label)sender;
             IlbExit.BackColor = Color.Red;
             IlbExit.ForeColor = Color.White;
         }
 
         private void IlbExit_MouseLeave(object sender, EventArgs e)
         {
-            Label IlbExit = (Label)sender;
+            var IlbExit = (Label)sender;
             IlbExit.BackColor = Color.Transparent;
             IlbExit.ForeColor = Color.Gray;
         }
@@ -80,6 +96,24 @@ namespace QuizRunner
         private void IlbExit_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void IpbCreatorButton_MouseEnter(object sender, EventArgs e)
+        {
+            var IpbCreatorButton = (PictureBox)sender;
+            IpbCreatorButton.Width += 20;
+            IpbCreatorButton.Height += 20;
+            IpbCreatorButton.Left -= 10;
+            IpbCreatorButton.Top -= 10;
+        }
+
+        private void IpbCreatorButton_MouseLeave(object sender, EventArgs e)
+        {
+            var IpbCreatorButton = (PictureBox)sender;
+            IpbCreatorButton.Width -= 20;
+            IpbCreatorButton.Height -= 20;
+            IpbCreatorButton.Left += 10;
+            IpbCreatorButton.Top += 10;
         }
 
     }
