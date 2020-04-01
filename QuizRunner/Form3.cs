@@ -385,16 +385,44 @@ namespace QuizRunner
 
         private void IlbExit_Click(object sender, EventArgs e)
         {
-            CanClose = true;
-            Application.Exit();
+            if (Changed)
+            {
+                if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
+                        "действия они будут потеряны.\nЖелаеие продолжить?", "Выход", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    CanClose = true;
+                    Application.Exit();
+                }
+            }
+            else
+            {
+                CanClose = true;
+                Application.Exit();
+            }
         }
 
         private void IpbBack_Click(object sender, EventArgs e)
         {
-            CanClose = true;
-            var IStartPage = new IfrStartPage();
-            IStartPage.Show();
-            this.Close();
+            if (Changed)
+            {
+                if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
+                        "действия они будут потеряны.\nЖелаеие продолжить?", "Выход в меню", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                {
+                    CanClose = true;
+                    var IStartPage = new IfrStartPage();
+                    IStartPage.Show();
+                    this.Close();
+                }
+            }
+            else
+            {
+                CanClose = true;
+                var IStartPage = new IfrStartPage();
+                IStartPage.Show();
+                this.Close();
+            }
         }
 
         private void IpbSave_Click(object sender, EventArgs e)
@@ -454,9 +482,24 @@ namespace QuizRunner
         /// </summary>
         private void Open()
         {
-            if (IofdOpenDialog.ShowDialog()==DialogResult.OK)
+            if (Changed)
             {
-                //Тут должна быть функция открытия.
+                if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
+                    "действия они будут потеряны.\nЖелаеие продолжить?","Открыть",MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Exclamation)==DialogResult.Yes)
+                {
+                    if (IofdOpenDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        //Тут должна быть функция открытия.
+                    }
+                }
+            }
+            else
+            {
+                if (IofdOpenDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Тут должна быть функция открытия.
+                }
             }
         }
 
