@@ -22,6 +22,7 @@ namespace QuizRunner
             public TextBox NameInput;
             public NumericUpDown ValueInput;
             public Label Remove;
+            public object AddButton;
         };
 
         public UVariable [] UserVariable = new UVariable[0];
@@ -127,10 +128,10 @@ namespace QuizRunner
             var IpnUserVariable = new Panel
             {
                 AutoScroll = true,
-                Width = this.ClientSize.Width / 9,
+                Width = this.ClientSize.Width / 9*2,
                 Height = this.ClientSize.Height,
                 BackColor = Color.FromArgb(18, 136, 235),
-                Left = this.ClientSize.Width - this.ClientSize.Width / 9,
+                Left = this.ClientSize.Width - this.ClientSize.Width / 9*2,
                 Parent = this
             };
 
@@ -156,7 +157,8 @@ namespace QuizRunner
                 Parent=IpnUserVariable
             };
             IbtAddVariable.Left = IpnUserVariable.Width / 2 - IbtAddVariable.Width / 2;
-            IbtAddVariable.Top = IlbUserVariableHeader.Top + IlbUserVariableHeader.Height + 20;
+            IbtAddVariable.Top = IlbUserVariableHeader.Top + IlbUserVariableHeader.Height + 42;
+            IbtAddVariable.Click += IbtAddVariable_Click;
 
         }
 
@@ -216,6 +218,12 @@ namespace QuizRunner
             Open();
         }
 
+        private void IbtAddVariable_Click(object sender, EventArgs e)
+        {
+            var IbtAddVariable = (Button)sender;
+            AddVariable(IbtAddVariable.Parent, sender);
+        }
+
         /// <summary>
         /// Сохраняет тест в файл.
         /// </summary>
@@ -236,6 +244,142 @@ namespace QuizRunner
             {
                 //Тут должна быть функция открытия.
             }
+        }
+
+        /// <summary>
+        /// Создаёт пользовательскую переменную.
+        /// </summary>
+        /// <param name="parent">Обьект на котором будет создана переменная.</param>
+        /// <param name="sender">Обьект посылающий запрос.</param>
+        private void AddVariable(object parent, object sender)
+        {
+            var IttCreatorToolTip = new ToolTip();
+
+            Array.Resize<UVariable>(ref UserVariable, UserVariable.Length + 1);
+            Panel ParentPanel = (Panel)parent;
+            int Now = UserVariable.Length - 1;
+            var Name = new TextBox
+            {
+                Text = "Имя " + (Now).ToString(),
+                Width = ParentPanel.Width / 10 * 3,
+                Left = ParentPanel.Width / 10 * 1,
+                Parent = ParentPanel
+            };
+            Name.Tag = Name.Text;
+            if (UserVariable.Length==1)
+            {
+                Name.Top = 20;
+            }
+            else
+            {
+                Name.Top = UserVariable[Now - 1].NameInput.Top 
+                    + UserVariable[Now - 1].NameInput.Height + 20;
+            }
+            IttCreatorToolTip.SetToolTip(Name, "Имя");
+            UserVariable[Now].NameInput = Name;
+            UserVariable[Now].Name = Name.Text;
+
+            var Value = new NumericUpDown
+            {
+                Width = ParentPanel.Width / 10 * 2,
+                Left = ParentPanel.Width / 10 * 5,
+                Top = Name.Top,
+                ThousandsSeparator = true,
+                Minimum = Convert.ToDecimal(Decimal.MinValue),
+                DecimalPlaces = 1,
+                Maximum =Convert.ToDecimal(Decimal.MaxValue),
+                Parent = ParentPanel
+            };
+            IttCreatorToolTip.SetToolTip(Value, "Значение");
+            UserVariable[Now].ValueInput = Value;
+            UserVariable[Now].Value = Convert.ToDouble(Value.Value);
+
+            var Remove = new Label
+            {
+                AutoSize = false,
+                Width = ParentPanel.Width / 10 * 1,
+                Height = Name.Height,
+                Left = ParentPanel.Width / 10 * 8,
+                Top = Name.Top,
+                ForeColor = Color.Red,
+                Text = "❌",
+                Font = new Font("Verdana", 12, FontStyle.Bold),
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = ParentPanel
+            };
+            Remove.Tag = Now;
+            Remove.Click += Remove_Click;
+            IttCreatorToolTip.SetToolTip(Remove, "Удалить переменную");
+            UserVariable[Now].Remove = Remove;
+
+            var AddButton = (Button)sender;
+            AddButton.Top = Name.Top + Name.Height + 20;
+            UserVariable[Now].AddButton = AddButton;
+
+            // Функция проверки имени переменной.
+            // Функция добавления переменной.
+        }
+
+        /// <summary>
+        /// Удаляет пользовательскую переменную по индексу в массиве.
+        /// </summary>
+        /// <param name="Index">Индекс.</param>
+        private void RemoveVariable(int Index)
+        {
+            // Функция удаления переменной.
+            UserVariable[Index].NameInput.Dispose();
+            UserVariable[Index].ValueInput.Dispose();
+            UserVariable[Index].Remove.Dispose();
+
+            if (Index != UserVariable.Length - 1)
+            {
+                for (var i = Index; i < UserVariable.Length - 1; i++)
+                {
+                    UserVariable[i] = UserVariable[i + 1];
+                    UserVariable[i].Remove.Tag = i;
+                    if (i != 0)
+                    {
+                        UserVariable[i].NameInput.Top = UserVariable[i - 1].NameInput.Top +
+                            UserVariable[i - 1].NameInput.Height + 20;
+                        UserVariable[i].ValueInput.Top = UserVariable[i - 1].NameInput.Top +
+                            UserVariable[i - 1].NameInput.Height + 20;
+                        UserVariable[i].Remove.Top = UserVariable[i - 1].NameInput.Top +
+                            UserVariable[i - 1].NameInput.Height + 20;
+                    }
+                    else
+                    {
+                        UserVariable[i].NameInput.Top = 20;
+                        UserVariable[i].ValueInput.Top = 20;
+                        UserVariable[i].Remove.Top = 20;
+                    }
+                }
+
+
+                Array.Resize<UVariable>(ref UserVariable, UserVariable.Length - 1);
+                var AddButton = (Button)UserVariable[UserVariable.Length - 1].AddButton;
+                AddButton.Top = UserVariable[UserVariable.Length - 1].NameInput.Top +
+                    UserVariable[UserVariable.Length - 1].NameInput.Height + 20;
+            }
+            else
+            {
+                if (UserVariable.Length == 1)
+                {
+                    Array.Resize<UVariable>(ref UserVariable, UserVariable.Length - 1);
+                }
+                else
+                {
+                    Array.Resize<UVariable>(ref UserVariable, UserVariable.Length - 1);
+                    var AddButton = (Button)UserVariable[UserVariable.Length - 1].AddButton;
+                    AddButton.Top = UserVariable[UserVariable.Length - 1].NameInput.Top +
+                        UserVariable[UserVariable.Length - 1].NameInput.Height + 20;
+                }
+            }
+        }
+
+        private void Remove_Click(object sender, EventArgs e)
+        {
+            var Remove = (Label)sender;
+            RemoveVariable((int)Remove.Tag);
         }
     }
 }
