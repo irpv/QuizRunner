@@ -24,6 +24,8 @@ namespace QuizRunner
         {
             this.BackColor = Color.White;
 
+            var IttMainToolTip = new ToolTip();
+
             var IlbExit = new Label
             {
                 AutoSize = true,
