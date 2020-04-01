@@ -216,6 +216,9 @@ namespace QuizRunner
             Open();
         }
 
+        /// <summary>
+        /// Сохраняет тест в файл.
+        /// </summary>
         private void Save()
         {
             if (IsfdSaveDialog.ShowDialog()==DialogResult.OK)
@@ -224,6 +227,9 @@ namespace QuizRunner
             }
         }
 
+        /// <summary>
+        /// Открыввает тест из файла.
+        /// </summary>
         private void Open()
         {
             if (IofdOpenDialog.ShowDialog()==DialogResult.OK)
