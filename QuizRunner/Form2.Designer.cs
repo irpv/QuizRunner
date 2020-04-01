@@ -34,9 +34,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(900, 600);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "IfrStartPage";
-            this.Text = "Form2";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "QuizRunner";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.IfrStartPage_FormClosing);
+            this.Load += new System.EventHandler(this.IfrStartPage_Load);
             this.ResumeLayout(false);
 
         }
