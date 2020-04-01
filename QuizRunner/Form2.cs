@@ -95,6 +95,28 @@ namespace QuizRunner
             IpbResultButton.MouseEnter += MainButtons_MouseEnter;
             IpbResultButton.MouseLeave += MainButtons_MouseLeave;
             IttMainToolTip.SetToolTip(IpbResultButton, "Просмотреть результаты");
+
+            var IlbUserName = new Label
+            {
+                AutoSize = true,
+                Text = Environment.UserName,
+                Font = new Font("Verdana", 25, FontStyle.Bold),
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Parent = this
+            };
+            IlbUserName.Left = this.Width / 2 - IlbUserName.Width / 2;
+            IlbUserName.Top = IpbQuizButton.Top - IlbUserName.Height - 15;
+
+            var IlbWelcome = new Label
+            {
+                AutoSize = true,
+                Text = "Добро пожаловать",
+                Font = new Font("Verdana", 25),
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Parent = this
+            };
+            IlbWelcome.Left = this.Width / 2 - IlbWelcome.Width / 2;
+            IlbWelcome.Top = IlbUserName.Top - IlbWelcome.Height - 10;
         }
 
         private void IfrStartPage_FormClosing(object sender, FormClosingEventArgs e)
