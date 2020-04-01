@@ -75,6 +75,21 @@ namespace QuizRunner
             IlbExit.MouseLeave += IlbExit_MouseLeave;
             IlbExit.Click += IlbExit_Click;
 
+            var IpbBack = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Image = Properties.Resources.BackPic,
+                Width = 50,
+                Height = 50,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = IpnMenu,
+                Left = 5,
+            };
+            IpbBack.Top = IlbExit.Top - IpbBack.Height - 15;
+            IpbBack.MouseEnter += MenuButtons_MouseEnter;
+            IpbBack.MouseLeave += MenuButtons_MouseLeave;
+            IpbBack.Click += IpbBack_Click;
+
         }
 
         private void MenuButtons_MouseEnter(object sender, EventArgs e)
@@ -113,6 +128,14 @@ namespace QuizRunner
         {
             CanClose = true;
             Application.Exit();
+        }
+
+        private void IpbBack_Click(object sender, EventArgs e)
+        {
+            CanClose = true;
+            var IStartPage = new IfrStartPage();
+            IStartPage.Show();
+            this.Close();
         }
     }
 }
