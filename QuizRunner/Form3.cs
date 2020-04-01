@@ -28,7 +28,17 @@ namespace QuizRunner
             public object AddButton;
         };
 
-        public UVariable [] UserVariable = new UVariable[0];
+        public UVariable[] UserVariable = new UVariable[0];
+
+        public struct SLine
+        {
+            public TextBox Prefix;
+            public TextBox Calc;
+            public TextBox Postfix;
+            public Label Remove;
+        }
+
+        public SLine[] StatisticsLines = new SLine[0];
 
         public IfrCreator()
         {
@@ -58,7 +68,7 @@ namespace QuizRunner
                 BackColor = Color.FromArgb(18, 136, 235),
                 Width = 60,
                 Height = this.ClientSize.Height,
-                Parent =this
+                Parent = this
             };
 
             var IpbSave = new PictureBox
@@ -131,10 +141,10 @@ namespace QuizRunner
             var IpnUserVariable = new Panel
             {
                 AutoScroll = true,
-                Width = this.ClientSize.Width / 9*2,
+                Width = this.ClientSize.Width / 9 * 2,
                 Height = this.ClientSize.Height,
                 BackColor = Color.FromArgb(18, 136, 235),
-                Left = this.ClientSize.Width - this.ClientSize.Width / 9*2,
+                Left = this.ClientSize.Width - this.ClientSize.Width / 9 * 2,
                 Parent = this
             };
 
@@ -155,9 +165,9 @@ namespace QuizRunner
                 BackColor = Color.White,
                 FlatStyle = FlatStyle.Flat,
                 ForeColor = Color.FromArgb(18, 136, 235),
-                Cursor=System.Windows.Forms.Cursors.Hand,
+                Cursor = System.Windows.Forms.Cursors.Hand,
                 AutoSize = true,
-                Parent=IpnUserVariable
+                Parent = IpnUserVariable
             };
             IbtAddVariable.Left = IpnUserVariable.Width / 2 - IbtAddVariable.Width / 2;
             IbtAddVariable.Top = IlbUserVariableHeader.Top + IlbUserVariableHeader.Height + 42;
@@ -165,9 +175,9 @@ namespace QuizRunner
 
             var ItcQuizEditor = new TabControl
             {
-                Left = IpnMenu.Width+2,
-                Width = this.ClientSize.Width - IpnMenu.Width - IpnUserVariable.Width-2,
-                Height = this.ClientSize.Height-1,
+                Left = IpnMenu.Width + 2,
+                Width = this.ClientSize.Width - IpnMenu.Width - IpnUserVariable.Width - 2,
+                Height = this.ClientSize.Height - 1,
                 Parent = this
             };
             ItcQuizEditor.SendToBack();
@@ -175,7 +185,7 @@ namespace QuizRunner
             var ItpHome = new TabPage
             {
                 Text = "Главная",
-                Parent=ItcQuizEditor
+                Parent = ItcQuizEditor
             };
 
             var IlbTestName = new Label
@@ -228,8 +238,8 @@ namespace QuizRunner
             var IlbAddTabPage = new Label
             {
                 AutoSize = true,
-                Text="+",
-                TextAlign=System.Drawing.ContentAlignment.MiddleCenter,
+                Text = "+",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
                 Font = new Font("Verdana", 15, FontStyle.Bold),
                 ForeColor = Color.Green,
                 Cursor = System.Windows.Forms.Cursors.Hand,
@@ -238,6 +248,106 @@ namespace QuizRunner
             IlbAddTabPage.MouseEnter += IlbAddTabPage_MouseEnter;
             IlbAddTabPage.MouseLeave += IlbAddTabPage_MouseLeave;
 
+            var ItpStatistics = new TabPage
+            {
+                Text = "Статистика",
+                Parent = ItcQuizEditor
+            };
+
+            var IlbHint = new Label
+            {
+                AutoSize = false,
+                Top = 20,
+                Width = ItpStatistics.ClientSize.Width - 40,
+                Height = 80,
+                Text = "Создайте строку для отображения статистики.\n" +
+                    "Используйте: [имя переменной], что бы использовать переменную в расчётах.",
+                Font = new Font("Verdana", 15, FontStyle.Bold),
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Parent = ItpStatistics
+            };
+            IlbHint.Left = ItpStatistics.ClientSize.Width / 2 - IlbHint.Width / 2;
+
+            var IgbStatisticsLines = new GroupBox
+            {
+                Text = "Cтроки статистики",
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Font = new Font("Verdana", 10, FontStyle.Bold),
+                Width = ItpStatistics.ClientSize.Width - 40,
+                Top = IlbHint.Top + IlbHint.Height + 30,
+                Parent = ItpStatistics
+            };
+            IgbStatisticsLines.Left = ItpStatistics.ClientSize.Width / 2
+                - IgbStatisticsLines.Width / 2;
+            IgbStatisticsLines.Height = ItpStatistics.ClientSize.Height
+                - IgbStatisticsLines.Top - 10;
+
+            var IpnStatisticsLinesScroller = new Panel
+            {
+                AutoScroll = true,
+                BorderStyle = BorderStyle.None,
+                Left = 15,
+                Top = 15,
+                Width = IgbStatisticsLines.ClientSize.Width-30,
+                Height = IgbStatisticsLines.ClientSize.Height-30,
+                Parent = IgbStatisticsLines
+            };
+
+            var IlbAddStatisticsLine = new Label
+            {
+                AutoSize = true,
+                Text = "+",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Font = new Font("Verdana", 15, FontStyle.Bold),
+                ForeColor = Color.Green,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = ItpStatistics,
+                Left=IgbStatisticsLines.Left,
+                Tag= IpnStatisticsLinesScroller
+            };
+            IlbAddStatisticsLine.Top = IgbStatisticsLines.Top - IlbAddStatisticsLine.Height;
+            IlbAddStatisticsLine.MouseEnter += IlbAddTabPage_MouseEnter;
+            IlbAddStatisticsLine.MouseLeave += IlbAddTabPage_MouseLeave;
+            IlbAddStatisticsLine.Click += IlbAddStatisticsLine_Click;
+
+            var IlbStatisticPrefix = new Label
+            {
+                AutoSize = false,
+                Font = new Font("Verdana", 8, FontStyle.Bold),
+                Text = "Префикс",
+                TextAlign=System.Drawing.ContentAlignment.MiddleCenter,
+                Height = 15,
+                Width = IpnStatisticsLinesScroller.ClientSize.Width / 10 * 2,
+                Left = IpnStatisticsLinesScroller.ClientSize.Width / 20 * 1,
+                Top = 20,
+                Parent = IpnStatisticsLinesScroller
+            };
+
+            var IlbStatisticСalculations = new Label
+            {
+                AutoSize = false,
+                Font = new Font("Verdana", 8, FontStyle.Bold),
+                Text = "Расчёты",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Height = 15,
+                Width = IpnStatisticsLinesScroller.ClientSize.Width / 10 * 2,
+                Left = IpnStatisticsLinesScroller.ClientSize.Width / 20 * 6,
+                Top = 20,
+                Parent = IpnStatisticsLinesScroller
+            };
+
+            var IlbStatisticPostfix = new Label
+            {
+                AutoSize = false,
+                Font = new Font("Verdana", 8, FontStyle.Bold),
+                Text = "Постфикс",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Height = 15,
+                Width = IpnStatisticsLinesScroller.ClientSize.Width / 10 * 2,
+                Left = IpnStatisticsLinesScroller.ClientSize.Width / 20 * 11,
+                Top = 20,
+                Parent = IpnStatisticsLinesScroller
+            };
 
         }
 
@@ -320,6 +430,12 @@ namespace QuizRunner
             var IlbAddTabPage = (Label)sender;
             IlbAddTabPage.ForeColor = Color.Green;
             IlbAddTabPage.BackColor = Color.Transparent;
+        }
+
+        private void IlbAddStatisticsLine_Click(object sender,EventArgs e)
+        {
+            var IlbAddStatisticsLine = (Label)sender;
+            AddStatisticLine(IlbAddStatisticsLine.Tag);
         }
 
         /// <summary>
@@ -409,7 +525,7 @@ namespace QuizRunner
                 Parent = ParentPanel
             };
             Remove.Tag = Now;
-            Remove.Click += Remove_Click;
+            Remove.Click += RemoveVar_Click;
             IttCreatorToolTip.SetToolTip(Remove, "Удалить переменную");
             UserVariable[Now].Remove = Remove;
 
@@ -479,8 +595,9 @@ namespace QuizRunner
             }
         }
 
-        private void Remove_Click(object sender, EventArgs e)
+        private void RemoveVar_Click(object sender, EventArgs e)
         {
+            Changed = true;
             var Remove = (Label)sender;
             RemoveVariable((int)Remove.Tag);
         }
@@ -502,6 +619,113 @@ namespace QuizRunner
             Changed = true;
             // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
             // Функция изменения значения переменной по имени (UserVariable[Convert.ToInt32(Value.Tag].Name)).
+        }
+
+        /// <summary>
+        /// Cоздаёт строку статистики на указанной панели.
+        /// </summary>
+        /// <param name="sender">Панель</param>
+        private void AddStatisticLine(object sender)
+        {
+            Array.Resize<SLine>(ref StatisticsLines, StatisticsLines.Length + 1);
+            int Now = StatisticsLines.Length - 1;
+            var PParen = (Panel)sender;
+
+            var Prefix = new TextBox
+            {
+                Width = PParen.Width / 10 * 2,
+                Left = PParen.Width / 20 * 1,
+                Parent = PParen
+            };
+            if (StatisticsLines.Length==1)
+            {
+                Prefix.Top = 40;
+            }
+            else
+            {
+                Prefix.Top = StatisticsLines[Now - 1].Prefix.Top + 30;
+            }
+            Prefix.TextChanged += UnsavedText_TextChanged;
+            StatisticsLines[Now].Prefix = Prefix;
+
+            var Calc = new TextBox
+            {
+                Width = PParen.Width / 10 * 2,
+                Left = PParen.Width / 20 * 6,
+                Top = Prefix.Top,
+                Parent = PParen
+            };
+            Calc.TextChanged += UnsavedText_TextChanged;
+            StatisticsLines[Now].Calc = Calc;
+
+            var Postfix = new TextBox
+            {
+                Width = PParen.Width / 10 * 2,
+                Left = PParen.Width / 20 * 11,
+                Top = Prefix.Top,
+                Parent = PParen
+            };
+            Postfix.TextChanged += UnsavedText_TextChanged;
+            StatisticsLines[Now].Postfix = Postfix;
+
+            var RemoveLine = new Label
+            {
+                AutoSize = false,
+                Width = PParen.Width / 20 * 3,
+                Height = Prefix.Height,
+                Left = PParen.Width / 10 * 8,
+                Top = Prefix.Top,
+                ForeColor = Color.Red,
+                Text = "❌",
+                Font = new Font("Verdana", 12, FontStyle.Bold),
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = PParen
+            };
+            RemoveLine.Click += RemoveLine_Click;
+            RemoveLine.Tag = Now;
+            StatisticsLines[Now].Remove = RemoveLine;
+        }
+
+        /// <summary>
+        /// Удаляет строку статистики по указанному индексу в массиве.
+        /// </summary>
+        /// <param name="Index">Индекс.</param>
+        private void RemoveStatisticLine(int Index)
+        {
+            StatisticsLines[Index].Prefix.Dispose();
+            StatisticsLines[Index].Calc.Dispose();
+            StatisticsLines[Index].Postfix.Dispose();
+            StatisticsLines[Index].Remove.Dispose();
+
+            for (var i = Index; i < StatisticsLines.Length - 1; i++)
+            {
+                StatisticsLines[i] = StatisticsLines[i + 1];
+                StatisticsLines[i].Remove.Tag = i;
+                
+                if (i!=0)
+                {
+                    StatisticsLines[i].Prefix.Top = StatisticsLines[i - 1].Prefix.Top + 30;
+                    StatisticsLines[i].Calc.Top = StatisticsLines[i].Prefix.Top;
+                    StatisticsLines[i].Postfix.Top = StatisticsLines[i].Prefix.Top;
+                    StatisticsLines[i].Remove.Top = StatisticsLines[i].Prefix.Top;
+                }
+                else
+                {
+                    StatisticsLines[i].Prefix.Top = 40;
+                    StatisticsLines[i].Calc.Top = StatisticsLines[i].Prefix.Top;
+                    StatisticsLines[i].Postfix.Top = StatisticsLines[i].Prefix.Top;
+                    StatisticsLines[i].Remove.Top = StatisticsLines[i].Prefix.Top;
+                }
+            }
+
+            Array.Resize<SLine>(ref StatisticsLines, StatisticsLines.Length - 1);
+        }
+
+        void RemoveLine_Click(object sender,EventArgs e)
+        {
+            var RemoveLine = (Label)sender;
+            RemoveStatisticLine(Convert.ToInt32(RemoveLine.Tag));
+            Changed = true;
         }
     }
 }
