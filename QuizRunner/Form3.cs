@@ -160,6 +160,14 @@ namespace QuizRunner
             IbtAddVariable.Top = IlbUserVariableHeader.Top + IlbUserVariableHeader.Height + 42;
             IbtAddVariable.Click += IbtAddVariable_Click;
 
+            var ItcQuizEditor = new TabControl
+            {
+                Left = IpnMenu.Width+2,
+                Width = this.ClientSize.Width - IpnMenu.Width - IpnUserVariable.Width-2,
+                Height = this.ClientSize.Height-1,
+                Parent = this
+            };
+
         }
 
         private void MenuButtons_MouseEnter(object sender, EventArgs e)
