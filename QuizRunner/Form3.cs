@@ -53,14 +53,31 @@ namespace QuizRunner
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = IpnMenu,
                 Left = 5,
-                Top = IpbSave.Top + IpbSave.Height + 10
+                Top = IpbSave.Top + IpbSave.Height + 15
             };
             IpbOpen.MouseEnter += MenuButtons_MouseEnter;
             IpbOpen.MouseLeave += MenuButtons_MouseLeave;
 
+            var IlbExit = new Label
+            {
+                AutoSize = false,
+                Width = IpnMenu.Width,
+                Height = IpnMenu.Width,
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Text = "❌",
+                Font = new Font("Verdana", 25, FontStyle.Bold),
+                ForeColor = Color.White,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = IpnMenu,
+                Top = IpnMenu.Height - IpnMenu.Width
+            };
+            IlbExit.MouseEnter += IlbExit_MouseEnter;
+            IlbExit.MouseLeave += IlbExit_MouseLeave;
+            IlbExit.Click += IlbExit_Click;
+
         }
 
-        void MenuButtons_MouseEnter(object sender, EventArgs e)
+        private void MenuButtons_MouseEnter(object sender, EventArgs e)
         {
             var Button = (PictureBox)sender;
             Button.Width += 4;
@@ -69,13 +86,33 @@ namespace QuizRunner
             Button.Top -= 2;
         }
 
-        void MenuButtons_MouseLeave(object sender, EventArgs e)
+        private void MenuButtons_MouseLeave(object sender, EventArgs e)
         {
             var Button = (PictureBox)sender;
             Button.Width -= 4;
             Button.Height -= 4;
             Button.Left += 2;
             Button.Top += 2;
+        }
+
+        private void IlbExit_MouseEnter(object sender, EventArgs e)
+        {
+            var IlbExit = (Label)sender;
+            IlbExit.Font = new Font("Verdana", 30, FontStyle.Bold);
+            IlbExit.BackColor = Color.Red;
+        }
+
+        private void IlbExit_MouseLeave(object sender, EventArgs e)
+        {
+            var IlbExit = (Label)sender;
+            IlbExit.Font = new Font("Verdana", 25, FontStyle.Bold);
+            IlbExit.BackColor = Color.Transparent;
+        }
+
+        private void IlbExit_Click(object sender, EventArgs e)
+        {
+            CanClose = true;
+            Application.Exit();
         }
     }
 }
