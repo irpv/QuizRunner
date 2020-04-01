@@ -275,6 +275,7 @@ namespace QuizRunner
                 Name.Top = UserVariable[Now - 1].NameInput.Top 
                     + UserVariable[Now - 1].NameInput.Height + 20;
             }
+            Name.TextChanged += NameInput_TextChanged;
             IttCreatorToolTip.SetToolTip(Name, "Имя");
             UserVariable[Now].NameInput = Name;
             UserVariable[Now].Name = Name.Text;
@@ -287,9 +288,11 @@ namespace QuizRunner
                 ThousandsSeparator = true,
                 Minimum = Convert.ToDecimal(Decimal.MinValue),
                 DecimalPlaces = 1,
-                Maximum =Convert.ToDecimal(Decimal.MaxValue),
+                Maximum = Convert.ToDecimal(Decimal.MaxValue),
+                Tag = Now,
                 Parent = ParentPanel
             };
+            Value.ValueChanged += ValueInput_ValieChanged;
             IttCreatorToolTip.SetToolTip(Value, "Значение");
             UserVariable[Now].ValueInput = Value;
             UserVariable[Now].Value = Convert.ToDouble(Value.Value);
@@ -327,6 +330,7 @@ namespace QuizRunner
         private void RemoveVariable(int Index)
         {
             // Функция удаления переменной.
+
             UserVariable[Index].NameInput.Dispose();
             UserVariable[Index].ValueInput.Dispose();
             UserVariable[Index].Remove.Dispose();
@@ -337,6 +341,7 @@ namespace QuizRunner
                 {
                     UserVariable[i] = UserVariable[i + 1];
                     UserVariable[i].Remove.Tag = i;
+                    UserVariable[i].ValueInput.Tag = i;
                     if (i != 0)
                     {
                         UserVariable[i].NameInput.Top = UserVariable[i - 1].NameInput.Top +
@@ -380,6 +385,23 @@ namespace QuizRunner
         {
             var Remove = (Label)sender;
             RemoveVariable((int)Remove.Tag);
+        }
+
+        private void NameInput_TextChanged(object sender, EventArgs e)
+        {
+            var Name = (TextBox)sender;
+            if (Name.Text != Name.Tag.ToString())
+            {
+                // Функция получения значения по имени переменной (Name.Tag.ToString())
+                // Функция удаления переменной.
+                // Функция создания переменной.
+            }
+        }
+
+        private void ValueInput_ValieChanged(object sender, EventArgs e)
+        {
+            // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
+            // Функция изменения значения переменной по имени (UserVariable[Convert.ToInt32(Value.Tag].Name)).
         }
     }
 }
