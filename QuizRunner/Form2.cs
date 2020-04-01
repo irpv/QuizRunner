@@ -62,9 +62,24 @@ namespace QuizRunner
             IpbCreatorButton.Left = this.Width / 2 - IpbCreatorButton.Width 
                 - IpbCreatorButton.Width/2 - 20;
             IpbCreatorButton.Top = this.Height / 2 - IpbCreatorButton.Height / 2;
-            IpbCreatorButton.MouseEnter += IpbCreatorButton_MouseEnter;
-            IpbCreatorButton.MouseLeave += IpbCreatorButton_MouseLeave;
+            IpbCreatorButton.MouseEnter += MainButtons_MouseEnter;
+            IpbCreatorButton.MouseLeave += MainButtons_MouseLeave;
             IttMainToolTip.SetToolTip(IpbCreatorButton, "Создать или отредактировать тест");
+
+            var IpbQuizButton = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Image = Properties.Resources.QuizPic,
+                Width = this.Width / 5,
+                Height = this.Width / 5,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = this
+            };
+            IpbQuizButton.Left = this.Width / 2 - IpbQuizButton.Width / 2;
+            IpbQuizButton.Top = this.Height / 2 - IpbQuizButton.Height / 2;
+            IpbQuizButton.MouseEnter += MainButtons_MouseEnter;
+            IpbQuizButton.MouseLeave += MainButtons_MouseLeave;
+            IttMainToolTip.SetToolTip(IpbQuizButton, "Пройти тест");
         }
 
         private void IfrStartPage_FormClosing(object sender, FormClosingEventArgs e)
@@ -98,7 +113,7 @@ namespace QuizRunner
             Application.Exit();
         }
 
-        private void IpbCreatorButton_MouseEnter(object sender, EventArgs e)
+        private void MainButtons_MouseEnter(object sender, EventArgs e)
         {
             var IpbCreatorButton = (PictureBox)sender;
             IpbCreatorButton.Width += 20;
@@ -107,7 +122,7 @@ namespace QuizRunner
             IpbCreatorButton.Top -= 10;
         }
 
-        private void IpbCreatorButton_MouseLeave(object sender, EventArgs e)
+        private void MainButtons_MouseLeave(object sender, EventArgs e)
         {
             var IpbCreatorButton = (PictureBox)sender;
             IpbCreatorButton.Width -= 20;
