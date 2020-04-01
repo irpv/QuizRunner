@@ -22,6 +22,8 @@ namespace QuizRunner
 
         private void IfrCreator_Load(object sender, EventArgs e)
         {
+            var IttCreatorToolTip = new ToolTip();
+
             var IpnMenu = new Panel
             {
                 BackColor = Color.FromArgb(18, 136, 235),
@@ -43,6 +45,7 @@ namespace QuizRunner
             };
             IpbSave.MouseEnter += MenuButtons_MouseEnter;
             IpbSave.MouseLeave += MenuButtons_MouseLeave;
+            IttCreatorToolTip.SetToolTip(IpbSave, "Сохранить...");
 
             var IpbOpen = new PictureBox
             {
@@ -57,6 +60,7 @@ namespace QuizRunner
             };
             IpbOpen.MouseEnter += MenuButtons_MouseEnter;
             IpbOpen.MouseLeave += MenuButtons_MouseLeave;
+            IttCreatorToolTip.SetToolTip(IpbOpen, "Открыть...");
 
             var IlbExit = new Label
             {
@@ -74,6 +78,8 @@ namespace QuizRunner
             IlbExit.MouseEnter += IlbExit_MouseEnter;
             IlbExit.MouseLeave += IlbExit_MouseLeave;
             IlbExit.Click += IlbExit_Click;
+            IttCreatorToolTip.SetToolTip(IlbExit, "Закрыть " + AppDomain.CurrentDomain.FriendlyName.Substring(0,
+                    AppDomain.CurrentDomain.FriendlyName.Length - 4));
 
             var IpbBack = new PictureBox
             {
@@ -89,6 +95,7 @@ namespace QuizRunner
             IpbBack.MouseEnter += MenuButtons_MouseEnter;
             IpbBack.MouseLeave += MenuButtons_MouseLeave;
             IpbBack.Click += IpbBack_Click;
+            IttCreatorToolTip.SetToolTip(IpbBack, "Вернуться в меню");
 
         }
 
