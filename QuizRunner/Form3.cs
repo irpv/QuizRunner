@@ -15,6 +15,17 @@ namespace QuizRunner
         // Указывает, разрешено ли форме закрыться.
         public bool CanClose;
 
+        public struct UVariable
+        {
+            public string Name;
+            public double Value;
+            public TextBox NameInput;
+            public NumericUpDown ValueInput;
+            public Label Remove;
+        };
+
+        public UVariable [] UserVariable = new UVariable[0];
+
         public IfrCreator()
         {
             InitializeComponent();
@@ -133,6 +144,19 @@ namespace QuizRunner
                 Parent = IpnUserVariable
             };
             IlbUserVariableHeader.Left = IpnUserVariable.Width / 2 - IlbUserVariableHeader.Width / 2;
+
+            var IbtAddVariable = new Button
+            {
+                Text = "Добавить",
+                BackColor = Color.White,
+                FlatStyle = FlatStyle.Flat,
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Cursor=System.Windows.Forms.Cursors.Hand,
+                AutoSize = true,
+                Parent=IpnUserVariable
+            };
+            IbtAddVariable.Left = IpnUserVariable.Width / 2 - IbtAddVariable.Width / 2;
+            IbtAddVariable.Top = IlbUserVariableHeader.Top + IlbUserVariableHeader.Height + 20;
 
         }
 
