@@ -27,8 +27,8 @@ namespace QuizRunner
             var IlbExit = new Label
             {
                 AutoSize = true,
-                Text = "X",
-                Font = new Font("Imact", 15, FontStyle.Bold),
+                Text = "❌",
+                Font = new Font("Verdana", 15, FontStyle.Bold),
                 ForeColor = Color.Gray,
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = this
@@ -37,6 +37,16 @@ namespace QuizRunner
             IlbExit.MouseEnter += IlbExit_MouseEnter;
             IlbExit.MouseLeave += IlbExit_MouseLeave;
             IlbExit.MouseClick += IlbExit_Click;
+
+            var IlbTitle = new Label
+            {
+                AutoSize = true,
+                Text = AppDomain.CurrentDomain.FriendlyName.Substring(0, 
+                    AppDomain.CurrentDomain.FriendlyName.Length - 4),
+                Font = new Font("Verdana", 15),
+                ForeColor = Color.Gray,
+                Parent=this
+            };
         }
 
         private void IfrStartPage_FormClosing(object sender, FormClosingEventArgs e)
@@ -44,6 +54,10 @@ namespace QuizRunner
             if (!CanClose)
             {
                 Application.Exit();
+            }
+            else
+            {
+                this.Dispose();
             }
         }
 
