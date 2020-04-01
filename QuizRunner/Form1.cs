@@ -16,5 +16,16 @@ namespace QuizRunner
         {
             InitializeComponent();
         }
+
+        private void IfrMain_Load(object sender, EventArgs e)
+        {
+            IfrStartPage IStartPage = new IfrStartPage();
+            IStartPage.Show();
+        }
+
+        private void IfrMain_Activated(object sender, EventArgs e)
+        {
+            this.Hide();
+        }
     }
 }

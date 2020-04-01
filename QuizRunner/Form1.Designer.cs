@@ -34,9 +34,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(358, 450);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "IfrMain";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Load";
+            this.Activated += new System.EventHandler(this.IfrMain_Activated);
+            this.Load += new System.EventHandler(this.IfrMain_Load);
             this.ResumeLayout(false);
 
         }
