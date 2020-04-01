@@ -44,6 +44,20 @@ namespace QuizRunner
             IpbSave.MouseEnter += MenuButtons_MouseEnter;
             IpbSave.MouseLeave += MenuButtons_MouseLeave;
 
+            var IpbOpen = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Image = Properties.Resources.OpenPic,
+                Width = 50,
+                Height = 50,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = IpnMenu,
+                Left = 5,
+                Top = IpbSave.Top + IpbSave.Height + 10
+            };
+            IpbOpen.MouseEnter += MenuButtons_MouseEnter;
+            IpbOpen.MouseLeave += MenuButtons_MouseLeave;
+
         }
 
         void MenuButtons_MouseEnter(object sender, EventArgs e)
