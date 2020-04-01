@@ -30,6 +30,38 @@ namespace QuizRunner
                 Parent =this
             };
 
+            var IpbSave = new PictureBox
+            {
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                Image = Properties.Resources.SavePic,
+                Width = 50,
+                Height = 50,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = IpnMenu,
+                Left = 5,
+                Top = 5
+            };
+            IpbSave.MouseEnter += MenuButtons_MouseEnter;
+            IpbSave.MouseLeave += MenuButtons_MouseLeave;
+
+        }
+
+        void MenuButtons_MouseEnter(object sender, EventArgs e)
+        {
+            var Button = (PictureBox)sender;
+            Button.Width += 4;
+            Button.Height += 4;
+            Button.Left -= 2;
+            Button.Top -= 2;
+        }
+
+        void MenuButtons_MouseLeave(object sender, EventArgs e)
+        {
+            var Button = (PictureBox)sender;
+            Button.Width -= 4;
+            Button.Height -= 4;
+            Button.Left += 2;
+            Button.Top += 2;
         }
     }
 }
