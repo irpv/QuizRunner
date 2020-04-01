@@ -15,6 +15,9 @@ namespace QuizRunner
         // Указывает, разрешено ли форме закрыться.
         public bool CanClose;
 
+        //Указывает, были ли изменены данные, после открытия или создания.
+        public bool Changed;
+
         public struct UVariable
         {
             public string Name;
@@ -167,6 +170,74 @@ namespace QuizRunner
                 Height = this.ClientSize.Height-1,
                 Parent = this
             };
+            ItcQuizEditor.SendToBack();
+
+            var ItpHome = new TabPage
+            {
+                Text = "Главная",
+                Parent=ItcQuizEditor
+            };
+
+            var IlbTestName = new Label
+            {
+                AutoSize = true,
+                Text = "Название теста",
+                Font = new Font("Verdana", 25, FontStyle.Bold),
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Top = 50,
+                Parent = ItpHome
+            };
+            IlbTestName.Left = ItpHome.ClientSize.Width / 2 - IlbTestName.Width / 2;
+
+            var ItbTestName = new TextBox
+            {
+                Width = ItpHome.ClientSize.Width - 40,
+                Height = 25,
+                Font = new Font("Verdana", 20, FontStyle.Bold),
+                Top = IlbTestName.Top + IlbTestName.Height + 20,
+                BorderStyle = BorderStyle.FixedSingle,
+                TextAlign = System.Windows.Forms.HorizontalAlignment.Center,
+                Parent = ItpHome
+            };
+            ItbTestName.Left = ItpHome.ClientSize.Width / 2 - ItbTestName.Width / 2;
+            ItbTestName.TextChanged += UnsavedText_TextChanged;
+
+            var IlbTestDescription = new Label
+            {
+                AutoSize = true,
+                Text = "Описание теста",
+                Font = new Font("Verdana", 20, FontStyle.Bold),
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Top = ItbTestName.Top + ItbTestName.Height + 20,
+                Parent = ItpHome
+            };
+            IlbTestDescription.Left = ItpHome.ClientSize.Width / 2 - IlbTestDescription.Width / 2;
+
+            var IrtbTestDescription = new RichTextBox
+            {
+                Left = ItbTestName.Left,
+                Top = IlbTestDescription.Top + IlbTestDescription.Height + 20,
+                Width = ItbTestName.Width,
+                Font = new Font("Verdana", 15, FontStyle.Bold),
+                BorderStyle = BorderStyle.Fixed3D,
+                Parent = ItpHome
+            };
+            IrtbTestDescription.Height = ItpHome.ClientSize.Height - IrtbTestDescription.Top - 20;
+            IrtbTestDescription.TextChanged += UnsavedText_TextChanged;
+
+            var IlbAddTabPage = new Label
+            {
+                AutoSize = true,
+                Text="+",
+                TextAlign=System.Drawing.ContentAlignment.MiddleCenter,
+                Font = new Font("Verdana", 15, FontStyle.Bold),
+                ForeColor = Color.Green,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = ItpHome
+            };
+            IlbAddTabPage.MouseEnter += IlbAddTabPage_MouseEnter;
+            IlbAddTabPage.MouseLeave += IlbAddTabPage_MouseLeave;
+
 
         }
 
@@ -230,6 +301,25 @@ namespace QuizRunner
         {
             var IbtAddVariable = (Button)sender;
             AddVariable(IbtAddVariable.Parent, sender);
+        }
+
+        private void UnsavedText_TextChanged(object sender, EventArgs e)
+        {
+            Changed = true;
+        }
+
+        private void IlbAddTabPage_MouseEnter(object sender,EventArgs e)
+        {
+            var IlbAddTabPage = (Label)sender;
+            IlbAddTabPage.ForeColor = Color.White;
+            IlbAddTabPage.BackColor = Color.Green;
+        }
+
+        private void IlbAddTabPage_MouseLeave(object sender, EventArgs e)
+        {
+            var IlbAddTabPage = (Label)sender;
+            IlbAddTabPage.ForeColor = Color.Green;
+            IlbAddTabPage.BackColor = Color.Transparent;
         }
 
         /// <summary>
@@ -397,6 +487,7 @@ namespace QuizRunner
 
         private void NameInput_TextChanged(object sender, EventArgs e)
         {
+            Changed = true;
             var Name = (TextBox)sender;
             if (Name.Text != Name.Tag.ToString())
             {
@@ -408,6 +499,7 @@ namespace QuizRunner
 
         private void ValueInput_ValieChanged(object sender, EventArgs e)
         {
+            Changed = true;
             // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
             // Функция изменения значения переменной по имени (UserVariable[Convert.ToInt32(Value.Tag].Name)).
         }
