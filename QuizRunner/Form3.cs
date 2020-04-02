@@ -44,6 +44,14 @@ namespace QuizRunner
         // Массив интерфейсов строк статистики.
         public SLine[] StatisticsLines = new SLine[0];
 
+        // Структура интерфейса ответа на вопрос.
+        public struct Answer
+        {
+            public TextBox AnswerIntput;
+            public TextBox[] AnswerArguments;
+            public Label Remove;
+        };
+
         public IfrCreator()
         {
             InitializeComponent();
@@ -922,6 +930,7 @@ namespace QuizRunner
             {
                 Width = TItcTabController.ClientSize.Width,
                 Height = TItcTabController.ClientSize.Height,
+                Tag = new Answer[0],
                 Parent = TItcTabController
             };
 
