@@ -344,6 +344,7 @@ namespace QuizRunner
             IlbAddStatisticsLine.MouseEnter += IlbAddTabPage_MouseEnter;
             IlbAddStatisticsLine.MouseLeave += IlbAddTabPage_MouseLeave;
             IlbAddStatisticsLine.Click += IlbAddStatisticsLine_Click;
+            IttCreatorToolTip.SetToolTip(IlbAddStatisticsLine, "Добавить строку статистики");
 
             // Подсказка форматирования: Префикс.
             var IlbStatisticPrefix = new Label
@@ -793,6 +794,7 @@ namespace QuizRunner
         /// <param name="sender">Панель</param>
         private void AddStatisticLine(object sender)
         {
+            var TIttStatisticLine = new ToolTip();
             Array.Resize<SLine>(ref StatisticsLines, StatisticsLines.Length + 1);
             int TNow = StatisticsLines.Length - 1;
             var TIpnParent = (Panel)sender;
@@ -812,6 +814,7 @@ namespace QuizRunner
                 TItbPrefix.Top = StatisticsLines[TNow - 1].Prefix.Top + 30;
             }
             TItbPrefix.TextChanged += UnsavedText_TextChanged;
+            TIttStatisticLine.SetToolTip(TItbPrefix, "Префикс");
             StatisticsLines[TNow].Prefix = TItbPrefix;
 
             var TItbCalc = new TextBox
@@ -822,6 +825,7 @@ namespace QuizRunner
                 Parent = TIpnParent
             };
             TItbCalc.TextChanged += UnsavedText_TextChanged;
+            TIttStatisticLine.SetToolTip(TItbCalc, "Расчёты");
             StatisticsLines[TNow].Calc = TItbCalc;
 
             var TItbPostfix = new TextBox
@@ -832,6 +836,7 @@ namespace QuizRunner
                 Parent = TIpnParent
             };
             TItbPostfix.TextChanged += UnsavedText_TextChanged;
+            TIttStatisticLine.SetToolTip(TItbPostfix, "Постфикс");
             StatisticsLines[TNow].Postfix = TItbPostfix;
 
             var TIlbRemove = new Label
@@ -849,6 +854,7 @@ namespace QuizRunner
             };
             TIlbRemove.Click += RemoveLine_Click;
             TIlbRemove.Tag = TNow;
+            TIttStatisticLine.SetToolTip(TIlbRemove, "Удалить строку");
             StatisticsLines[TNow].Remove = TIlbRemove;
         }
 
