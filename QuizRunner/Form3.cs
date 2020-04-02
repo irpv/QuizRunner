@@ -202,7 +202,7 @@ namespace QuizRunner
                 Height = this.ClientSize.Height - 1,
                 Parent = this
             };
-            ItcQuizEditor.SendToBack();
+            ItcQuizEditor.BringToFront();
 
             /// Главная страница.
             /// --------
@@ -277,6 +277,7 @@ namespace QuizRunner
             };
             IlbAddTabPage.MouseEnter += IlbAddTabPage_MouseEnter;
             IlbAddTabPage.MouseLeave += IlbAddTabPage_MouseLeave;
+            IlbAddTabPage.Click += IlbAddTabPage_Click;
             /// --------
 
             /// Страница статистики.
@@ -577,6 +578,11 @@ namespace QuizRunner
         {
             ((Label)sender).ForeColor = Color.Green;
             ((Label)sender).BackColor = Color.Transparent;
+        }
+
+        private void IlbAddTabPage_Click(object sender, EventArgs e)
+        {
+            CreateNewQuestionPage(((TabControl)this.Controls[0]).SelectedIndex + 1);
         }
 
         private void IlbAddStatisticsLine_Click(object sender,EventArgs e)
@@ -902,5 +908,212 @@ namespace QuizRunner
             RemoveStatisticLine(Convert.ToInt32(((Label)sender).Tag));
         }
         /// -----------------
+
+
+        /// <summary>
+        /// Добавляет страницу теста на место по указанному индексу.
+        /// </summary>
+        /// <param name="Index">Индекс</param>
+        private void CreateNewQuestionPage(int Index)
+        {
+            // Cтраница.
+            var TItcTabController = (TabControl)this.Controls[0];
+            var TItpQuestionPage = new TabPage
+            {
+                Width = TItcTabController.ClientSize.Width,
+                Height = TItcTabController.ClientSize.Height,
+                Parent = TItcTabController
+            };
+
+            /// Остовные графические элементы страницы.
+            /// -----------------
+            // Инпут вопроса.
+            var TIrtbQuestion = new RichTextBox
+            {
+                Width = TItpQuestionPage.Width - 40,
+                Height = 250,
+                Top = 50,
+                Parent = TItpQuestionPage
+            };
+            TIrtbQuestion.Left = TItpQuestionPage.Width / 2
+                - TIrtbQuestion.Width / 2;
+            TIrtbQuestion.TextChanged += UnsavedText_TextChanged;
+            // Лейбл вопроса.
+            var ITlbQuestion = new Label
+            {
+                AutoSize = true,
+                Text = "Вопрос",
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Font = new Font("Verdana", 15, FontStyle.Bold),
+                Top = 20,
+                Parent = TItpQuestionPage
+            };
+            ITlbQuestion.Left = TItpQuestionPage.Width / 2 - ITlbQuestion.Width / 2;
+
+            // ГрупБокс для хранения типов ответов.
+            var TIgbAnswerType = new GroupBox
+            {
+                Text="Тип ответов",
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Font = new Font("Verdana", 8, FontStyle.Bold),
+                Width = TIrtbQuestion.Width,
+                Height = 80,
+                Left = TIrtbQuestion.Left,
+                Top = TIrtbQuestion.Top + TIrtbQuestion.Height + 20,
+                Parent = TItpQuestionPage
+            };
+
+            // Тип ответа РадиоБатн.
+            var TIrbRadioButtonType = new RadioButton
+            {
+                Text = "Радиобатн",
+                Font = new Font("Verdana", 10, FontStyle.Bold),
+                AutoSize = true,
+                Checked=true,
+                Parent = TIgbAnswerType
+            };
+            TIrbRadioButtonType.Left = TIgbAnswerType.ClientSize.Width / 2 - TIrbRadioButtonType.Width - 25;
+            TIrbRadioButtonType.Top = TIgbAnswerType.Height / 2 - TIrbRadioButtonType.Height / 2;
+            TIrbRadioButtonType.CheckedChanged += (s, e) =>
+            {
+                Changed = true;
+            };
+
+            // Тип ответа Чекбокс.
+            var TIrbCheckBoxType = new RadioButton
+            {
+                Text = "Чекбокс",
+                Font = new Font("Verdana", 10, FontStyle.Bold),
+                Checked = false,
+                AutoSize = true,
+                Top=TIrbRadioButtonType.Top,
+                Parent = TIgbAnswerType
+            };
+            TIrbCheckBoxType.Left = TIgbAnswerType.ClientSize.Width / 2 + 10;
+            TIrbCheckBoxType.CheckedChanged += (s, e) =>
+            {
+                Changed = true;
+            };
+
+            // ГрупБокс для хранения ответов.
+            var TIgbAnswerBox = new GroupBox
+            {
+                Text = "Ответы",
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Font = new Font("Verdana", 8, FontStyle.Bold),
+                Width = TIrtbQuestion.Width,
+                Left = TIrtbQuestion.Left,
+                Top = TIgbAnswerType.Top + TIgbAnswerType.Height + 30,
+                Parent = TItpQuestionPage
+            };
+            TIgbAnswerBox.Height = TItpQuestionPage.Height - TIgbAnswerBox.Top - 20;
+
+            // Панель для скролинга ответов.
+            var TIpnScrollAnswerBox = new Panel
+            {
+                Left = 15,
+                Top = 15,
+                Width = TIgbAnswerBox.Width - 30,
+                Height = TIgbAnswerBox.Height - 30,
+                Parent = TIgbAnswerBox
+            };
+
+            // Кнопка добавления варианта ответа.
+            var TIlbAddAnswer = new Label
+            {
+                AutoSize = true,
+                Text = "+",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Font = new Font("Verdana", 15, FontStyle.Bold),
+                ForeColor = Color.Green,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = TItpQuestionPage,
+                Left = TIgbAnswerBox.Left,
+                Tag = TIpnScrollAnswerBox
+            };
+            TIlbAddAnswer.Top = TIgbAnswerBox.Top - TIlbAddAnswer.Height;
+            TIlbAddAnswer.MouseEnter += IlbAddTabPage_MouseEnter;
+            TIlbAddAnswer.MouseLeave += IlbAddTabPage_MouseLeave;
+
+            // Кнопка создания новой вкладки.
+            var TIlbAddNewTabPage = new Label
+            {
+                AutoSize = true,
+                Text = "+",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Font = new Font("Verdana", 15, FontStyle.Bold),
+                ForeColor = Color.Green,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = TItpQuestionPage
+            };
+            TIlbAddNewTabPage.MouseEnter += IlbAddTabPage_MouseEnter;
+            TIlbAddNewTabPage.MouseLeave += IlbAddTabPage_MouseLeave;
+            TIlbAddNewTabPage.Click += IlbAddTabPage_Click;
+
+            // Кнопка удаления текущей вкладки.
+            var TIlbRemoveThisTabPage = new Label
+            {
+                AutoSize = true,
+                Text = "x",
+                Font = new Font("Verdana", 15, FontStyle.Bold),
+                ForeColor = Color.Red,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Left = TIlbAddNewTabPage.Width,
+                Parent = TItpQuestionPage
+            };
+            TIlbRemoveThisTabPage.MouseEnter += (s, e) =>
+            {
+                TIlbRemoveThisTabPage.BackColor = Color.Red;
+                TIlbRemoveThisTabPage.ForeColor = Color.White;
+            };
+            TIlbRemoveThisTabPage.MouseLeave += (s, e) =>
+            {
+                TIlbRemoveThisTabPage.BackColor = Color.Transparent;
+                TIlbRemoveThisTabPage.ForeColor = Color.Red;
+            };
+            TIlbRemoveThisTabPage.Click += (s, e) =>
+            {
+                if (MessageBox.Show("Вы действительно хотите удалить вопрос?","Удалить вопрос?",
+                    MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
+                {
+                    TItcTabController.TabPages.Remove(TItcTabController.SelectedTab);
+                    RenumberTabPages(TItcTabController, 1, TItcTabController.TabPages.Count - 2);
+                }
+            };
+            /// -----------------
+
+            /// Перемещение вкладки на нужную позицию.
+            /// -----------------
+            if (TItcTabController.TabPages.Count != 3)
+            {
+                for (var i = TItcTabController.TabPages.Count - 1; i > Index; i--)
+                {
+                    TItcTabController.TabPages[i] = TItcTabController.TabPages[i - 1];
+                }
+                TItcTabController.TabPages[Index] = TItpQuestionPage;
+            }
+            else
+            {
+                TItcTabController.TabPages[2] = TItcTabController.TabPages[1];
+                TItcTabController.TabPages[1] = TItpQuestionPage;
+            }
+            RenumberTabPages(TItcTabController, 1, TItcTabController.TabPages.Count - 2);
+            /// -----------------
+
+        }
+        
+        /// <summary>
+        /// Устанавливает текст вкладок в соответствии с их положением.
+        /// </summary>
+        /// <param name="TabController">Контейнер вкладок</param>
+        /// <param name="Start">Номер начала нумерации</param>
+        /// <param name="End">Номер окончания нумерации</param>
+        private void RenumberTabPages(TabControl TabController, int Start, int End)
+        {
+            for (var i = Start; i <= End; i++)
+            {
+                TabController.TabPages[i].Text = i.ToString();
+            }
+        }
     }
 }
