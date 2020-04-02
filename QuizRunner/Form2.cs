@@ -12,7 +12,7 @@ namespace QuizRunner
 {
     public partial class IfrStartPage : Form
     {
-        // Указывает, разрешено ли форме закрыться.
+        // Свойство формы, указывающее ращрешено ли её закрыться.
         public bool CanClose;
 
         public IfrStartPage()

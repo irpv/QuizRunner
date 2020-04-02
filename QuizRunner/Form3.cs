@@ -12,10 +12,10 @@ namespace QuizRunner
 {
     public partial class IfrCreator : Form
     {
-        // Указывает, разрешено ли форме закрыться.
+        // Свойство формы, указывающее ращрешено ли её закрыться.
         public bool CanClose;
 
-        // Указывает, были ли изменены данные, после открытия или создания.
+        // Свойство формы, указывающее были ли изменены данные, после открытия или создания.
         public bool Changed;
 
         // Структура для хранения интерфейсов пользовательских переменных.
@@ -30,7 +30,7 @@ namespace QuizRunner
         };
 
         // Массив интерфейсов пользовательских переменных.
-        public UVariable[] UserVariable = new UVariable[0];
+        public UVariable[] GUserVariable = new UVariable[0];
 
         // Структура для хранения  интерфейсов строк статистики.
         public struct SLine
@@ -42,7 +42,7 @@ namespace QuizRunner
         }
 
         // Массив интерфейсов строк статистики.
-        public SLine[] StatisticsLines = new SLine[0];
+        public SLine[] GStatisticsLines = new SLine[0];
 
         // Структура интерфейса ответа на вопрос.
         public struct Answer
@@ -58,14 +58,14 @@ namespace QuizRunner
             InitializeComponent();
         }
 
-        private readonly SaveFileDialog IsfdSaveDialog = new SaveFileDialog
+        private readonly SaveFileDialog GIsfdSaveDialog = new SaveFileDialog
         {
             Title = "Сохранить",
             FileName = "Test.qrtf",
             Filter = "QuizRunner Test File (*.qrtf)|*.qrtf"
         };
 
-        private readonly OpenFileDialog IofdOpenDialog = new OpenFileDialog
+        private readonly OpenFileDialog GIofdOpenDialog = new OpenFileDialog
         {
             Title = "Открыть",
             FileName = "Test.qrtf",
@@ -605,7 +605,7 @@ namespace QuizRunner
         /// </summary>
         private void Save()
         {
-            if (IsfdSaveDialog.ShowDialog()==DialogResult.OK)
+            if (GIsfdSaveDialog.ShowDialog()==DialogResult.OK)
             {
                 //Тут должна быть функция сохранения.
                 Changed = false;
@@ -623,7 +623,7 @@ namespace QuizRunner
                     "действия они будут потеряны.\nЖелаете продолжить?", "Открыть",MessageBoxButtons.YesNo,
                     MessageBoxIcon.Exclamation)==DialogResult.Yes)
                 {
-                    if (IofdOpenDialog.ShowDialog() == DialogResult.OK)
+                    if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
                         //Тут должна быть функция открытия.
                         Changed = false;
@@ -632,7 +632,7 @@ namespace QuizRunner
             }
             else
             {
-                if (IofdOpenDialog.ShowDialog() == DialogResult.OK)
+                if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Тут должна быть функция открытия.
                     Changed = false;
@@ -649,9 +649,9 @@ namespace QuizRunner
         {
             var TIttCreatorToolTip = new ToolTip();
 
-            Array.Resize<UVariable>(ref UserVariable, UserVariable.Length + 1);
+            Array.Resize<UVariable>(ref GUserVariable, GUserVariable.Length + 1);
             Panel TIpnParentPanel = (Panel)parent;
-            int TNow = UserVariable.Length - 1;
+            int TNow = GUserVariable.Length - 1;
             var TItbName = new TextBox
             {
                 Text = "Имя " + (TNow).ToString(),
@@ -660,19 +660,19 @@ namespace QuizRunner
                 Parent = TIpnParentPanel
             };
             TItbName.Tag = TItbName.Text;
-            if (UserVariable.Length==1)
+            if (GUserVariable.Length==1)
             {
                 TItbName.Top = 20;
             }
             else
             {
-                TItbName.Top = UserVariable[TNow - 1].NameInput.Top 
-                    + UserVariable[TNow - 1].NameInput.Height + 20;
+                TItbName.Top = GUserVariable[TNow - 1].NameInput.Top 
+                    + GUserVariable[TNow - 1].NameInput.Height + 20;
             }
             TItbName.TextChanged += TItbName_TextChanged;
             TIttCreatorToolTip.SetToolTip(TItbName, "Имя");
-            UserVariable[TNow].NameInput = TItbName;
-            UserVariable[TNow].Name = TItbName.Text;
+            GUserVariable[TNow].NameInput = TItbName;
+            GUserVariable[TNow].Name = TItbName.Text;
 
             var TInudValue = new NumericUpDown
             {
@@ -688,8 +688,8 @@ namespace QuizRunner
             };
             TInudValue.ValueChanged += TInudValue_ValieChanged;
             TIttCreatorToolTip.SetToolTip(TInudValue, "Значение");
-            UserVariable[TNow].ValueInput = TInudValue;
-            UserVariable[TNow].Value = Convert.ToDouble(TInudValue.Value);
+            GUserVariable[TNow].ValueInput = TInudValue;
+            GUserVariable[TNow].Value = Convert.ToDouble(TInudValue.Value);
 
             var TIlbRemoveV = new Label
             {
@@ -707,11 +707,11 @@ namespace QuizRunner
             TIlbRemoveV.Tag = TNow;
             TIlbRemoveV.Click += TIlbRemoveV_Click;
             TIttCreatorToolTip.SetToolTip(TIlbRemoveV, "Удалить переменную");
-            UserVariable[TNow].Remove = TIlbRemoveV;
+            GUserVariable[TNow].Remove = TIlbRemoveV;
 
             var TIbtAddButton = (Button)sender;
             TIbtAddButton.Top = TItbName.Top + TItbName.Height + 20;
-            UserVariable[TNow].AddButton = TIbtAddButton;
+            GUserVariable[TNow].AddButton = TIbtAddButton;
 
             // Функция проверки имени переменной.
             // Функция добавления переменной.
@@ -720,57 +720,57 @@ namespace QuizRunner
         /// <summary>
         /// Удаляет пользовательскую переменную по индексу в массиве.
         /// </summary>
-        /// <param name="Index">Индекс.</param>
-        private void RemoveVariable(int Index)
+        /// <param name="index">Индекс.</param>
+        private void RemoveVariable(int index)
         {
             // Функция удаления переменной.
 
-            UserVariable[Index].NameInput.Dispose();
-            UserVariable[Index].ValueInput.Dispose();
-            UserVariable[Index].Remove.Dispose();
+            GUserVariable[index].NameInput.Dispose();
+            GUserVariable[index].ValueInput.Dispose();
+            GUserVariable[index].Remove.Dispose();
 
-            if (Index != UserVariable.Length - 1)
+            if (index != GUserVariable.Length - 1)
             {
-                for (var i = Index; i < UserVariable.Length - 1; i++)
+                for (var i = index; i < GUserVariable.Length - 1; i++)
                 {
-                    UserVariable[i] = UserVariable[i + 1];
-                    UserVariable[i].Remove.Tag = i;
-                    UserVariable[i].ValueInput.Tag = i;
+                    GUserVariable[i] = GUserVariable[i + 1];
+                    GUserVariable[i].Remove.Tag = i;
+                    GUserVariable[i].ValueInput.Tag = i;
                     if (i != 0)
                     {
-                        UserVariable[i].NameInput.Top = UserVariable[i - 1].NameInput.Top +
-                            UserVariable[i - 1].NameInput.Height + 20;
-                        UserVariable[i].ValueInput.Top = UserVariable[i - 1].NameInput.Top +
-                            UserVariable[i - 1].NameInput.Height + 20;
-                        UserVariable[i].Remove.Top = UserVariable[i - 1].NameInput.Top +
-                            UserVariable[i - 1].NameInput.Height + 20;
+                        GUserVariable[i].NameInput.Top = GUserVariable[i - 1].NameInput.Top +
+                            GUserVariable[i - 1].NameInput.Height + 20;
+                        GUserVariable[i].ValueInput.Top = GUserVariable[i - 1].NameInput.Top +
+                            GUserVariable[i - 1].NameInput.Height + 20;
+                        GUserVariable[i].Remove.Top = GUserVariable[i - 1].NameInput.Top +
+                            GUserVariable[i - 1].NameInput.Height + 20;
                     }
                     else
                     {
-                        UserVariable[i].NameInput.Top = 20;
-                        UserVariable[i].ValueInput.Top = 20;
-                        UserVariable[i].Remove.Top = 20;
+                        GUserVariable[i].NameInput.Top = 20;
+                        GUserVariable[i].ValueInput.Top = 20;
+                        GUserVariable[i].Remove.Top = 20;
                     }
                 }
 
 
-                Array.Resize<UVariable>(ref UserVariable, UserVariable.Length - 1);
-                var TIbtAddButton = (Button)UserVariable[UserVariable.Length - 1].AddButton;
-                TIbtAddButton.Top = UserVariable[UserVariable.Length - 1].NameInput.Top +
-                    UserVariable[UserVariable.Length - 1].NameInput.Height + 20;
+                Array.Resize<UVariable>(ref GUserVariable, GUserVariable.Length - 1);
+                var TIbtAddButton = (Button)GUserVariable[GUserVariable.Length - 1].AddButton;
+                TIbtAddButton.Top = GUserVariable[GUserVariable.Length - 1].NameInput.Top +
+                    GUserVariable[GUserVariable.Length - 1].NameInput.Height + 20;
             }
             else
             {
-                if (UserVariable.Length == 1)
+                if (GUserVariable.Length == 1)
                 {
-                    Array.Resize<UVariable>(ref UserVariable, UserVariable.Length - 1);
+                    Array.Resize<UVariable>(ref GUserVariable, GUserVariable.Length - 1);
                 }
                 else
                 {
-                    Array.Resize<UVariable>(ref UserVariable, UserVariable.Length - 1);
-                    var TIbtAddButton = (Button)UserVariable[UserVariable.Length - 1].AddButton;
-                    TIbtAddButton.Top = UserVariable[UserVariable.Length - 1].NameInput.Top +
-                        UserVariable[UserVariable.Length - 1].NameInput.Height + 20;
+                    Array.Resize<UVariable>(ref GUserVariable, GUserVariable.Length - 1);
+                    var TIbtAddButton = (Button)GUserVariable[GUserVariable.Length - 1].AddButton;
+                    TIbtAddButton.Top = GUserVariable[GUserVariable.Length - 1].NameInput.Top +
+                        GUserVariable[GUserVariable.Length - 1].NameInput.Height + 20;
                 }
             }
         }
@@ -810,8 +810,8 @@ namespace QuizRunner
         private void AddStatisticLine(object sender)
         {
             var TIttStatisticLine = new ToolTip();
-            Array.Resize<SLine>(ref StatisticsLines, StatisticsLines.Length + 1);
-            int TNow = StatisticsLines.Length - 1;
+            Array.Resize<SLine>(ref GStatisticsLines, GStatisticsLines.Length + 1);
+            int TNow = GStatisticsLines.Length - 1;
             var TIpnParent = (Panel)sender;
 
             var TItbPrefix = new TextBox
@@ -820,17 +820,17 @@ namespace QuizRunner
                 Left = TIpnParent.Width / 20 * 1,
                 Parent = TIpnParent
             };
-            if (StatisticsLines.Length==1)
+            if (GStatisticsLines.Length==1)
             {
                 TItbPrefix.Top = 40;
             }
             else
             {
-                TItbPrefix.Top = StatisticsLines[TNow - 1].Prefix.Top + 30;
+                TItbPrefix.Top = GStatisticsLines[TNow - 1].Prefix.Top + 30;
             }
             TItbPrefix.TextChanged += UnsavedText_TextChanged;
             TIttStatisticLine.SetToolTip(TItbPrefix, "Префикс");
-            StatisticsLines[TNow].Prefix = TItbPrefix;
+            GStatisticsLines[TNow].Prefix = TItbPrefix;
 
             var TItbCalc = new TextBox
             {
@@ -841,7 +841,7 @@ namespace QuizRunner
             };
             TItbCalc.TextChanged += UnsavedText_TextChanged;
             TIttStatisticLine.SetToolTip(TItbCalc, "Расчёты");
-            StatisticsLines[TNow].Calc = TItbCalc;
+            GStatisticsLines[TNow].Calc = TItbCalc;
 
             var TItbPostfix = new TextBox
             {
@@ -852,7 +852,7 @@ namespace QuizRunner
             };
             TItbPostfix.TextChanged += UnsavedText_TextChanged;
             TIttStatisticLine.SetToolTip(TItbPostfix, "Постфикс");
-            StatisticsLines[TNow].Postfix = TItbPostfix;
+            GStatisticsLines[TNow].Postfix = TItbPostfix;
 
             var TIlbRemoveSL = new Label
             {
@@ -870,42 +870,42 @@ namespace QuizRunner
             TIlbRemoveSL.Click += TIlbRemoveSL_Click;
             TIlbRemoveSL.Tag = TNow;
             TIttStatisticLine.SetToolTip(TIlbRemoveSL, "Удалить строку");
-            StatisticsLines[TNow].Remove = TIlbRemoveSL;
+            GStatisticsLines[TNow].Remove = TIlbRemoveSL;
         }
 
         /// <summary>
         /// Удаляет строку статистики по указанному индексу в массиве.
         /// </summary>
-        /// <param name="Index">Индекс.</param>
-        private void RemoveStatisticLine(int Index)
+        /// <param name="index">Индекс.</param>
+        private void RemoveStatisticLine(int index)
         {
-            StatisticsLines[Index].Prefix.Dispose();
-            StatisticsLines[Index].Calc.Dispose();
-            StatisticsLines[Index].Postfix.Dispose();
-            StatisticsLines[Index].Remove.Dispose();
+            GStatisticsLines[index].Prefix.Dispose();
+            GStatisticsLines[index].Calc.Dispose();
+            GStatisticsLines[index].Postfix.Dispose();
+            GStatisticsLines[index].Remove.Dispose();
 
-            for (var i = Index; i < StatisticsLines.Length - 1; i++)
+            for (var i = index; i < GStatisticsLines.Length - 1; i++)
             {
-                StatisticsLines[i] = StatisticsLines[i + 1];
-                StatisticsLines[i].Remove.Tag = i;
+                GStatisticsLines[i] = GStatisticsLines[i + 1];
+                GStatisticsLines[i].Remove.Tag = i;
                 
                 if (i!=0)
                 {
-                    StatisticsLines[i].Prefix.Top = StatisticsLines[i - 1].Prefix.Top + 30;
-                    StatisticsLines[i].Calc.Top = StatisticsLines[i].Prefix.Top;
-                    StatisticsLines[i].Postfix.Top = StatisticsLines[i].Prefix.Top;
-                    StatisticsLines[i].Remove.Top = StatisticsLines[i].Prefix.Top;
+                    GStatisticsLines[i].Prefix.Top = GStatisticsLines[i - 1].Prefix.Top + 30;
+                    GStatisticsLines[i].Calc.Top = GStatisticsLines[i].Prefix.Top;
+                    GStatisticsLines[i].Postfix.Top = GStatisticsLines[i].Prefix.Top;
+                    GStatisticsLines[i].Remove.Top = GStatisticsLines[i].Prefix.Top;
                 }
                 else
                 {
-                    StatisticsLines[i].Prefix.Top = 40;
-                    StatisticsLines[i].Calc.Top = StatisticsLines[i].Prefix.Top;
-                    StatisticsLines[i].Postfix.Top = StatisticsLines[i].Prefix.Top;
-                    StatisticsLines[i].Remove.Top = StatisticsLines[i].Prefix.Top;
+                    GStatisticsLines[i].Prefix.Top = 40;
+                    GStatisticsLines[i].Calc.Top = GStatisticsLines[i].Prefix.Top;
+                    GStatisticsLines[i].Postfix.Top = GStatisticsLines[i].Prefix.Top;
+                    GStatisticsLines[i].Remove.Top = GStatisticsLines[i].Prefix.Top;
                 }
             }
 
-            Array.Resize<SLine>(ref StatisticsLines, StatisticsLines.Length - 1);
+            Array.Resize<SLine>(ref GStatisticsLines, GStatisticsLines.Length - 1);
         }
 
         /// События графических элементов строк статистики,
@@ -922,8 +922,8 @@ namespace QuizRunner
         /// <summary>
         /// Добавляет страницу теста на место по указанному индексу.
         /// </summary>
-        /// <param name="Index">Индекс</param>
-        private void CreateNewQuestionPage(int Index)
+        /// <param name="index">Индекс</param>
+        private void CreateNewQuestionPage(int index)
         {
             // Cтраница.
             var TItcTabController = (TabControl)this.Controls[0];
@@ -1101,11 +1101,11 @@ namespace QuizRunner
             /// -----------------
             if (TItcTabController.TabPages.Count != 3)
             {
-                for (var i = TItcTabController.TabPages.Count - 1; i > Index; i--)
+                for (var i = TItcTabController.TabPages.Count - 1; i > index; i--)
                 {
                     TItcTabController.TabPages[i] = TItcTabController.TabPages[i - 1];
                 }
-                TItcTabController.TabPages[Index] = TItpQuestionPage;
+                TItcTabController.TabPages[index] = TItpQuestionPage;
             }
             else
             {
@@ -1120,14 +1120,14 @@ namespace QuizRunner
         /// <summary>
         /// Устанавливает текст вкладок в соответствии с их положением.
         /// </summary>
-        /// <param name="TabController">Контейнер вкладок</param>
-        /// <param name="Start">Номер начала нумерации</param>
-        /// <param name="End">Номер окончания нумерации</param>
-        private void RenumberTabPages(TabControl TabController, int Start, int End)
+        /// <param name="tabcontroller">Контейнер вкладок</param>
+        /// <param name="start">Номер начала нумерации</param>
+        /// <param name="end">Номер окончания нумерации</param>
+        private void RenumberTabPages(TabControl tabcontroller, int start, int end)
         {
-            for (var i = Start; i <= End; i++)
+            for (var i = start; i <= end; i++)
             {
-                TabController.TabPages[i].Text = i.ToString();
+                tabcontroller.TabPages[i].Text = i.ToString();
             }
         }
 
@@ -1234,28 +1234,28 @@ namespace QuizRunner
         /// <summary>
         /// Улаляет интерфейс ответа по заданному индексу.
         /// </summary>
-        /// <param name="Index">Индекс</param>
-        private void RemoveAnswer(int Index)
+        /// <param name="index">Индекс</param>
+        private void RemoveAnswer(int index)
         {
             var TItcTabController = (TabControl)this.Controls[0];
             var TITabPage = TItcTabController.SelectedTab;
             var TAnswerArray = (Answer[])TITabPage.Tag;
 
             TAnswerArray[0].AnswerIntput.Focus();
-            TAnswerArray[Index].AnswerIntput.Dispose();
-            TAnswerArray[Index].AddAnswerArgumets.Dispose();
-            TAnswerArray[Index].Remove.Dispose();
-            if (TAnswerArray[Index].AnswerArguments.Length!=0)
+            TAnswerArray[index].AnswerIntput.Dispose();
+            TAnswerArray[index].AddAnswerArgumets.Dispose();
+            TAnswerArray[index].Remove.Dispose();
+            if (TAnswerArray[index].AnswerArguments.Length!=0)
             {
-                for (var i = 0; i < TAnswerArray[Index].AnswerArguments.Length; i++)
+                for (var i = 0; i < TAnswerArray[index].AnswerArguments.Length; i++)
                 {
-                    TAnswerArray[Index].AnswerArguments[i].Dispose();
+                    TAnswerArray[index].AnswerArguments[i].Dispose();
                 }
             }
 
             /// Расстановка элементов по координатам.
             /// -----------------
-            for (var i = Index ; i < TAnswerArray.Length - 1; i++)
+            for (var i = index ; i < TAnswerArray.Length - 1; i++)
             {
                 TAnswerArray[i] = TAnswerArray[i + 1];
                 TAnswerArray[i].AddAnswerArgumets.Tag = i;
@@ -1319,13 +1319,13 @@ namespace QuizRunner
         /// <summary>
         /// Создаёт интерфейс для аргумента по указанному индексу ответа.
         /// </summary>
-        /// <param name="Index">Индекс ответа</param>
-        private void CreateNewAnswerArgument(int Index)
+        /// <param name="index">Индекс ответа</param>
+        private void CreateNewAnswerArgument(int index)
         {
             var TItcTabController = (TabControl)this.Controls[0];
             var TItpTabPage = TItcTabController.SelectedTab;
             var TAnswerArray = (Answer[])TItpTabPage.Tag;
-            var TAnswer = TAnswerArray[Index];
+            var TAnswer = TAnswerArray[index];
             Array.Resize<TextBox>(ref TAnswer.AnswerArguments, TAnswer.AnswerArguments.Length + 1);
 
             /// Оснавные графические элементы аргументов
@@ -1352,11 +1352,11 @@ namespace QuizRunner
                 = TItbNewAnswerArgument;
             /// -----------------
 
-            TAnswerArray[Index] = TAnswer;
+            TAnswerArray[index] = TAnswer;
 
             /// Расстановка элементов по координатам.
             /// -----------------
-            for (var i = Index + 1; i <= TAnswerArray.Length-1; i++)
+            for (var i = index + 1; i <= TAnswerArray.Length-1; i++)
             {
                 if (TAnswerArray[i - 1].AnswerArguments.Length != 0)
                 {
