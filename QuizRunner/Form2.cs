@@ -26,6 +26,9 @@ namespace QuizRunner
 
             var IttMainToolTip = new ToolTip();
 
+            /// Заголовок программы.
+            /// -----------------
+            // Кнопка закрытия.
             var IlbExit = new Label
             {
                 AutoSize = true,
@@ -39,7 +42,8 @@ namespace QuizRunner
             IlbExit.MouseEnter += IlbExit_MouseEnter;
             IlbExit.MouseLeave += IlbExit_MouseLeave;
             IlbExit.MouseClick += IlbExit_Click;
-
+            
+            // Вывод имени программы.
             var IlbTitle = new Label
             {
                 AutoSize = true,
@@ -49,7 +53,11 @@ namespace QuizRunner
                 ForeColor = Color.Gray,
                 Parent=this
             };
+            /// -----------------
 
+            /// Оснавные элементы управления.
+            /// -----------------
+            // Кнопка перехода в редактор тестов.
             var IpbCreatorButton = new PictureBox
             {
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -67,6 +75,7 @@ namespace QuizRunner
             IpbCreatorButton.Click += IpbCreatorButton_Click;
             IttMainToolTip.SetToolTip(IpbCreatorButton, "Создать или отредактировать тест");
 
+            // Кнопка перехода в прохождение теста.
             var IpbQuizButton = new PictureBox
             {
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -82,6 +91,7 @@ namespace QuizRunner
             IpbQuizButton.MouseLeave += MainButtons_MouseLeave;
             IttMainToolTip.SetToolTip(IpbQuizButton, "Пройти тест");
 
+            // Кнопка перехода к просмотру результатов теста.
             var IpbResultButton = new PictureBox
             {
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -96,7 +106,11 @@ namespace QuizRunner
             IpbResultButton.MouseEnter += MainButtons_MouseEnter;
             IpbResultButton.MouseLeave += MainButtons_MouseLeave;
             IttMainToolTip.SetToolTip(IpbResultButton, "Просмотреть результаты");
+            /// -----------------
 
+            /// Дополнительные элементы.
+            /// -----------------
+            // Вывод имени пользователя.
             var IlbUserName = new Label
             {
                 AutoSize = true,
@@ -108,6 +122,7 @@ namespace QuizRunner
             IlbUserName.Left = this.Width / 2 - IlbUserName.Width / 2;
             IlbUserName.Top = IpbQuizButton.Top - IlbUserName.Height - 15;
 
+            // Вывод приветствия.
             var IlbWelcome = new Label
             {
                 AutoSize = true,
@@ -118,8 +133,11 @@ namespace QuizRunner
             };
             IlbWelcome.Left = this.Width / 2 - IlbWelcome.Width / 2;
             IlbWelcome.Top = IlbUserName.Top - IlbWelcome.Height - 10;
+            /// -----------------
         }
 
+        /// События основных графических элементов.
+        /// -----------------
         private void IfrStartPage_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (!CanClose)
@@ -149,6 +167,7 @@ namespace QuizRunner
             Application.Exit();
         }
 
+        // Вход курсора в область одной из кнопок.
         private void MainButtons_MouseEnter(object sender, EventArgs e)
         {
             ((PictureBox)sender).Width += 20;
@@ -157,6 +176,7 @@ namespace QuizRunner
             ((PictureBox)sender).Top -= 10;
         }
 
+        //Покидание курсором области одной из кнопок.
         private void MainButtons_MouseLeave(object sender, EventArgs e)
         {
             ((PictureBox)sender).Width -= 20;
@@ -172,5 +192,6 @@ namespace QuizRunner
             this.Close();
 
         }
+        /// -----------------
     }
 }

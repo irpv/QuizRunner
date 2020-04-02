@@ -15,9 +15,10 @@ namespace QuizRunner
         // Указывает, разрешено ли форме закрыться.
         public bool CanClose;
 
-        //Указывает, были ли изменены данные, после открытия или создания.
+        // Указывает, были ли изменены данные, после открытия или создания.
         public bool Changed;
 
+        // Структура для хранения интерфейсов пользовательских переменных.
         public struct UVariable
         {
             public string Name;
@@ -28,8 +29,10 @@ namespace QuizRunner
             public object AddButton;
         };
 
+        // Массив интерфейсов пользовательских переменных.
         public UVariable[] UserVariable = new UVariable[0];
 
+        // Структура для хранения  интерфейсов строк статистики.
         public struct SLine
         {
             public TextBox Prefix;
@@ -38,6 +41,7 @@ namespace QuizRunner
             public Label Remove;
         }
 
+        // Массив интерфейсов строк статистики.
         public SLine[] StatisticsLines = new SLine[0];
 
         public IfrCreator()
@@ -61,8 +65,12 @@ namespace QuizRunner
 
         private void IfrCreator_Load(object sender, EventArgs e)
         {
+            // ТулТип для подсказок.
             var IttCreatorToolTip = new ToolTip();
-
+            
+            /// Меню.
+            /// -----------------
+            // Панель меню.
             var IpnMenu = new Panel
             {
                 BackColor = Color.FromArgb(18, 136, 235),
@@ -71,6 +79,7 @@ namespace QuizRunner
                 Parent = this
             };
 
+            // Кнопка сохранения в файл.
             var IpbSave = new PictureBox
             {
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -87,6 +96,7 @@ namespace QuizRunner
             IpbSave.Click += IpbSave_Click;
             IttCreatorToolTip.SetToolTip(IpbSave, "Сохранить...");
 
+            // Кнопка открытия из файла.
             var IpbOpen = new PictureBox
             {
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -103,6 +113,7 @@ namespace QuizRunner
             IpbOpen.Click += IpbOpen_Click;
             IttCreatorToolTip.SetToolTip(IpbOpen, "Открыть...");
 
+            // Кнопка закрытия программы.
             var IlbExit = new Label
             {
                 AutoSize = false,
@@ -122,6 +133,7 @@ namespace QuizRunner
             IttCreatorToolTip.SetToolTip(IlbExit, "Закрыть " + AppDomain.CurrentDomain.FriendlyName.Substring(0,
                     AppDomain.CurrentDomain.FriendlyName.Length - 4));
 
+            // Кнопка выхода в меню.
             var IpbBack = new PictureBox
             {
                 SizeMode = PictureBoxSizeMode.StretchImage,
@@ -137,7 +149,11 @@ namespace QuizRunner
             IpbBack.MouseLeave += MenuButtons_MouseLeave;
             IpbBack.Click += IpbBack_Click;
             IttCreatorToolTip.SetToolTip(IpbBack, "Вернуться в меню");
+            ///-----------------
 
+            /// Пользовательские переменные.
+            /// -----------------
+            // Панель переменных.
             var IpnUserVariable = new Panel
             {
                 AutoScroll = true,
@@ -148,6 +164,7 @@ namespace QuizRunner
                 Parent = this
             };
 
+            // Заголовок панели.
             var IlbUserVariableHeader = new Label
             {
                 AutoSize = true,
@@ -159,6 +176,7 @@ namespace QuizRunner
             };
             IlbUserVariableHeader.Left = IpnUserVariable.Width / 2 - IlbUserVariableHeader.Width / 2;
 
+            // Кнопка добавления переменной.
             var IbtAddVariable = new Button
             {
                 Text = "Добавить",
@@ -172,7 +190,11 @@ namespace QuizRunner
             IbtAddVariable.Left = IpnUserVariable.Width / 2 - IbtAddVariable.Width / 2;
             IbtAddVariable.Top = IlbUserVariableHeader.Top + IlbUserVariableHeader.Height + 42;
             IbtAddVariable.Click += IbtAddVariable_Click;
+            /// -----------------
 
+            /// Редактор тестов.
+            /// -----------------
+            // Контроллер вкладок
             var ItcQuizEditor = new TabControl
             {
                 Left = IpnMenu.Width + 2,
@@ -182,12 +204,16 @@ namespace QuizRunner
             };
             ItcQuizEditor.SendToBack();
 
+            /// Главная страница.
+            /// --------
+            //  Страница для главной.
             var ItpHome = new TabPage
             {
                 Text = "Главная",
                 Parent = ItcQuizEditor
             };
 
+            // Лейбл названия теста.
             var IlbTestName = new Label
             {
                 AutoSize = true,
@@ -199,6 +225,7 @@ namespace QuizRunner
             };
             IlbTestName.Left = ItpHome.ClientSize.Width / 2 - IlbTestName.Width / 2;
 
+            // Инпут названия теста.
             var ItbTestName = new TextBox
             {
                 Width = ItpHome.ClientSize.Width - 40,
@@ -212,6 +239,7 @@ namespace QuizRunner
             ItbTestName.Left = ItpHome.ClientSize.Width / 2 - ItbTestName.Width / 2;
             ItbTestName.TextChanged += UnsavedText_TextChanged;
 
+            // Лейбл описания теста.
             var IlbTestDescription = new Label
             {
                 AutoSize = true,
@@ -223,6 +251,7 @@ namespace QuizRunner
             };
             IlbTestDescription.Left = ItpHome.ClientSize.Width / 2 - IlbTestDescription.Width / 2;
 
+            // Инпут описания теста.
             var IrtbTestDescription = new RichTextBox
             {
                 Left = ItbTestName.Left,
@@ -235,6 +264,7 @@ namespace QuizRunner
             IrtbTestDescription.Height = ItpHome.ClientSize.Height - IrtbTestDescription.Top - 20;
             IrtbTestDescription.TextChanged += UnsavedText_TextChanged;
 
+            // Кнопка добавления страницы.
             var IlbAddTabPage = new Label
             {
                 AutoSize = true,
@@ -247,13 +277,18 @@ namespace QuizRunner
             };
             IlbAddTabPage.MouseEnter += IlbAddTabPage_MouseEnter;
             IlbAddTabPage.MouseLeave += IlbAddTabPage_MouseLeave;
+            /// --------
 
+            /// Страница статистики.
+            /// --------
+            // Страница для статистики.
             var ItpStatistics = new TabPage
             {
                 Text = "Статистика",
                 Parent = ItcQuizEditor
             };
 
+            // Подсказка по использованию.
             var IlbHint = new Label
             {
                 AutoSize = false,
@@ -268,6 +303,7 @@ namespace QuizRunner
             };
             IlbHint.Left = ItpStatistics.ClientSize.Width / 2 - IlbHint.Width / 2;
 
+            // Груп бокс для хранения строк статистики.
             var IgbStatisticsLines = new GroupBox
             {
                 Text = "Cтроки статистики",
@@ -282,7 +318,7 @@ namespace QuizRunner
             IgbStatisticsLines.Height = ItpStatistics.ClientSize.Height
                 - IgbStatisticsLines.Top - 10;
 
-
+            // Кнопка добавления строки статистики.
             var IlbAddStatisticsLine = new Label
             {
                 AutoSize = true,
@@ -309,6 +345,7 @@ namespace QuizRunner
             IlbAddStatisticsLine.MouseLeave += IlbAddTabPage_MouseLeave;
             IlbAddStatisticsLine.Click += IlbAddStatisticsLine_Click;
 
+            // Подсказка форматирования: Префикс.
             var IlbStatisticPrefix = new Label
             {
                 AutoSize = false,
@@ -349,6 +386,7 @@ namespace QuizRunner
                 }
             };
 
+            // Подсказка форматирования: Вычисления.
             var IlbStatisticСalculations = new Label
             {
                 AutoSize = false,
@@ -389,6 +427,7 @@ namespace QuizRunner
                 }
             };
 
+            // Подсказка форматирования: Постфикс.
             var IlbStatisticPostfix = new Label
             {
                 AutoSize = false,
@@ -428,9 +467,14 @@ namespace QuizRunner
                     Parent = IgbStatisticsLines
                 }
             };
+            /// --------
+            /// -----------------
 
         }
 
+        /// События основных графических элементов.
+        /// -----------------
+        // Вход курсора в область одной из кнопок меню.
         private void MenuButtons_MouseEnter(object sender, EventArgs e)
         {
             ((PictureBox)sender).Width += 4;
@@ -439,6 +483,7 @@ namespace QuizRunner
             ((PictureBox)sender).Top -= 2;
         }
 
+        // Покидание курсором области одной из кнопок меню.
         private void MenuButtons_MouseLeave(object sender, EventArgs e)
         {
             ((PictureBox)sender).Width -= 4;
@@ -515,6 +560,7 @@ namespace QuizRunner
             AddVariable(IbtAddVariable.Parent, sender);
         }
 
+        // Установка статуса "Изменено" при изменении одного из текстовых полей.
         private void UnsavedText_TextChanged(object sender, EventArgs e)
         {
             Changed = true;
@@ -536,6 +582,7 @@ namespace QuizRunner
         {
             AddStatisticLine(((Label)sender).Tag);
         }
+        /// -----------------
 
         /// <summary>
         /// Сохраняет тест в файл.
@@ -712,6 +759,9 @@ namespace QuizRunner
             }
         }
 
+        /// События графических элементов пользовательскх переменных,
+        /// созданных автоматически.
+        /// -----------------
         private void RemoveVar_Click(object sender, EventArgs e)
         {
             Changed = true;
@@ -735,6 +785,7 @@ namespace QuizRunner
             // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
             // Функция изменения значения переменной по имени (UserVariable[Convert.ToInt32(Value.Tag].Name)).
         }
+        /// -----------------
 
         /// <summary>
         /// Cоздаёт строку статистики на указанной панели.
@@ -836,10 +887,14 @@ namespace QuizRunner
             Array.Resize<SLine>(ref StatisticsLines, StatisticsLines.Length - 1);
         }
 
+        /// События графических элементов строк статистики,
+        /// созданных автоматически.
+        /// -----------------
         void RemoveLine_Click(object sender,EventArgs e)
         {
             Changed = true;
             RemoveStatisticLine(Convert.ToInt32(((Label)sender).Tag));
         }
+        /// -----------------
     }
 }
