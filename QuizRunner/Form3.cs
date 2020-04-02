@@ -1184,9 +1184,19 @@ namespace QuizRunner
                 Font = new Font("Verdana", 10, FontStyle.Bold),
                 TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
                 Cursor = System.Windows.Forms.Cursors.Hand,
+                Tag = TAnswerArray.Length - 1,
                 Parent = TIpnPanel
             };
             TAnswerArray[TAnswerArray.Length - 1].Remove = TIlbRemoveA;
+            TIlbRemoveA.Click += (s, e) =>
+            {
+                if (MessageBox.Show("Вы действительно хотите удалить ответ и все его аргументы?",
+                    "Удалить ответ?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                    == DialogResult.Yes)
+                {
+                    RemoveAnswer((int)TIlbRemoveA.Tag);
+                }
+            };
 
             // Кнопка добавления аргумента.
             var TIlbAddAnswerArgumets = new Label
@@ -1219,6 +1229,91 @@ namespace QuizRunner
 
             // Сохранение массива ответов в страницу.
             TItpTabPage.Tag = TAnswerArray;
+        }
+
+        /// <summary>
+        /// Улаляет интерфейс ответа по заданному индексу.
+        /// </summary>
+        /// <param name="Index">Индекс</param>
+        private void RemoveAnswer(int Index)
+        {
+            var TItcTabController = (TabControl)this.Controls[0];
+            var TITabPage = TItcTabController.SelectedTab;
+            var TAnswerArray = (Answer[])TITabPage.Tag;
+
+            TAnswerArray[0].AnswerIntput.Focus();
+            TAnswerArray[Index].AnswerIntput.Dispose();
+            TAnswerArray[Index].AddAnswerArgumets.Dispose();
+            TAnswerArray[Index].Remove.Dispose();
+            if (TAnswerArray[Index].AnswerArguments.Length!=0)
+            {
+                for (var i = 0; i < TAnswerArray[Index].AnswerArguments.Length; i++)
+                {
+                    TAnswerArray[Index].AnswerArguments[i].Dispose();
+                }
+            }
+
+            /// Расстановка элементов по координатам.
+            /// -----------------
+            for (var i = Index ; i < TAnswerArray.Length - 1; i++)
+            {
+                TAnswerArray[i] = TAnswerArray[i + 1];
+                TAnswerArray[i].AddAnswerArgumets.Tag = i;
+                TAnswerArray[i].Remove.Tag = i;
+
+                // Расстановка строк ответов.
+                if  (i!=0)
+                {
+                    if (TAnswerArray[i - 1].AnswerArguments.Length != 0)
+                    {
+                        TAnswerArray[i].AnswerIntput.Top = TAnswerArray[i - 1].AnswerArguments
+                            [TAnswerArray[i - 1].AnswerArguments.Length - 1].Top +
+                            TAnswerArray[i - 1].AnswerArguments[TAnswerArray[i - 1]
+                            .AnswerArguments.Length - 1].Height+ 30;
+                    }
+                    else
+                    {
+                        TAnswerArray[i].AnswerIntput.Top = TAnswerArray[i - 1].AnswerIntput.Top
+                            + TAnswerArray[i - 1].AnswerIntput.Height + 30;
+                    }
+                    TAnswerArray[i].AddAnswerArgumets.Top = TAnswerArray[i].AnswerIntput.Top;
+                    TAnswerArray[i].Remove.Top = TAnswerArray[i].AnswerIntput.Top;
+                }
+                else
+                {
+                    TAnswerArray[i].AnswerIntput.Top = 20;
+                    TAnswerArray[i].AddAnswerArgumets.Top = TAnswerArray[i].AnswerIntput.Top;
+                    TAnswerArray[i].Remove.Top = TAnswerArray[i].AnswerIntput.Top;
+                }
+
+                // Расстановка аргументов.
+                if (TAnswerArray[i].AnswerArguments.Length!=0)
+                {
+                    for (var j=0; j < TAnswerArray[i].AnswerArguments.Length; j++)
+                    {
+                        if (j!=0)
+                        {
+                            TAnswerArray[i].AnswerArguments[j].Top =
+                                TAnswerArray[i].AnswerArguments[j - 1].Top +
+                                TAnswerArray[i].AnswerArguments[j - 1].Height + 10;
+                        }
+                        else
+                        {
+                            TAnswerArray[i].AnswerArguments[j].Top =
+                                TAnswerArray[i].AnswerIntput.Top + TAnswerArray[i].AnswerIntput.Height
+                                + 10;
+                        }
+                    }
+                }
+
+            }
+            /// -----------------
+
+            Array.Resize<Answer>(ref TAnswerArray, TAnswerArray.Length - 1);
+
+
+            TITabPage.Tag = TAnswerArray;
+
         }
 
         /// <summary>
