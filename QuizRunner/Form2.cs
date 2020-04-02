@@ -134,16 +134,14 @@ namespace QuizRunner
 
         private void IlbExit_MouseEnter(object sender, EventArgs e)
         {
-            var IlbExit = (Label)sender;
-            IlbExit.BackColor = Color.Red;
-            IlbExit.ForeColor = Color.White;
+            ((Label)sender).BackColor = Color.Red;
+            ((Label)sender).ForeColor = Color.White;
         }
 
         private void IlbExit_MouseLeave(object sender, EventArgs e)
         {
-            var IlbExit = (Label)sender;
-            IlbExit.BackColor = Color.Transparent;
-            IlbExit.ForeColor = Color.Gray;
+            ((Label)sender).BackColor = Color.Transparent;
+            ((Label)sender).ForeColor = Color.Gray;
         }
 
         private void IlbExit_Click(object sender, EventArgs e)
@@ -153,28 +151,26 @@ namespace QuizRunner
 
         private void MainButtons_MouseEnter(object sender, EventArgs e)
         {
-            var IpbCreatorButton = (PictureBox)sender;
-            IpbCreatorButton.Width += 20;
-            IpbCreatorButton.Height += 20;
-            IpbCreatorButton.Left -= 10;
-            IpbCreatorButton.Top -= 10;
+            ((PictureBox)sender).Width += 20;
+            ((PictureBox)sender).Height += 20;
+            ((PictureBox)sender).Left -= 10;
+            ((PictureBox)sender).Top -= 10;
         }
 
         private void MainButtons_MouseLeave(object sender, EventArgs e)
         {
-            var IpbCreatorButton = (PictureBox)sender;
-            IpbCreatorButton.Width -= 20;
-            IpbCreatorButton.Height -= 20;
-            IpbCreatorButton.Left += 10;
-            IpbCreatorButton.Top += 10;
+            ((PictureBox)sender).Width -= 20;
+            ((PictureBox)sender).Height -= 20;
+            ((PictureBox)sender).Left += 10;
+            ((PictureBox)sender).Top += 10;
         }
 
         private void IpbCreatorButton_Click(object sender, EventArgs e)
         {
-            var ICreator = new IfrCreator();
-            ICreator.Show();
             this.CanClose = true;
+            new IfrCreator().Show();
             this.Close();
+
         }
     }
 }
