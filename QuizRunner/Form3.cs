@@ -287,6 +287,7 @@ namespace QuizRunner
             IlbAddTabPage.MouseEnter += IlbAddTabPage_MouseEnter;
             IlbAddTabPage.MouseLeave += IlbAddTabPage_MouseLeave;
             IlbAddTabPage.Click += IlbAddTabPage_Click;
+            IttCreatorToolTip.SetToolTip(IlbAddTabPage, "Добавить вопрос");
             /// --------
 
             /// Страница статистики.
@@ -925,6 +926,9 @@ namespace QuizRunner
         /// <param name="index">Индекс</param>
         private void CreateNewQuestionPage(int index)
         {
+            //ТулТип
+            var TIttToolTip = new ToolTip();
+
             // Cтраница.
             var TItcTabController = (TabControl)this.Controls[0];
             var TItpQuestionPage = new TabPage
@@ -976,23 +980,25 @@ namespace QuizRunner
             // Тип ответа РадиоБатн.
             var TIrbRadioButtonType = new RadioButton
             {
-                Text = "Радиобатн",
+                Text = "Один ответ",
                 Font = new Font("Verdana", 10, FontStyle.Bold),
                 AutoSize = true,
                 Checked=true,
                 Parent = TIgbAnswerType
             };
-            TIrbRadioButtonType.Left = TIgbAnswerType.ClientSize.Width / 2 - TIrbRadioButtonType.Width - 25;
+            TIrbRadioButtonType.Left = TIgbAnswerType.ClientSize.Width / 2 - TIrbRadioButtonType.Width - 40;
             TIrbRadioButtonType.Top = TIgbAnswerType.Height / 2 - TIrbRadioButtonType.Height / 2;
             TIrbRadioButtonType.CheckedChanged += (s, e) =>
             {
                 Changed = true;
             };
+            TIttToolTip.SetToolTip(TIrbRadioButtonType,
+                "Позволяет выбрать только один ответ из предложенных");
 
             // Тип ответа Чекбокс.
             var TIrbCheckBoxType = new RadioButton
             {
-                Text = "Чекбокс",
+                Text = "Несколько ответов",
                 Font = new Font("Verdana", 10, FontStyle.Bold),
                 Checked = false,
                 AutoSize = true,
@@ -1004,6 +1010,8 @@ namespace QuizRunner
             {
                 Changed = true;
             };
+            TIttToolTip.SetToolTip(TIrbCheckBoxType,
+                "Позволяет выбрать несколько ответов из предложенных");
 
             // ГрупБокс для хранения ответов.
             var TIgbAnswerBox = new GroupBox
@@ -1049,6 +1057,7 @@ namespace QuizRunner
             {
                 CreateNewAnswer(TIpnScrollAnswerBox);
             };
+            TIttToolTip.SetToolTip(TIlbAddAnswer, "Добавить ответ на вопрос");
 
             // Кнопка создания новой вкладки.
             var TIlbAddNewTabPage = new Label
@@ -1064,6 +1073,7 @@ namespace QuizRunner
             TIlbAddNewTabPage.MouseEnter += IlbAddTabPage_MouseEnter;
             TIlbAddNewTabPage.MouseLeave += IlbAddTabPage_MouseLeave;
             TIlbAddNewTabPage.Click += IlbAddTabPage_Click;
+            TIttToolTip.SetToolTip(TIlbAddNewTabPage, "Добавить вопрос");
 
             // Кнопка удаления текущей вкладки.
             var TIlbRemoveThisTabPage = new Label
@@ -1095,6 +1105,7 @@ namespace QuizRunner
                     RenumberTabPages(TItcTabController, 1, TItcTabController.TabPages.Count - 2);
                 }
             };
+            TIttToolTip.SetToolTip(TIlbRemoveThisTabPage, "Удалить этот вопрос");
             /// -----------------
 
             /// Перемещение вкладки на нужную позицию.
@@ -1137,6 +1148,9 @@ namespace QuizRunner
         /// <param name="sender">Панель</param>
         private void CreateNewAnswer(object sender)
         {
+            //ТулТип
+            var TIttToolTip = new ToolTip();
+
             var TIpnPanel = (Panel)sender;
             var TItpTabPage = (TabPage)TIpnPanel.Parent.Parent;
             var TAnswerArray = (Answer[])TItpTabPage.Tag;
@@ -1197,6 +1211,7 @@ namespace QuizRunner
                     RemoveAnswer((int)TIlbRemoveA.Tag);
                 }
             };
+            TIttToolTip.SetToolTip(TIlbRemoveA, "Удалить ответ");
 
             // Кнопка добавления аргумента.
             var TIlbAddAnswerArgumets = new Label
@@ -1222,6 +1237,7 @@ namespace QuizRunner
                     "Добавить аргумент.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CreateNewAnswerArgument((int)TIlbAddAnswerArgumets.Tag);
             };
+            TIttToolTip.SetToolTip(TIlbAddAnswerArgumets, "Добавить аргумент к ответу");
 
             // Инициализация массива аргументов.
             TAnswerArray[TAnswerArray.Length - 1].AnswerArguments = new TextBox[0];
