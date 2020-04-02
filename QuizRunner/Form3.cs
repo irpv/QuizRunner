@@ -654,7 +654,7 @@ namespace QuizRunner
                 TItbName.Top = UserVariable[TNow - 1].NameInput.Top 
                     + UserVariable[TNow - 1].NameInput.Height + 20;
             }
-            TItbName.TextChanged += NameInput_TextChanged;
+            TItbName.TextChanged += TItbName_TextChanged;
             TIttCreatorToolTip.SetToolTip(TItbName, "Имя");
             UserVariable[TNow].NameInput = TItbName;
             UserVariable[TNow].Name = TItbName.Text;
@@ -671,7 +671,7 @@ namespace QuizRunner
                 Tag = TNow,
                 Parent = TIpnParentPanel
             };
-            TInudValue.ValueChanged += ValueInput_ValieChanged;
+            TInudValue.ValueChanged += TInudValue_ValieChanged;
             TIttCreatorToolTip.SetToolTip(TInudValue, "Значение");
             UserVariable[TNow].ValueInput = TInudValue;
             UserVariable[TNow].Value = Convert.ToDouble(TInudValue.Value);
@@ -689,8 +689,8 @@ namespace QuizRunner
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = TIpnParentPanel
             };
-            TIlbRemove.Tag = TNow;
-            TIlbRemove.Click += RemoveVar_Click;
+            TItbName.Tag = TNow;
+            TIlbRemove.Click += TItbName_Click;
             TIttCreatorToolTip.SetToolTip(TIlbRemove, "Удалить переменную");
             UserVariable[TNow].Remove = TIlbRemove;
 
@@ -763,13 +763,13 @@ namespace QuizRunner
         /// События графических элементов пользовательскх переменных,
         /// созданных автоматически.
         /// -----------------
-        private void RemoveVar_Click(object sender, EventArgs e)
+        private void TItbName_Click(object sender, EventArgs e)
         {
             Changed = true;
             RemoveVariable((int)((Label)sender).Tag);
         }
 
-        private void NameInput_TextChanged(object sender, EventArgs e)
+        private void TItbName_TextChanged(object sender, EventArgs e)
         {
             Changed = true;
             if (((TextBox)sender).Text != ((TextBox)sender).Tag.ToString())
@@ -780,7 +780,7 @@ namespace QuizRunner
             }
         }
 
-        private void ValueInput_ValieChanged(object sender, EventArgs e)
+        private void TInudValue_ValieChanged(object sender, EventArgs e)
         {
             Changed = true;
             // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
@@ -852,7 +852,7 @@ namespace QuizRunner
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = TIpnParent
             };
-            TIlbRemove.Click += RemoveLine_Click;
+            TIlbRemove.Click += TIlbRemove_Click;
             TIlbRemove.Tag = TNow;
             TIttStatisticLine.SetToolTip(TIlbRemove, "Удалить строку");
             StatisticsLines[TNow].Remove = TIlbRemove;
@@ -896,7 +896,7 @@ namespace QuizRunner
         /// События графических элементов строк статистики,
         /// созданных автоматически.
         /// -----------------
-        void RemoveLine_Click(object sender,EventArgs e)
+        void TIlbRemove_Click(object sender,EventArgs e)
         {
             Changed = true;
             RemoveStatisticLine(Convert.ToInt32(((Label)sender).Tag));
