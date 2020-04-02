@@ -50,6 +50,7 @@ namespace QuizRunner
             public TextBox AnswerIntput;
             public TextBox[] AnswerArguments;
             public Label Remove;
+            public Label AddAnswerArgumets;
         };
 
         public IfrCreator()
@@ -1020,6 +1021,7 @@ namespace QuizRunner
             // Панель для скролинга ответов.
             var TIpnScrollAnswerBox = new Panel
             {
+                AutoScroll = true,
                 Left = 15,
                 Top = 15,
                 Width = TIgbAnswerBox.Width - 30,
@@ -1043,6 +1045,10 @@ namespace QuizRunner
             TIlbAddAnswer.Top = TIgbAnswerBox.Top - TIlbAddAnswer.Height;
             TIlbAddAnswer.MouseEnter += IlbAddTabPage_MouseEnter;
             TIlbAddAnswer.MouseLeave += IlbAddTabPage_MouseLeave;
+            TIlbAddAnswer.Click += (s, e) =>
+            {
+                CreateNewAnswer(TIpnScrollAnswerBox);
+            };
 
             // Кнопка создания новой вкладки.
             var TIlbAddNewTabPage = new Label
@@ -1123,6 +1129,88 @@ namespace QuizRunner
             {
                 TabController.TabPages[i].Text = i.ToString();
             }
+        }
+
+        /// <summary>
+        /// Создаёт строку ответа на указанной панели.
+        /// </summary>
+        /// <param name="sender">Панель</param>
+        private void CreateNewAnswer(object sender)
+        {
+            var TIpnPanel = (Panel)sender;
+            var TItpTabPage = (TabPage)TIpnPanel.Parent.Parent;
+            var TAnswerArray = (Answer[])TItpTabPage.Tag;
+            Array.Resize<Answer>(ref TAnswerArray, TAnswerArray.Length+1);
+
+            /// Оснавные графические элементы ответа.
+            /// -----------------
+            // Инпут ответа.
+            var TItbAnswerInput = new TextBox
+            {
+                Font = new Font("Verdana", 8, FontStyle.Bold),
+                Width = TIpnPanel.Width - 80,
+                Left = 5,
+                Parent = TIpnPanel
+            };
+            if (TAnswerArray.Length!=1)
+            {
+                if (TAnswerArray[TAnswerArray.Length-2].AnswerArguments.Length!=0)
+                {
+                    TItbAnswerInput.Top = TAnswerArray[TAnswerArray.Length - 2].AnswerArguments
+                        [TAnswerArray[TAnswerArray.Length - 2].AnswerArguments.Length - 1].Top+30;
+                }
+                else
+                {
+                    TItbAnswerInput.Top = TAnswerArray[TAnswerArray.Length - 2].AnswerIntput.Top + 30;
+                }
+            }
+            else
+            {
+                TItbAnswerInput.Top = 20;
+            }
+            TItbAnswerInput.TextChanged += UnsavedText_TextChanged;
+            TAnswerArray[TAnswerArray.Length - 1].AnswerIntput = TItbAnswerInput;
+
+            // Кнопка удаления ответа.
+            var TIlbRemoveA = new Label
+            {
+                AutoSize = false,
+                Width = 20,
+                Height = 20,
+                Left = TItbAnswerInput.Left + TItbAnswerInput.Width + 10,
+                Top = TItbAnswerInput.Top,
+                ForeColor = Color.Red,
+                Text = "x",
+                Font = new Font("Verdana", 10, FontStyle.Bold),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = TIpnPanel
+            };
+            TAnswerArray[TAnswerArray.Length - 1].Remove = TIlbRemoveA;
+
+            // Кнопка удаления аргумента.
+            var TIlbAddAnswerArgumets = new Label
+            {
+                AutoSize = false,
+                Width = 20,
+                Height = 20,
+                Left = TIlbRemoveA.Left + TIlbRemoveA.Width + 5,
+                Top = TItbAnswerInput.Top,
+                ForeColor = Color.Green,
+                Text = "+",
+                Font = new Font("Verdana", 10, FontStyle.Bold),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = TIpnPanel
+            };
+            TAnswerArray[TAnswerArray.Length - 1].AddAnswerArgumets = TIlbAddAnswerArgumets;
+
+            // Инициализация массива аргументов.
+            TAnswerArray[TAnswerArray.Length - 1].AnswerArguments = new TextBox[0];
+            /// -----------------
+
+            // Сохранение массива ответов в страницу.
+            TItpTabPage.Tag = TAnswerArray;
         }
     }
 }
