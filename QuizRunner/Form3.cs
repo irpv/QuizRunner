@@ -676,7 +676,7 @@ namespace QuizRunner
             UserVariable[TNow].ValueInput = TInudValue;
             UserVariable[TNow].Value = Convert.ToDouble(TInudValue.Value);
 
-            var TIlbRemove = new Label
+            var TIlbRemoveV = new Label
             {
                 AutoSize = false,
                 Width = TIpnParentPanel.Width / 10 * 1,
@@ -689,10 +689,10 @@ namespace QuizRunner
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = TIpnParentPanel
             };
-            TItbName.Tag = TNow;
-            TIlbRemove.Click += TItbName_Click;
-            TIttCreatorToolTip.SetToolTip(TIlbRemove, "Удалить переменную");
-            UserVariable[TNow].Remove = TIlbRemove;
+            TIlbRemoveV.Tag = TNow;
+            TIlbRemoveV.Click += TIlbRemoveV_Click;
+            TIttCreatorToolTip.SetToolTip(TIlbRemoveV, "Удалить переменную");
+            UserVariable[TNow].Remove = TIlbRemoveV;
 
             var TIbtAddButton = (Button)sender;
             TIbtAddButton.Top = TItbName.Top + TItbName.Height + 20;
@@ -763,7 +763,7 @@ namespace QuizRunner
         /// События графических элементов пользовательскх переменных,
         /// созданных автоматически.
         /// -----------------
-        private void TItbName_Click(object sender, EventArgs e)
+        private void TIlbRemoveV_Click(object sender, EventArgs e)
         {
             Changed = true;
             RemoveVariable((int)((Label)sender).Tag);
@@ -839,7 +839,7 @@ namespace QuizRunner
             TIttStatisticLine.SetToolTip(TItbPostfix, "Постфикс");
             StatisticsLines[TNow].Postfix = TItbPostfix;
 
-            var TIlbRemove = new Label
+            var TIlbRemoveSL = new Label
             {
                 AutoSize = false,
                 Width = TIpnParent.Width / 20 * 3,
@@ -852,10 +852,10 @@ namespace QuizRunner
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = TIpnParent
             };
-            TIlbRemove.Click += TIlbRemove_Click;
-            TIlbRemove.Tag = TNow;
-            TIttStatisticLine.SetToolTip(TIlbRemove, "Удалить строку");
-            StatisticsLines[TNow].Remove = TIlbRemove;
+            TIlbRemoveSL.Click += TIlbRemoveSL_Click;
+            TIlbRemoveSL.Tag = TNow;
+            TIttStatisticLine.SetToolTip(TIlbRemoveSL, "Удалить строку");
+            StatisticsLines[TNow].Remove = TIlbRemoveSL;
         }
 
         /// <summary>
@@ -896,7 +896,7 @@ namespace QuizRunner
         /// События графических элементов строк статистики,
         /// созданных автоматически.
         /// -----------------
-        void TIlbRemove_Click(object sender,EventArgs e)
+        void TIlbRemoveSL_Click(object sender,EventArgs e)
         {
             Changed = true;
             RemoveStatisticLine(Convert.ToInt32(((Label)sender).Tag));
