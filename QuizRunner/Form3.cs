@@ -388,7 +388,7 @@ namespace QuizRunner
             if (Changed)
             {
                 if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
-                        "действия они будут потеряны.\nЖелаеие продолжить?", "Выход", MessageBoxButtons.YesNo,
+                        "действия они будут потеряны.\nЖелаете продолжить?", "Выход", MessageBoxButtons.YesNo,
                         MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     CanClose = true;
@@ -407,7 +407,7 @@ namespace QuizRunner
             if (Changed)
             {
                 if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
-                        "действия они будут потеряны.\nЖелаеие продолжить?", "Выход в меню", MessageBoxButtons.YesNo,
+                        "действия они будут потеряны.\nЖелаете продолжить?", "Выход в меню", MessageBoxButtons.YesNo,
                         MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
                     CanClose = true;
@@ -486,7 +486,7 @@ namespace QuizRunner
             if (Changed)
             {
                 if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
-                    "действия они будут потеряны.\nЖелаеие продолжить?","Открыть",MessageBoxButtons.YesNo,
+                    "действия они будут потеряны.\nЖелаете продолжить?", "Открыть",MessageBoxButtons.YesNo,
                     MessageBoxIcon.Exclamation)==DialogResult.Yes)
                 {
                     if (IofdOpenDialog.ShowDialog() == DialogResult.OK)
