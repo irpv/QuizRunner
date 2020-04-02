@@ -1188,7 +1188,7 @@ namespace QuizRunner
             };
             TAnswerArray[TAnswerArray.Length - 1].Remove = TIlbRemoveA;
 
-            // Кнопка удаления аргумента.
+            // Кнопка добавления аргумента.
             var TIlbAddAnswerArgumets = new Label
             {
                 AutoSize = false,
@@ -1201,15 +1201,103 @@ namespace QuizRunner
                 Font = new Font("Verdana", 10, FontStyle.Bold),
                 TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
                 Cursor = System.Windows.Forms.Cursors.Hand,
+                Tag = TAnswerArray.Length - 1,
                 Parent = TIpnPanel
             };
             TAnswerArray[TAnswerArray.Length - 1].AddAnswerArgumets = TIlbAddAnswerArgumets;
+            TIlbAddAnswerArgumets.Click += (s, e) =>
+            {
+                MessageBox.Show("Будьте внимательны, не нужные строки аргументов нельзя удалить." +
+                    "\nЕсли строка аргумента стала вам не нужна, оставьте её пустой.",
+                    "Добавить аргумент.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                CreateNewAnswerArgument((int)TIlbAddAnswerArgumets.Tag);
+            };
 
             // Инициализация массива аргументов.
             TAnswerArray[TAnswerArray.Length - 1].AnswerArguments = new TextBox[0];
             /// -----------------
 
             // Сохранение массива ответов в страницу.
+            TItpTabPage.Tag = TAnswerArray;
+        }
+
+        /// <summary>
+        /// Создаёт интерфейс для аргумента по указанному индексу ответа.
+        /// </summary>
+        /// <param name="Index">Индекс ответа</param>
+        private void CreateNewAnswerArgument(int Index)
+        {
+            var TItcTabController = (TabControl)this.Controls[0];
+            var TItpTabPage = TItcTabController.SelectedTab;
+            var TAnswerArray = (Answer[])TItpTabPage.Tag;
+            var TAnswer = TAnswerArray[Index];
+            Array.Resize<TextBox>(ref TAnswer.AnswerArguments, TAnswer.AnswerArguments.Length + 1);
+
+            /// Оснавные графические элементы аргументов
+            /// -----------------
+            // Инпут аргумента.
+            var TItbNewAnswerArgument = new TextBox
+            {
+                Width = TAnswer.AnswerIntput.Width / 2,
+                Left = TAnswer.AnswerIntput.Left + TAnswer.AnswerIntput.Width / 2,
+                Parent = TAnswer.AnswerIntput.Parent
+            };
+            if (TAnswer.AnswerArguments.Length==1)
+            {
+                TItbNewAnswerArgument.Top = TAnswer.AnswerIntput.Top +
+                    TAnswer.AnswerIntput.Height + 10;
+            }
+            else
+            {
+                TItbNewAnswerArgument.Top = TAnswer.AnswerArguments
+                    [TAnswer.AnswerArguments.Length - 2].Top + 
+                    TAnswer.AnswerArguments[TAnswer.AnswerArguments.Length-2].Height+10;
+            }
+            TAnswer.AnswerArguments[TAnswer.AnswerArguments.Length - 1]
+                = TItbNewAnswerArgument;
+            /// -----------------
+
+            TAnswerArray[Index] = TAnswer;
+
+            /// Расстановка элементов по координатам.
+            /// -----------------
+            for (var i = Index + 1; i <= TAnswerArray.Length-1; i++)
+            {
+                if (TAnswerArray[i - 1].AnswerArguments.Length != 0)
+                {
+                    TAnswerArray[i].AnswerIntput.Top = TAnswerArray[i - 1].AnswerArguments
+                        [TAnswerArray[i - 1].AnswerArguments.Length - 1].Top + 30;
+                    TAnswerArray[i].Remove.Top = TAnswerArray[i].AnswerIntput.Top;
+                    TAnswerArray[i].AddAnswerArgumets.Top = TAnswerArray[i].AnswerIntput.Top;
+                    if (TAnswerArray[i].AnswerArguments.Length!=0)
+                    {
+                        if (TAnswerArray[i].AnswerArguments.Length==1)
+                        {
+                            TAnswerArray[i].AnswerArguments[0].Top=TAnswerArray[i]
+                                .AnswerIntput.Top + TAnswer.AnswerIntput.Height + 10;
+                        }
+                        else
+                        {
+                            TAnswerArray[i].AnswerArguments[0].Top = TAnswerArray[i]
+                                .AnswerIntput.Top + TAnswer.AnswerIntput.Height + 10;
+                            for (var j = 1; j<TAnswerArray[i].AnswerArguments.Length;j++)
+                            {
+                                TAnswerArray[i].AnswerArguments[j].Top =
+                                    TAnswerArray[i].AnswerArguments[j - 1].Top
+                                    + TAnswerArray[i].AnswerArguments[j - 1].Height + 10;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    TAnswerArray[i].AnswerIntput.Top = TAnswerArray[i - 1].AnswerIntput.Top + 30;
+                    TAnswerArray[i].Remove.Top = TAnswerArray[i].AnswerIntput.Top;
+                    TAnswerArray[i].AddAnswerArgumets.Top = TAnswerArray[i].AnswerIntput.Top;
+                }
+            }
+            /// -----------------
+            
             TItpTabPage.Tag = TAnswerArray;
         }
     }
