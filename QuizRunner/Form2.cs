@@ -27,7 +27,7 @@ namespace QuizRunner
 
             var IttMainToolTip = new ToolTip();
             /// Заголовок программы.
-            /// -----------------
+            #region
             // Кнопка закрытия.
             var IlbExit = new Label
             {
@@ -65,19 +65,25 @@ namespace QuizRunner
             var IlbEdition = new Label
             {
                 AutoSize = true,
-                Text = Environment.OSVersion.Platform.ToString()
-                    + " Edition",
                 Font = new Font("Verdana", 12),
                 ForeColor = Color.Gray,
                 Left = IlbTitle.Left + IlbTitle.Width + 5,
                 Parent = this
             };
+            if (Environment.OSVersion.Platform.ToString().Contains("Win"))
+            {
+                IlbEdition.Text = "Windows Edition";
+            }
+            else
+            {
+                Text = Environment.OSVersion.Platform.ToString() + " Edition";
+            }
             IlbEdition.Top = IlbTitle.Top + IlbTitle.Height 
                 - IlbEdition.Height;
-            /// -----------------
+            #endregion
 
             /// Оснавные элементы управления.
-            /// -----------------
+            #region
             // Кнопка перехода в редактор тестов.
             var IpbCreatorButton = new PictureBox
             {
@@ -127,10 +133,10 @@ namespace QuizRunner
             IpbResultButton.MouseEnter += MainButtons_MouseEnter;
             IpbResultButton.MouseLeave += MainButtons_MouseLeave;
             IttMainToolTip.SetToolTip(IpbResultButton, "Просмотреть результаты");
-            /// -----------------
+            #endregion
 
             /// Дополнительные элементы.
-            /// -----------------
+            #region
             // Вывод имени пользователя.
             var IlbUserName = new Label
             {
@@ -154,11 +160,11 @@ namespace QuizRunner
             };
             IlbWelcome.Left = this.Width / 2 - IlbWelcome.Width / 2;
             IlbWelcome.Top = IlbUserName.Top - IlbWelcome.Height - 10;
-            /// -----------------
+            #endregion
         }
 
         /// События основных графических элементов.
-        /// -----------------
+        #region
         private void IfrStartPage_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (Environment.OSVersion.Platform != PlatformID.Unix)
@@ -217,6 +223,6 @@ namespace QuizRunner
             this.Close();
 
         }
-        /// -----------------
+        #endregion
     }
 }
