@@ -76,7 +76,8 @@ namespace QuizRunner
             }
             else
             {
-                Text = Environment.OSVersion.Platform.ToString() + " Edition";
+                IlbEdition.Text = Environment.OSVersion.Platform.ToString() 
+                    + " Edition";
             }
             IlbEdition.Top = IlbTitle.Top + IlbTitle.Height 
                 - IlbEdition.Height;
