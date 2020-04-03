@@ -682,7 +682,16 @@ namespace QuizRunner
                 TItbName.Top = GUserVariable[TNow - 1].NameInput.Top 
                     + GUserVariable[TNow - 1].NameInput.Height + 20;
             }
-            TItbName.TextChanged += TItbName_TextChanged;
+            TItbName.TextChanged += (s, e) =>
+            {
+                Changed = true;
+                if (((TextBox)sender).Text != ((TextBox)sender).Tag.ToString())
+                {
+                    // Функция получения значения по имени переменной (Name.Tag.ToString())
+                    // Функция удаления переменной.
+                    // Функция создания переменной.
+                }
+            };
             TIttCreatorToolTip.SetToolTip(TItbName, "Имя");
             GUserVariable[TNow].NameInput = TItbName;
             GUserVariable[TNow].Name = TItbName.Text;
@@ -699,7 +708,13 @@ namespace QuizRunner
                 Tag = TNow,
                 Parent = TIpnParentPanel
             };
-            TInudValue.ValueChanged += TInudValue_ValieChanged;
+            TInudValue.ValueChanged += (s, e) =>
+            {
+                Changed = true;
+                // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
+                // Функция изменения значения переменной по имени 
+                //(UserVariable[Convert.ToInt32(Value.Tag].Name)).
+            };
             TIttCreatorToolTip.SetToolTip(TInudValue, "Значение");
             GUserVariable[TNow].ValueInput = TInudValue;
             GUserVariable[TNow].Value = Convert.ToDouble(TInudValue.Value);
@@ -725,7 +740,11 @@ namespace QuizRunner
                 TIlbRemoveV.Text = "❌";
             }
             TIlbRemoveV.Tag = TNow;
-            TIlbRemoveV.Click += TIlbRemoveV_Click;
+            TIlbRemoveV.Click += (s, e) =>
+            {
+                Changed = true;
+                RemoveVariable((int)((Label)sender).Tag);
+            };
             TIttCreatorToolTip.SetToolTip(TIlbRemoveV, "Удалить переменную");
             GUserVariable[TNow].Remove = TIlbRemoveV;
 
@@ -794,34 +813,6 @@ namespace QuizRunner
                 }
             }
         }
-
-        /// События графических элементов пользовательскх переменных,
-        /// созданных автоматически.
-        #region
-        private void TIlbRemoveV_Click(object sender, EventArgs e)
-        {
-            Changed = true;
-            RemoveVariable((int)((Label)sender).Tag);
-        }
-
-        private void TItbName_TextChanged(object sender, EventArgs e)
-        {
-            Changed = true;
-            if (((TextBox)sender).Text != ((TextBox)sender).Tag.ToString())
-            {
-                // Функция получения значения по имени переменной (Name.Tag.ToString())
-                // Функция удаления переменной.
-                // Функция создания переменной.
-            }
-        }
-
-        private void TInudValue_ValieChanged(object sender, EventArgs e)
-        {
-            Changed = true;
-            // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
-            // Функция изменения значения переменной по имени (UserVariable[Convert.ToInt32(Value.Tag].Name)).
-        }
-        #endregion
 
         /// <summary>
         /// Cоздаёт строку статистики на указанной панели.
@@ -894,8 +885,12 @@ namespace QuizRunner
             {
                 TIlbRemoveSL.Text = "❌";
             }
-            TIlbRemoveSL.Click += TIlbRemoveSL_Click;
             TIlbRemoveSL.Tag = TNow;
+            TIlbRemoveSL.Click += (s, e) =>
+            {
+                Changed = true;
+                RemoveStatisticLine(Convert.ToInt32(((Label)TIlbRemoveSL).Tag));
+            };
             TIttStatisticLine.SetToolTip(TIlbRemoveSL, "Удалить строку");
             GStatisticsLines[TNow].Remove = TIlbRemoveSL;
         }
@@ -934,16 +929,6 @@ namespace QuizRunner
 
             Array.Resize<SLine>(ref GStatisticsLines, GStatisticsLines.Length - 1);
         }
-
-        /// События графических элементов строк статистики,
-        /// созданных автоматически.
-        #region
-        void TIlbRemoveSL_Click(object sender,EventArgs e)
-        {
-            Changed = true;
-            RemoveStatisticLine(Convert.ToInt32(((Label)sender).Tag));
-        }
-        #endregion
 
 
         /// <summary>
