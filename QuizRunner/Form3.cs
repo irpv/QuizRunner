@@ -962,7 +962,6 @@ namespace QuizRunner
                 Width = TItcTabController.ClientSize.Width,
                 Height = TItcTabController.ClientSize.Height,
                 Tag = new Answer[0],
-                Parent = TItcTabController
             };
 
             /// Остовные графические элементы страницы.
