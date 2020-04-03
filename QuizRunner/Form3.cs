@@ -74,6 +74,11 @@ namespace QuizRunner
 
         private void IfrCreator_Load(object sender, EventArgs e)
         {
+            if (Environment.OSVersion.Platform==PlatformID.Unix)
+            {
+                this.BackColor = Color.White;
+            }
+
             // ТулТип для подсказок.
             var IttCreatorToolTip = new ToolTip();
 
@@ -129,13 +134,20 @@ namespace QuizRunner
                 Width = IpnMenu.Width,
                 Height = IpnMenu.Width,
                 TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
-                Text = "❌",
                 Font = new Font("Verdana", 25, FontStyle.Bold),
                 ForeColor = Color.White,
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = IpnMenu,
                 Top = IpnMenu.Height - IpnMenu.Width
             };
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                IlbExit.Text = "X";
+            }
+            else
+            {
+                IlbExit.Text = "❌";
+            }
             IlbExit.MouseEnter += IlbExit_MouseEnter;
             IlbExit.MouseLeave += IlbExit_MouseLeave;
             IlbExit.Click += IlbExit_Click;
@@ -700,11 +712,18 @@ namespace QuizRunner
                 Left = TIpnParentPanel.Width / 10 * 8,
                 Top = TItbName.Top,
                 ForeColor = Color.Red,
-                Text = "❌",
                 Font = new Font("Verdana", 12, FontStyle.Bold),
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = TIpnParentPanel
             };
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                TIlbRemoveV.Text = "X";
+            }
+            else
+            {
+                TIlbRemoveV.Text = "❌";
+            }
             TIlbRemoveV.Tag = TNow;
             TIlbRemoveV.Click += TIlbRemoveV_Click;
             TIttCreatorToolTip.SetToolTip(TIlbRemoveV, "Удалить переменную");
@@ -863,11 +882,18 @@ namespace QuizRunner
                 Left = TIpnParent.Width / 10 * 8,
                 Top = TItbPrefix.Top,
                 ForeColor = Color.Red,
-                Text = "❌",
                 Font = new Font("Verdana", 12, FontStyle.Bold),
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = TIpnParent
             };
+            if (Environment.OSVersion.Platform  == PlatformID.Unix)
+            {
+                TIlbRemoveSL.Text = "X";
+            }
+            else
+            {
+                TIlbRemoveSL.Text = "❌";
+            }
             TIlbRemoveSL.Click += TIlbRemoveSL_Click;
             TIlbRemoveSL.Tag = TNow;
             TIttStatisticLine.SetToolTip(TIlbRemoveSL, "Удалить строку");

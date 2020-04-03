@@ -22,22 +22,29 @@ namespace QuizRunner
 
         private void IfrStartPage_Load(object sender, EventArgs e)
         {
+
             this.BackColor = Color.White;
 
             var IttMainToolTip = new ToolTip();
-
             /// Заголовок программы.
             /// -----------------
             // Кнопка закрытия.
             var IlbExit = new Label
             {
                 AutoSize = true,
-                Text = "❌",
                 Font = new Font("Verdana", 15, FontStyle.Bold),
                 ForeColor = Color.Gray,
                 Cursor = System.Windows.Forms.Cursors.Hand,
                 Parent = this
             };
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                IlbExit.Text = "X";
+            }
+            else
+            {
+                IlbExit.Text = "❌";
+            }
             IlbExit.Left = this.ClientSize.Width - IlbExit.Width;
             IlbExit.MouseEnter += IlbExit_MouseEnter;
             IlbExit.MouseLeave += IlbExit_MouseLeave;
@@ -53,6 +60,20 @@ namespace QuizRunner
                 ForeColor = Color.Gray,
                 Parent=this
             };
+
+            // Издание программы
+            var IlbEdition = new Label
+            {
+                AutoSize = true,
+                Text = Environment.OSVersion.Platform.ToString()
+                    + " Edition",
+                Font = new Font("Verdana", 12),
+                ForeColor = Color.Gray,
+                Left = IlbTitle.Left + IlbTitle.Width + 5,
+                Parent = this
+            };
+            IlbEdition.Top = IlbTitle.Top + IlbTitle.Height 
+                - IlbEdition.Height;
             /// -----------------
 
             /// Оснавные элементы управления.
@@ -140,14 +161,18 @@ namespace QuizRunner
         /// -----------------
         private void IfrStartPage_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (!CanClose)
+            if (Environment.OSVersion.Platform != PlatformID.Unix)
             {
-                Application.Exit();
+                if (!CanClose)
+                {
+                    Application.Exit();
+                }
+                else
+                {
+                    this.Dispose();
+                }
             }
-            else
-            {
-                this.Dispose();
-            }
+
         }
 
         private void IlbExit_MouseEnter(object sender, EventArgs e)
