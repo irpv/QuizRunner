@@ -76,9 +76,9 @@ namespace QuizRunner
         {
             // ТулТип для подсказок.
             var IttCreatorToolTip = new ToolTip();
-            
+
             /// Меню.
-            /// -----------------
+            #region
             // Панель меню.
             var IpnMenu = new Panel
             {
@@ -158,10 +158,10 @@ namespace QuizRunner
             IpbBack.MouseLeave += MenuButtons_MouseLeave;
             IpbBack.Click += IpbBack_Click;
             IttCreatorToolTip.SetToolTip(IpbBack, "Вернуться в меню");
-            ///-----------------
+            #endregion
 
             /// Пользовательские переменные.
-            /// -----------------
+            #region
             // Панель переменных.
             var IpnUserVariable = new Panel
             {
@@ -199,10 +199,10 @@ namespace QuizRunner
             IbtAddVariable.Left = IpnUserVariable.Width / 2 - IbtAddVariable.Width / 2;
             IbtAddVariable.Top = IlbUserVariableHeader.Top + IlbUserVariableHeader.Height + 42;
             IbtAddVariable.Click += IbtAddVariable_Click;
-            /// -----------------
+            #endregion
 
             /// Редактор тестов.
-            /// -----------------
+            #region
             // Контроллер вкладок
             var ItcQuizEditor = new TabControl
             {
@@ -214,7 +214,7 @@ namespace QuizRunner
             ItcQuizEditor.BringToFront();
 
             /// Главная страница.
-            /// --------
+            #region
             //  Страница для главной.
             var ItpHome = new TabPage
             {
@@ -288,10 +288,10 @@ namespace QuizRunner
             IlbAddTabPage.MouseLeave += IlbAddTabPage_MouseLeave;
             IlbAddTabPage.Click += IlbAddTabPage_Click;
             IttCreatorToolTip.SetToolTip(IlbAddTabPage, "Добавить вопрос");
-            /// --------
+            #endregion 
 
             /// Страница статистики.
-            /// --------
+            #region
             // Страница для статистики.
             var ItpStatistics = new TabPage
             {
@@ -479,13 +479,13 @@ namespace QuizRunner
                     Parent = IgbStatisticsLines
                 }
             };
-            /// --------
-            /// -----------------
+            #endregion
+            #endregion
 
         }
 
         /// События основных графических элементов.
-        /// -----------------
+        #region
         // Вход курсора в область одной из кнопок меню.
         private void MenuButtons_MouseEnter(object sender, EventArgs e)
         {
@@ -599,7 +599,7 @@ namespace QuizRunner
         {
             AddStatisticLine(((Label)sender).Tag);
         }
-        /// -----------------
+        #endregion
 
         /// <summary>
         /// Сохраняет тест в файл.
@@ -778,7 +778,7 @@ namespace QuizRunner
 
         /// События графических элементов пользовательскх переменных,
         /// созданных автоматически.
-        /// -----------------
+        #region
         private void TIlbRemoveV_Click(object sender, EventArgs e)
         {
             Changed = true;
@@ -802,7 +802,7 @@ namespace QuizRunner
             // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
             // Функция изменения значения переменной по имени (UserVariable[Convert.ToInt32(Value.Tag].Name)).
         }
-        /// -----------------
+        #endregion
 
         /// <summary>
         /// Cоздаёт строку статистики на указанной панели.
@@ -911,13 +911,13 @@ namespace QuizRunner
 
         /// События графических элементов строк статистики,
         /// созданных автоматически.
-        /// -----------------
+        #region
         void TIlbRemoveSL_Click(object sender,EventArgs e)
         {
             Changed = true;
             RemoveStatisticLine(Convert.ToInt32(((Label)sender).Tag));
         }
-        /// -----------------
+        #endregion
 
 
         /// <summary>
@@ -940,14 +940,11 @@ namespace QuizRunner
             };
 
             /// Остовные графические элементы страницы.
-            /// -----------------
+            #region
             // Инпут вопроса.
             var TIrtbQuestion = new RichTextBox
             {
                 Width = TItpQuestionPage.Width - 40,
-                Height = 250,
-                Top = 50,
-                Parent = TItpQuestionPage
             };
             TIrtbQuestion.Left = TItpQuestionPage.Width / 2
                 - TIrtbQuestion.Width / 2;
@@ -1102,32 +1099,21 @@ namespace QuizRunner
                     MessageBoxButtons.YesNo,MessageBoxIcon.Question)==DialogResult.Yes)
                 {
                     TItcTabController.TabPages.Remove(TItcTabController.SelectedTab);
+                    TItcTabController.SelectedIndex = 0;
                     RenumberTabPages(TItcTabController, 1, TItcTabController.TabPages.Count - 2);
                 }
             };
             TIttToolTip.SetToolTip(TIlbRemoveThisTabPage, "Удалить этот вопрос");
-            /// -----------------
+            #endregion
 
             /// Перемещение вкладки на нужную позицию.
-            /// -----------------
-            if (TItcTabController.TabPages.Count != 3)
-            {
-                for (var i = TItcTabController.TabPages.Count - 1; i > index; i--)
-                {
-                    TItcTabController.TabPages[i] = TItcTabController.TabPages[i - 1];
-                }
-                TItcTabController.TabPages[index] = TItpQuestionPage;
-            }
-            else
-            {
-                TItcTabController.TabPages[2] = TItcTabController.TabPages[1];
-                TItcTabController.TabPages[1] = TItpQuestionPage;
-            }
+            #region
+            TItcTabController.TabPages.Insert(index, TItpQuestionPage);
             RenumberTabPages(TItcTabController, 1, TItcTabController.TabPages.Count - 2);
-            /// -----------------
+            #endregion
 
         }
-        
+
         /// <summary>
         /// Устанавливает текст вкладок в соответствии с их положением.
         /// </summary>
@@ -1157,7 +1143,7 @@ namespace QuizRunner
             Array.Resize<Answer>(ref TAnswerArray, TAnswerArray.Length+1);
 
             /// Оснавные графические элементы ответа.
-            /// -----------------
+            #region
             // Инпут ответа.
             var TItbAnswerInput = new TextBox
             {
@@ -1241,7 +1227,7 @@ namespace QuizRunner
 
             // Инициализация массива аргументов.
             TAnswerArray[TAnswerArray.Length - 1].AnswerArguments = new TextBox[0];
-            /// -----------------
+            #endregion
 
             // Сохранение массива ответов в страницу.
             TItpTabPage.Tag = TAnswerArray;
@@ -1270,7 +1256,7 @@ namespace QuizRunner
             }
 
             /// Расстановка элементов по координатам.
-            /// -----------------
+            #region
             for (var i = index ; i < TAnswerArray.Length - 1; i++)
             {
                 TAnswerArray[i] = TAnswerArray[i + 1];
@@ -1323,7 +1309,7 @@ namespace QuizRunner
                 }
 
             }
-            /// -----------------
+            #endregion
 
             Array.Resize<Answer>(ref TAnswerArray, TAnswerArray.Length - 1);
 
@@ -1345,7 +1331,7 @@ namespace QuizRunner
             Array.Resize<TextBox>(ref TAnswer.AnswerArguments, TAnswer.AnswerArguments.Length + 1);
 
             /// Оснавные графические элементы аргументов
-            /// -----------------
+            #region
             // Инпут аргумента.
             var TItbNewAnswerArgument = new TextBox
             {
@@ -1366,12 +1352,12 @@ namespace QuizRunner
             }
             TAnswer.AnswerArguments[TAnswer.AnswerArguments.Length - 1]
                 = TItbNewAnswerArgument;
-            /// -----------------
+            #endregion
 
             TAnswerArray[index] = TAnswer;
 
             /// Расстановка элементов по координатам.
-            /// -----------------
+            #region
             for (var i = index + 1; i <= TAnswerArray.Length-1; i++)
             {
                 if (TAnswerArray[i - 1].AnswerArguments.Length != 0)
@@ -1407,8 +1393,8 @@ namespace QuizRunner
                     TAnswerArray[i].AddAnswerArgumets.Top = TAnswerArray[i].AnswerIntput.Top;
                 }
             }
-            /// -----------------
-            
+            #endregion
+
             TItpTabPage.Tag = TAnswerArray;
         }
     }
