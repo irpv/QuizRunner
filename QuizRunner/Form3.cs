@@ -375,7 +375,7 @@ namespace QuizRunner
                 AutoSize = false,
                 Font = new Font("Verdana", 8, FontStyle.Bold),
                 Text = "Префикс",
-                TextAlign= System.Drawing.ContentAlignment.MiddleCenter,
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
                 Height = 15,
                 Width = new Panel
                 {
@@ -398,16 +398,7 @@ namespace QuizRunner
                     Parent = IgbStatisticsLines
                 }.ClientSize.Width / 20 * 1,
                 Top = 20,
-                Parent = new Panel
-                {
-                    AutoScroll = true,
-                    BorderStyle = BorderStyle.None,
-                    Left = 15,
-                    Top = 15,
-                    Width = IgbStatisticsLines.ClientSize.Width - 30,
-                    Height = IgbStatisticsLines.ClientSize.Height - 30,
-                    Parent = IgbStatisticsLines
-                }
+                Parent = (Control)IlbAddStatisticsLine.Tag
             };
 
             // Подсказка форматирования: Вычисления.
@@ -439,16 +430,7 @@ namespace QuizRunner
                     Parent = IgbStatisticsLines
                 }.ClientSize.Width / 20 * 6,
                 Top = 20,
-                Parent = new Panel
-                {
-                    AutoScroll = true,
-                    BorderStyle = BorderStyle.None,
-                    Left = 15,
-                    Top = 15,
-                    Width = IgbStatisticsLines.ClientSize.Width - 30,
-                    Height = IgbStatisticsLines.ClientSize.Height - 30,
-                    Parent = IgbStatisticsLines
-                }
+                Parent = (Control)IlbAddStatisticsLine.Tag
             };
 
             // Подсказка форматирования: Постфикс.
@@ -480,16 +462,7 @@ namespace QuizRunner
                     Parent = IgbStatisticsLines
                 }.ClientSize.Width / 20 * 11,
                 Top = 20,
-                Parent = new Panel
-                {
-                    AutoScroll = true,
-                    BorderStyle = BorderStyle.None,
-                    Left = 15,
-                    Top = 15,
-                    Width = IgbStatisticsLines.ClientSize.Width - 30,
-                    Height = IgbStatisticsLines.ClientSize.Height - 30,
-                    Parent = IgbStatisticsLines
-                }
+                Parent = (Control)IlbAddStatisticsLine.Tag
             };
             #endregion
             #endregion
