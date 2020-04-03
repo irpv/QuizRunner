@@ -971,6 +971,9 @@ namespace QuizRunner
             var TIrtbQuestion = new RichTextBox
             {
                 Width = TItpQuestionPage.Width - 40,
+                Top = 50,
+                Height = 200,
+                Parent=TItpQuestionPage
             };
             TIrtbQuestion.Left = TItpQuestionPage.Width / 2
                 - TIrtbQuestion.Width / 2;
