@@ -62,14 +62,14 @@ namespace QuizRunner
         {
             Title = "Сохранить",
             FileName = "Test.qrtf",
-            Filter = "QuizRunner Test File (*.qrtf)|*.qrtf"
+            Filter = "QuizRunner Test File(*.qrtf)|*.qrtf|Все файлы|*.*"
         };
 
         private readonly OpenFileDialog GIofdOpenDialog = new OpenFileDialog
         {
             Title = "Открыть",
             FileName = "Test.qrtf",
-            Filter = "QuizRunner Test File (*.qrtf)|*.qrtf"
+            Filter = "QuizRunner Test File(*.qrtf)|*.qrtf|Все файлы|*.*"
         };
 
         private void IfrCreator_Load(object sender, EventArgs e)
