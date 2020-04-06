@@ -658,7 +658,7 @@ namespace QuizRunner
             TItbName.TextChanged += (s, e) =>
             {
                 Changed = true;
-                if (((TextBox)sender).Text != ((TextBox)sender).Tag.ToString())
+                if (TItbName.Text != (TItbName.Tag.ToString()))
                 {
                     // Функция получения значения по имени переменной (Name.Tag.ToString())
                     // Функция удаления переменной.
@@ -716,7 +716,7 @@ namespace QuizRunner
             TIlbRemoveV.Click += (s, e) =>
             {
                 Changed = true;
-                RemoveVariable((int)((Label)sender).Tag);
+                RemoveVariable((int)TIlbRemoveV.Tag);
             };
             TIttCreatorToolTip.SetToolTip(TIlbRemoveV, "Удалить переменную");
             GUserVariable[TNow].Remove = TIlbRemoveV;
