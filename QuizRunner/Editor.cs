@@ -219,7 +219,7 @@ namespace QuizRunner.Editor
         /// <param name="numberOfQuest">номер вопроса</param>
         /// <param name="numberOfAnsw">номер ответа</param>
         /// <returns>аргумент</returns>
-        public string[] GetArgument(int numberOfQuest, int numberOfAnsw)
+        public string[] GetAnswArgument(int numberOfQuest, int numberOfAnsw)
         {
             return ListOfQuestions[numberOfQuest].AnswArr[numberOfAnsw].Argument;
         }
@@ -327,7 +327,7 @@ namespace QuizRunner.Editor
         /// <param name="numOfQuest">номер вопроса</param>
         /// <param name="numOfAnsw">номер ответа</param>
         /// <param name="argum">аргумент</param>
-        public void SetAnswArgument(int numOfQuest, int numOfAnsw, string[] argum)
+        public void SetAnswArgument(string[] argum, int numOfQuest, int numOfAnsw)
         {
             if (ListOfQuestions.Length < numOfQuest)
             {
@@ -346,7 +346,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numOfStatLine">номер строки статистики</param>
         /// <param name="prfx">префикс</param>
-        public void SetStatPrefix(int numOfStatLine, string prfx)
+        public void SetStatPrefix(string prfx, int numOfStatLine)
         {
             if (StaticsLines.Length < numOfStatLine)
             {
@@ -360,7 +360,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numOfStatLine">номер строки статистики</param>
         /// <param name="calc">строка расчетов</param>
-        public void SetStatCalculate(int numOfStatLine, string calc)
+        public void SetStatCalculate(string calc, int numOfStatLine)
         {
             if (StaticsLines.Length < numOfStatLine)
             {
@@ -374,7 +374,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numOfStatLine">номер строки статистики</param>
         /// <param name="pstfx">постфикс</param>
-        public void SetStatPostfix(int numOfStatLine, string pstfx)
+        public void SetStatPostfix(string pstfx, int numOfStatLine)
         {
             if (StaticsLines.Length < numOfStatLine)
             {
