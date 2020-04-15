@@ -8,7 +8,7 @@ using System.Collections;
 
 namespace QuizRunner.Editor
 {
-    class Editor
+    public class Editor
     {
         private struct Answer
         {
