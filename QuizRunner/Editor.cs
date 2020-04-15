@@ -166,7 +166,7 @@ namespace QuizRunner.Editor
         /// <summary>
         /// Возвращает имя теста.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>имя теста</returns>
         public string GetName()
         {
             return Name;
@@ -175,7 +175,7 @@ namespace QuizRunner.Editor
         /// <summary>
         /// Возвращает описание теста.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>описание теста</returns>
         public string[] GetDescription()
         {
             return Descrip;
@@ -185,7 +185,7 @@ namespace QuizRunner.Editor
         /// Возвращает текст вопроса.
         /// </summary>
         /// <param name="numberOfQuest">номер вопроса</param>
-        /// <returns></returns>
+        /// <returns>текст вопроса</returns>
         public string[] GetQuestionText(int numberOfQuest)
         {
             return ListOfQuestions[numberOfQuest].QuestionText;
@@ -195,7 +195,7 @@ namespace QuizRunner.Editor
         /// Возвращает тип ответа.
         /// </summary>
         /// <param name="numberOfQuest">номер вопроса</param>
-        /// <returns></returns>
+        /// <returns>тип ответа</returns>
         public bool GetAnswType(int numberOfQuest)
         {
             return ListOfQuestions[numberOfQuest].AnswType;
@@ -206,10 +206,21 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numberOfQuest">номер вопроса</param>
         /// <param name="numberOfAnsw">номер ответа</param>
-        /// <returns></returns>
+        /// <returns>текст ответа</returns>
         public string GetAnswText(int numberOfQuest, int numberOfAnsw)
         {
             return ListOfQuestions[numberOfQuest].AnswArr[numberOfAnsw].AnswerText;
+        }
+
+        /// <summary>
+        /// Возвращает аргумент для расчета статистики.
+        /// </summary>
+        /// <param name="numberOfQuest">номер вопроса</param>
+        /// <param name="numberOfAnsw">номер ответа</param>
+        /// <returns>аргумент</returns>
+        public string[] GetArgument(int numberOfQuest, int numberOfAnsw)
+        {
+            return ListOfQuestions[numberOfQuest].AnswArr[numberOfAnsw].Argument;
         }
     }
    
