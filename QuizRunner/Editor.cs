@@ -332,5 +332,15 @@ namespace QuizRunner.Editor
         {
             StaticsLines[numOfStatLine].Calculate = calc;
         }
+
+        /// <summary>
+        /// Задает постфикс для расчета статистики.
+        /// </summary>
+        /// <param name="numOfStatLine">номер строки статистики</param>
+        /// <param name="pstfx">постфикс</param>
+        public void SetStatPostfix(int numOfStatLine, string pstfx)
+        {
+            StaticsLines[numOfStatLine].Postfix = pstfx;
+        }
     }
 }
