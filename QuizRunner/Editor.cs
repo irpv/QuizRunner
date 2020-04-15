@@ -322,5 +322,15 @@ namespace QuizRunner.Editor
         {
             StaticsLines[numOfStatLine].Prefix = prfx;
         }
+
+        /// <summary>
+        /// Задает строку с расчетами для статистики.
+        /// </summary>
+        /// <param name="numOfStatLine">номер строки статистики</param>
+        /// <param name="calc">строка расчетов</param>
+        public void SetStatCalculate(int numOfStatLine, string calc)
+        {
+            StaticsLines[numOfStatLine].Calculate = calc;
+        }
     }
 }
