@@ -242,6 +242,16 @@ namespace QuizRunner.Editor
         {
             return StaticsLines[numberOfStatLines].Calculate;
         }
+
+        /// <summary>
+        /// Возвращают строку с постфиксом для расчета статистики.
+        /// </summary>
+        /// <param name="numberOfStatLines">номер строки со статистикой</param>
+        /// <returns>постфикс</returns>
+        public string GetStatistPostfix(int numberOfStatLines)
+        {
+            return StaticsLines[numberOfStatLines].Postfix;
+        }
     }
    
 }
