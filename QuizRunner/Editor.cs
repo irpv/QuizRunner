@@ -200,6 +200,17 @@ namespace QuizRunner.Editor
         {
             return ListOfQuestions[numberOfQuest].AnswType;
         }
+
+        /// <summary>
+        /// Возвращает текст ответа.
+        /// </summary>
+        /// <param name="numberOfQuest">номер вопроса</param>
+        /// <param name="numberOfAnsw">номер ответа</param>
+        /// <returns></returns>
+        public string GetAnswText(int numberOfQuest, int numberOfAnsw)
+        {
+            return ListOfQuestions[numberOfQuest].AnswArr[numberOfAnsw].AnswerText;
+        }
     }
    
 }
