@@ -261,5 +261,14 @@ namespace QuizRunner.Editor
         {
             Name = name;
         }
+
+        /// <summary>
+        /// Задает описание теста.
+        /// </summary>
+        /// <param name="descript">описание теста</param>
+        public void SetDescrip(string[] descript)
+        {
+            Descrip = descript;
+        }
     }
 }
