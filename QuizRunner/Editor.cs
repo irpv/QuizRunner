@@ -130,6 +130,7 @@ namespace QuizRunner.Editor
 
                 // Считывает количество ответов.
                 TCount2 = Convert.ToInt32(SR.ReadLine());
+                ListOfQuestions[i].AnswArr = new Answer[0];
                 Array.Resize<Answer>(ref ListOfQuestions[i].AnswArr, TCount2);
                 for(var j = 0; j < TCount2; j++)
                 {
@@ -278,7 +279,7 @@ namespace QuizRunner.Editor
         /// <param name="numOfQuest">номер вопроса</param>
         public void SetQuestText(string[] qtext, int numOfQuest)
         {
-            if(ListOfQuestions.Length < numOfQuest)
+            if(ListOfQuestions.Length <= numOfQuest)
             {
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
             }
@@ -292,7 +293,7 @@ namespace QuizRunner.Editor
         /// <param name="numOfQuest">номер вопроса</param>
         public void SetAnswType(bool answt, int numOfQuest)
         {
-            if (ListOfQuestions.Length < numOfQuest)
+            if (ListOfQuestions.Length <= numOfQuest)
             {
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
             }
@@ -305,13 +306,15 @@ namespace QuizRunner.Editor
         /// <param name="numOfQuest">номер вопроса</param>
         /// <param name="numOfAnsw">номер ответа</param>
         /// <param name="atext">текст ответа</param>
-        public void SetAnswText(int numOfQuest, int numOfAnsw, string atext)
+        public void SetAnswText(string atext, int numOfQuest, int numOfAnsw)
         {
-            if (ListOfQuestions.Length < numOfQuest)
+            if (ListOfQuestions.Length <= numOfQuest)
             {
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
+                
             }
-            if (ListOfQuestions[numOfQuest].AnswArr.Length < numOfAnsw)
+            ListOfQuestions[numOfQuest].AnswArr = new Answer[0];
+            if (ListOfQuestions[numOfQuest].AnswArr.Length <= numOfAnsw)
             {
                 Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, numOfAnsw + 1);
             }
@@ -330,6 +333,7 @@ namespace QuizRunner.Editor
             {
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
             }
+            ListOfQuestions[numOfQuest].AnswArr = new Answer[0];
             if (ListOfQuestions[numOfQuest].AnswArr.Length < numOfAnsw)
             {
                 Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, numOfAnsw + 1);

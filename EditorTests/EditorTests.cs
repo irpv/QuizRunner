@@ -34,16 +34,32 @@ namespace EditorTests
         {
             string[] text = { "When did Bell invent the telephone?", "Enter the year." };
             Editor a = new Editor();
-            a.SetQuestText(text, 2);
-            string[] actual = a.GetQuestionText(2);
+            a.SetQuestText(text, 4);
+            string[] actual = a.GetQuestionText(4);
             CollectionAssert.AreEqual(text, actual);
         }
 
         
         [TestMethod]
-        public void SaveOpen()
+        public void SetGetAnwerType()
         {
-            
+            bool answtp = true;
+            Editor a = new Editor();
+            a.SetAnswType(answtp, 3);
+            bool actual = a.GetAnswType(3);
+            Assert.AreEqual(answtp, actual);
+        }
+
+        [TestMethod]
+        public void SetGetAnswTxt()
+        {
+            string[] text = { "When did Bell invent the telephone?", "Enter the year." };
+            string answ = "1876";
+            Editor a = new Editor();
+            a.SetQuestText(text, 4);
+            a.SetAnswText(answ, 4, 2);
+            string actual = a.GetAnswText(4, 2);
+            Assert.AreEqual(answ, actual);
         }
     }
 }
