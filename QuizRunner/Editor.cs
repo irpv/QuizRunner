@@ -270,5 +270,15 @@ namespace QuizRunner.Editor
         {
             Descrip = descript;
         }
+
+        /// <summary>
+        /// Задает текст вопроса.
+        /// </summary>
+        /// <param name="qtext">текст вопроса</param>
+        /// <param name="numOfQuest">номер вопроса</param>
+        public void SetQuestText(string[] qtext, int numOfQuest)
+        {
+            ListOfQuestions[numOfQuest].QuestionText = qtext;
+        }
     }
 }
