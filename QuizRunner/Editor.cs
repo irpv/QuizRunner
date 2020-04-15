@@ -162,6 +162,15 @@ namespace QuizRunner.Editor
             }
             SR.Close();
         }
+
+        /// <summary>
+        /// Возвращает имя теста.
+        /// </summary>
+        /// <returns></returns>
+        public string GetName()
+        {
+            return Name;
+        }
     }
    
 }
