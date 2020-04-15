@@ -291,5 +291,15 @@ namespace QuizRunner.Editor
             ListOfQuestions[numOfQuest].AnswType = answt;
         }
 
+        /// <summary>
+        /// Задает текст ответа на вопрос.
+        /// </summary>
+        /// <param name="numOfQuest">номер вопроса</param>
+        /// <param name="numOfAnsw">номер ответа</param>
+        /// <param name="atext">текст ответа</param>
+        public void SetAnswText(int numOfQuest, int numOfAnsw, string atext)
+        {
+            ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].AnswerText = atext;
+        }
     }
 }
