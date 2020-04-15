@@ -222,6 +222,16 @@ namespace QuizRunner.Editor
         {
             return ListOfQuestions[numberOfQuest].AnswArr[numberOfAnsw].Argument;
         }
+
+        /// <summary>
+        /// Возвращает префикс для расчета статистики.
+        /// </summary>
+        /// <param name="numberOfStatLines">номер строки со статистикой</param>
+        /// <returns>префикс</returns>
+        public string GetStatistPrefix(int numberOfStatLines)
+        {
+            return StaticsLines[numberOfStatLines].Prefix;
+        }
     }
    
 }
