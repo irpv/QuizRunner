@@ -301,5 +301,16 @@ namespace QuizRunner.Editor
         {
             ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].AnswerText = atext;
         }
+
+        /// <summary>
+        /// Задает аргумент ответа для расчета статистики.
+        /// </summary>
+        /// <param name="numOfQuest">номер вопроса</param>
+        /// <param name="numOfAnsw">номер ответа</param>
+        /// <param name="argum">аргумент</param>
+        public void SetAnswArgument(int numOfQuest, int numOfAnsw, string[] argum)
+        {
+            ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument = argum;
+        }
     }
 }
