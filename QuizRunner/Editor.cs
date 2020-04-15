@@ -252,6 +252,14 @@ namespace QuizRunner.Editor
         {
             return StaticsLines[numberOfStatLines].Postfix;
         }
+
+        /// <summary>
+        /// Задает имя теста.
+        /// </summary>
+        /// <param name="name">имя теста</param>
+        public void SetName(string name)
+        {
+            Name = name;
+        }
     }
-   
 }
