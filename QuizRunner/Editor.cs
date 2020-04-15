@@ -180,6 +180,16 @@ namespace QuizRunner.Editor
         {
             return Descrip;
         }
+
+        /// <summary>
+        /// Возвращает текст вопроса.
+        /// </summary>
+        /// <param name="numberOfQuest">номер вопроса</param>
+        /// <returns></returns>
+        public string[] GetQuestionText(int numberOfQuest)
+        {
+            return ListOfQuestions[numberOfQuest].QuestionText;
+        }
     }
    
 }
