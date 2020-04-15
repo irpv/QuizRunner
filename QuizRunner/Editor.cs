@@ -190,6 +190,16 @@ namespace QuizRunner.Editor
         {
             return ListOfQuestions[numberOfQuest].QuestionText;
         }
+
+        /// <summary>
+        /// Возвращает тип ответа.
+        /// </summary>
+        /// <param name="numberOfQuest">номер вопроса</param>
+        /// <returns></returns>
+        public bool GetAnswType(int numberOfQuest)
+        {
+            return ListOfQuestions[numberOfQuest].AnswType;
+        }
     }
    
 }
