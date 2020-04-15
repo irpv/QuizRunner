@@ -75,5 +75,44 @@ namespace EditorTests
             string[] actual = a.GetAnswArgument(numOfQuestion, numOfAnswer);
             CollectionAssert.AreEqual(arg, actual);
         }
+
+        [TestMethod]
+        public void SetGetStatistPrefix()
+        {
+            string prfx = "[abc]";
+            int numOfStatL = 3;
+            Editor a = new Editor();
+            a.SetStatPrefix(prfx, numOfStatL);
+            string actual = a.GetStatistPrefix(numOfStatL);
+            Assert.AreEqual(prfx, actual);
+        }
+
+        [TestMethod]
+        public void SetGetStatistCalculate()
+        {
+            string calclt = "/100";
+            int numOfStatL = 3;
+            Editor a = new Editor();
+            a.SetStatCalculate(calclt, numOfStatL);
+            string actual = a.GetStatistCalculate(numOfStatL);
+            Assert.AreEqual(calclt, actual);
+        }
+
+        [TestMethod]
+        public void SetGetStatistPostfix()
+        {
+            string post = "%";
+            int numOfStatL = 3;
+            Editor a = new Editor();
+            a.SetStatPostfix(post, numOfStatL);
+            string actual = a.GetStatistPostfix(numOfStatL);
+            Assert.AreEqual(post, actual);
+        }
+
+        [TestMethod]
+        public void SaveOpen()
+        {
+
+        }
     }
 }
