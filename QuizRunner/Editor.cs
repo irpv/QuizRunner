@@ -171,6 +171,15 @@ namespace QuizRunner.Editor
         {
             return Name;
         }
+
+        /// <summary>
+        /// Возвращает описание теста.
+        /// </summary>
+        /// <returns></returns>
+        public string[] GetDescription()
+        {
+            return Descrip;
+        }
     }
    
 }
