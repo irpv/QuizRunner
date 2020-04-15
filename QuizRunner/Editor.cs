@@ -312,5 +312,15 @@ namespace QuizRunner.Editor
         {
             ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument = argum;
         }
+
+        /// <summary>
+        /// Задает префикс для расчета статистики.
+        /// </summary>
+        /// <param name="numOfStatLine">номер строки статистики</param>
+        /// <param name="prfx">префикс</param>
+        public void SetStatPrefix(int numOfStatLine, string prfx)
+        {
+            StaticsLines[numOfStatLine].Prefix = prfx;
+        }
     }
 }
