@@ -232,6 +232,16 @@ namespace QuizRunner.Editor
         {
             return StaticsLines[numberOfStatLines].Prefix;
         }
+
+        /// <summary>
+        /// Возвращают строку с расчетами для статистики.
+        /// </summary>
+        /// <param name="numberOfStatLines">номер строки со статистикой</param>
+        /// <returns>расчеты</returns>
+        public string GetStatistCalculate(int numberOfStatLines)
+        {
+            return StaticsLines[numberOfStatLines].Calculate;
+        }
     }
    
 }
