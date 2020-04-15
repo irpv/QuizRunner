@@ -280,5 +280,16 @@ namespace QuizRunner.Editor
         {
             ListOfQuestions[numOfQuest].QuestionText = qtext;
         }
+
+        /// <summary>
+        /// Задает тип ответа на вопрос.
+        /// </summary>
+        /// <param name="answt">тип ответа</param>
+        /// <param name="numOfQuest">номер вопроса</param>
+        public void SetAnswType(bool answt, int numOfQuest)
+        {
+            ListOfQuestions[numOfQuest].AnswType = answt;
+        }
+
     }
 }
