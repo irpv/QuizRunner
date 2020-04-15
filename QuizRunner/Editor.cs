@@ -278,6 +278,10 @@ namespace QuizRunner.Editor
         /// <param name="numOfQuest">номер вопроса</param>
         public void SetQuestText(string[] qtext, int numOfQuest)
         {
+            if(ListOfQuestions.Length < numOfQuest)
+            {
+                Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
+            }
             ListOfQuestions[numOfQuest].QuestionText = qtext;
         }
 
@@ -288,6 +292,10 @@ namespace QuizRunner.Editor
         /// <param name="numOfQuest">номер вопроса</param>
         public void SetAnswType(bool answt, int numOfQuest)
         {
+            if (ListOfQuestions.Length < numOfQuest)
+            {
+                Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
+            }
             ListOfQuestions[numOfQuest].AnswType = answt;
         }
 
@@ -299,6 +307,14 @@ namespace QuizRunner.Editor
         /// <param name="atext">текст ответа</param>
         public void SetAnswText(int numOfQuest, int numOfAnsw, string atext)
         {
+            if (ListOfQuestions.Length < numOfQuest)
+            {
+                Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
+            }
+            if (ListOfQuestions[numOfQuest].AnswArr.Length < numOfAnsw)
+            {
+                Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, numOfAnsw + 1);
+            }
             ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].AnswerText = atext;
         }
 
@@ -310,6 +326,14 @@ namespace QuizRunner.Editor
         /// <param name="argum">аргумент</param>
         public void SetAnswArgument(int numOfQuest, int numOfAnsw, string[] argum)
         {
+            if (ListOfQuestions.Length < numOfQuest)
+            {
+                Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
+            }
+            if (ListOfQuestions[numOfQuest].AnswArr.Length < numOfAnsw)
+            {
+                Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, numOfAnsw + 1);
+            }
             ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument = argum;
         }
 
@@ -320,6 +344,10 @@ namespace QuizRunner.Editor
         /// <param name="prfx">префикс</param>
         public void SetStatPrefix(int numOfStatLine, string prfx)
         {
+            if (StaticsLines.Length < numOfStatLine)
+            {
+                Array.Resize<Statistics>(ref StaticsLines, numOfStatLine + 1);
+            }
             StaticsLines[numOfStatLine].Prefix = prfx;
         }
 
@@ -330,6 +358,10 @@ namespace QuizRunner.Editor
         /// <param name="calc">строка расчетов</param>
         public void SetStatCalculate(int numOfStatLine, string calc)
         {
+            if (StaticsLines.Length < numOfStatLine)
+            {
+                Array.Resize<Statistics>(ref StaticsLines, numOfStatLine + 1);
+            }
             StaticsLines[numOfStatLine].Calculate = calc;
         }
 
@@ -340,6 +372,10 @@ namespace QuizRunner.Editor
         /// <param name="pstfx">постфикс</param>
         public void SetStatPostfix(int numOfStatLine, string pstfx)
         {
+            if (StaticsLines.Length < numOfStatLine)
+            {
+                Array.Resize<Statistics>(ref StaticsLines, numOfStatLine + 1);
+            }
             StaticsLines[numOfStatLine].Postfix = pstfx;
         }
     }
