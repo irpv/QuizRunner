@@ -119,27 +119,36 @@ namespace EditorTests
             string[] desc = { "This is a new test!", "It's good." };
             string[] text = { "When did Bell invent the telephone?", "Enter the year." };
             string answ = "1876";
-            string answ2 = "1877";
+            string answ1 = "1877";
+            string answ2 = "1878";
             bool answtp = true;
             string[] arg = { "[abc]", "+100" };
+            string[] arg1 = { "[abc]", "+0" };
+            string[] arg2 = { "[abc]", "+0" };
             string prfx = "[abc]";
             string calclt = "/100";
             string post = "%";
-            string path = @"c:\temp\MyTest111.txt";
+            string path = @"c:\temp\2.txt";
             // act
             Editor a = new Editor();
             a.SetName(name);
             a.SetDescrip(desc);
-            a.SetQuestionText(text, 1);
-            a.SetAnswType(answtp, 1);
-            a.SetAnswArgument(arg, 1, 1);
-            a.SetAnswText(answ, 1, 1);
-            a.SetAnswText(answ2, 1, 2);
-            a.SetStatPrefix(prfx, 1);
-            a.SetStatCalculate(calclt, 1);
-            a.SetStatPostfix(post, 1);
+            a.SetQuestionText(text, 0);
+            a.SetAnswType(answtp, 0);
+            
+            a.SetAnswText(answ1, 0, 1);
+            a.SetAnswText(answ, 0, 0);
+            a.SetAnswArgument(arg, 0, 0);
+            a.SetAnswArgument(arg1, 0, 1);
+            
+            a.SetStatPrefix(prfx, 0);
+            a.SetStatCalculate(calclt, 0);
+            a.SetStatPostfix(post, 0);
             a.Save(path);
             Editor actual = new Editor();
+            //Debug.Write("\n" + a.GetAnswText(0, 0) + " ++++");
+            //Debug.Write("\n" + a.GetAnswText(0, 0) + " ++++");
+            //Debug.Write("\n" + a.GetAnswText(0, 1) + "  ++++");
             actual.Open(path);
             // assert
             Assert.AreEqual(a, actual);
