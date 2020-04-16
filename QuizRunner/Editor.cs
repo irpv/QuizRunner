@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Diagnostics;
 using System.Collections;
 
 namespace QuizRunner.Editor
@@ -42,21 +43,24 @@ namespace QuizRunner.Editor
         public void Save(string direction)
         {
             File.Create(direction).Close();
-            StreamWriter SW = new StreamWriter(direction);
+            StreamWriter SW = File.AppendText(direction);
 
             // Записываем имя теста.
             SW.WriteLine(Name);
-
+            SW.Close();
+           
             // Записываем описание теста.
-            File.WriteAllLines(direction, Descrip);
-
+            File.AppendAllLines(direction, Descrip);
+            SW = File.AppendText(direction);
             // Записывает количество вопросов.
             SW.WriteLine(ListOfQuestions.Length.ToString());
-            for(var i = 0; i < ListOfQuestions.Length; i++)
+            for (int i = 0; i < ListOfQuestions.Length; i++)
             {
                 // Записывает текст вопроса.
                 SW.WriteLine(ListOfQuestions[i].QuestionText.Length.ToString());
-                File.WriteAllLines(direction, ListOfQuestions[i].QuestionText);
+                SW.Close();
+                File.AppendAllLines(direction, ListOfQuestions[i].QuestionText);
+                SW = File.AppendText(direction);
 
                 // Записывает тип вопроса.
                 SW.WriteLine(ListOfQuestions[i].AnswType.ToString());
@@ -70,7 +74,9 @@ namespace QuizRunner.Editor
 
                     // Записывает аргумент ответа.
                     SW.WriteLine(ListOfQuestions[i].AnswArr[j].Argument.Length.ToString());
-                    File.WriteAllLines(direction, ListOfQuestions[i].AnswArr[j].Argument);
+                    SW.Close();
+                    File.AppendAllLines(direction, ListOfQuestions[i].AnswArr[j].Argument);
+                    SW = File.AppendText(direction);
                 }
 ;            }
 
@@ -277,11 +283,18 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="qtext">текст вопроса</param>
         /// <param name="numOfQuest">номер вопроса</param>
-        public void SetQuestText(string[] qtext, int numOfQuest)
+        public void SetQuestionText(string[] qtext, int numOfQuest)
         {
             if(ListOfQuestions.Length <= numOfQuest)
             {
+                int TCount = ListOfQuestions.Length;
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
+                for(var i = TCount; i <= numOfQuest; i++)
+                {
+                    ListOfQuestions[i] = new Question();
+                    ListOfQuestions[i].QuestionText = new string[0];
+                }
+                
             }
             ListOfQuestions[numOfQuest].QuestionText = qtext;
         }
@@ -310,8 +323,13 @@ namespace QuizRunner.Editor
         {
             if (ListOfQuestions.Length <= numOfQuest)
             {
+                int TCount = ListOfQuestions.Length;
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
-                
+                for (var i = TCount; i <= numOfQuest; i++)
+                {
+                    ListOfQuestions[i] = new Question();
+                    
+                }
             }
             ListOfQuestions[numOfQuest].AnswArr = new Answer[0];
             if (ListOfQuestions[numOfQuest].AnswArr.Length <= numOfAnsw)
@@ -329,14 +347,26 @@ namespace QuizRunner.Editor
         /// <param name="argum">аргумент</param>
         public void SetAnswArgument(string[] argum, int numOfQuest, int numOfAnsw)
         {
-            if (ListOfQuestions.Length < numOfQuest)
+            if (ListOfQuestions.Length <= numOfQuest)
             {
+                int TCount = ListOfQuestions.Length;
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
+                for (var i = TCount; i <= numOfQuest; i++)
+                {
+                    ListOfQuestions[i] = new Question();
+                    ListOfQuestions[i].AnswArr = new Answer[0];
+                }
             }
-            ListOfQuestions[numOfQuest].AnswArr = new Answer[0];
-            if (ListOfQuestions[numOfQuest].AnswArr.Length < numOfAnsw)
+            Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, 1);
+            //Debug.Write(ListOfQuestions[numOfQuest].AnswArr.Length);
+            if (ListOfQuestions[numOfQuest].AnswArr.Length <= numOfAnsw)
             {
+                int TCount1 = ListOfQuestions[numOfQuest].AnswArr.Length;
                 Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, numOfAnsw + 1);
+                for (var j = TCount1; j <= numOfAnsw; j++)
+                {
+                    ListOfQuestions[numOfQuest].AnswArr[j].Argument = new string[0];
+                }
             }
             ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument = argum;
         }
@@ -348,7 +378,7 @@ namespace QuizRunner.Editor
         /// <param name="prfx">префикс</param>
         public void SetStatPrefix(string prfx, int numOfStatLine)
         {
-            if (StaticsLines.Length < numOfStatLine)
+            if (StaticsLines.Length <= numOfStatLine)
             {
                 Array.Resize<Statistics>(ref StaticsLines, numOfStatLine + 1);
             }
@@ -362,7 +392,7 @@ namespace QuizRunner.Editor
         /// <param name="calc">строка расчетов</param>
         public void SetStatCalculate(string calc, int numOfStatLine)
         {
-            if (StaticsLines.Length < numOfStatLine)
+            if (StaticsLines.Length <= numOfStatLine)
             {
                 Array.Resize<Statistics>(ref StaticsLines, numOfStatLine + 1);
             }
@@ -376,7 +406,7 @@ namespace QuizRunner.Editor
         /// <param name="pstfx">постфикс</param>
         public void SetStatPostfix(string pstfx, int numOfStatLine)
         {
-            if (StaticsLines.Length < numOfStatLine)
+            if (StaticsLines.Length <= numOfStatLine)
             {
                 Array.Resize<Statistics>(ref StaticsLines, numOfStatLine + 1);
             }

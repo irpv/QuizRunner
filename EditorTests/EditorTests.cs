@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using QuizRunner.Editor;
+
 namespace EditorTests
 {
     [TestClass]
@@ -22,7 +23,7 @@ namespace EditorTests
         [TestMethod]
         public void SetGetDescription()
         {
-            string[] desc = { "This is a new test!" , "It's good."};
+            string[] desc = { "This is a new test!", "It's good." };
             Editor a = new Editor();
             a.SetDescrip(desc);
             string[] actual = a.GetDescription();
@@ -35,7 +36,7 @@ namespace EditorTests
             string[] text = { "When did Bell invent the telephone?", "Enter the year." };
             int numOfQuestion = 4;
             Editor a = new Editor();
-            a.SetQuestText(text, numOfQuestion);
+            a.SetQuestionText(text, numOfQuestion);
             string[] actual = a.GetQuestionText(numOfQuestion);
             CollectionAssert.AreEqual(text, actual);
         }
@@ -68,12 +69,13 @@ namespace EditorTests
         public void SetGetAnswArgument()
         {
             string[] arg = { "[abc]", "+100" };
-            int numOfQuestion = 4;
-            int numOfAnswer = 2;
+            string [] expected = { "[abc]", "+100" };
+            int numOfQuestion = 1;
+            int numOfAnswer = 1;
             Editor a = new Editor();
             a.SetAnswArgument(arg, numOfQuestion, numOfAnswer);
             string[] actual = a.GetAnswArgument(numOfQuestion, numOfAnswer);
-            CollectionAssert.AreEqual(arg, actual);
+            CollectionAssert.AreEqual(expected, actual);
         }
 
         [TestMethod]
@@ -112,7 +114,36 @@ namespace EditorTests
         [TestMethod]
         public void SaveOpen()
         {
-
+            // arrange
+            string name = "New";
+            string[] desc = { "This is a new test!", "It's good." };
+            string[] text = { "When did Bell invent the telephone?", "Enter the year." };
+            string answ = "1876";
+            string answ2 = "1877";
+            bool answtp = true;
+            string[] arg = { "[abc]", "+100" };
+            string prfx = "[abc]";
+            string calclt = "/100";
+            string post = "%";
+            string path = @"c:\temp\MyTest111.txt";
+            // act
+            Editor a = new Editor();
+            a.SetName(name);
+            a.SetDescrip(desc);
+            a.SetQuestionText(text, 1);
+            a.SetAnswType(answtp, 1);
+            a.SetAnswArgument(arg, 1, 1);
+            a.SetAnswText(answ, 1, 1);
+            a.SetAnswText(answ2, 1, 2);
+            a.SetStatPrefix(prfx, 1);
+            a.SetStatCalculate(calclt, 1);
+            a.SetStatPostfix(post, 1);
+            a.Save(path);
+            Editor actual = new Editor();
+            actual.Open(path);
+            // assert
+            Assert.AreEqual(a, actual);
+            //CollectionAssert.AreEqual(arg, actual);
         }
     }
 }
