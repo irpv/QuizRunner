@@ -49,7 +49,7 @@ namespace EditorTests
             Editor a = new Editor();
             int numOfQuestion = 4;
             a.SetAnswType(answtp, numOfQuestion);
-            bool actual = a.GetAnswType(numOfQuestion);
+            bool actual = a.GetAnswerType(numOfQuestion);
             Assert.AreEqual(answtp, actual);
         }
 
@@ -61,7 +61,7 @@ namespace EditorTests
             int numOfAnswer = 2;
             Editor a = new Editor();
             a.SetAnswText(answ, numOfQuestion, numOfAnswer);
-            string actual = a.GetAnswText(numOfQuestion, numOfAnswer);
+            string actual = a.GetAnswerText(numOfQuestion, numOfAnswer);
             Assert.AreEqual(answ, actual);
         }
 
@@ -74,7 +74,7 @@ namespace EditorTests
             int numOfAnswer = 1;
             Editor a = new Editor();
             a.SetAnswArgument(arg, numOfQuestion, numOfAnswer);
-            string[] actual = a.GetAnswArgument(numOfQuestion, numOfAnswer);
+            string[] actual = a.GetAnswerArgument(numOfQuestion, numOfAnswer);
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -85,7 +85,7 @@ namespace EditorTests
             int numOfStatL = 3;
             Editor a = new Editor();
             a.SetStatPrefix(prfx, numOfStatL);
-            string actual = a.GetStatistPrefix(numOfStatL);
+            string actual = a.GetStatPrefix(numOfStatL);
             Assert.AreEqual(prfx, actual);
         }
 
@@ -96,7 +96,7 @@ namespace EditorTests
             int numOfStatL = 3;
             Editor a = new Editor();
             a.SetStatCalculate(calclt, numOfStatL);
-            string actual = a.GetStatistCalculate(numOfStatL);
+            string actual = a.GetStatCalculate(numOfStatL);
             Assert.AreEqual(calclt, actual);
         }
 
@@ -107,7 +107,7 @@ namespace EditorTests
             int numOfStatL = 3;
             Editor a = new Editor();
             a.SetStatPostfix(post, numOfStatL);
-            string actual = a.GetStatistPostfix(numOfStatL);
+            string actual = a.GetStatPostfix(numOfStatL);
             Assert.AreEqual(post, actual);
         }
 
@@ -120,11 +120,10 @@ namespace EditorTests
             string[] text = { "When did Bell invent the telephone?", "Enter the year." };
             string answ = "1876";
             string answ1 = "1877";
-            string answ2 = "1878";
+            //string answ2 = "1878";
             bool answtp = true;
             string[] arg = { "[abc]", "+100" };
-            string[] arg1 = { "[abc]", "+0" };
-            string[] arg2 = { "[abc]", "+0" };
+            string[] arg1 = {""};
             string prfx = "[abc]";
             string calclt = "/100";
             string post = "%";
@@ -135,24 +134,31 @@ namespace EditorTests
             a.SetDescrip(desc);
             a.SetQuestionText(text, 0);
             a.SetAnswType(answtp, 0);
-            
-            a.SetAnswText(answ1, 0, 1);
             a.SetAnswText(answ, 0, 0);
+            a.SetAnswText(answ1, 0, 1);
             a.SetAnswArgument(arg, 0, 0);
             a.SetAnswArgument(arg1, 0, 1);
-            
+            a.ListOfVariables.Add("new", 152);
             a.SetStatPrefix(prfx, 0);
             a.SetStatCalculate(calclt, 0);
             a.SetStatPostfix(post, 0);
             a.Save(path);
             Editor actual = new Editor();
-            //Debug.Write("\n" + a.GetAnswText(0, 0) + " ++++");
-            //Debug.Write("\n" + a.GetAnswText(0, 0) + " ++++");
-            //Debug.Write("\n" + a.GetAnswText(0, 1) + "  ++++");
+            //actual = a;
             actual.Open(path);
             // assert
-            Assert.AreEqual(a, actual);
-            //CollectionAssert.AreEqual(arg, actual);
+            Assert.AreEqual(a.GetName(), actual.GetName());
+            CollectionAssert.AreEqual(a.GetDescription(), actual.GetDescription());
+            CollectionAssert.AreEqual(a.GetQuestionText(0), actual.GetQuestionText(0));
+            Assert.AreEqual(a.GetAnswerType(0), actual.GetAnswerType(0));
+            Assert.AreEqual(a.GetAnswerText(0, 0), actual.GetAnswerText(0, 0));
+            Assert.AreEqual(a.GetAnswerText(0, 1), actual.GetAnswerText(0, 1));
+            CollectionAssert.AreEqual(a.GetAnswerArgument(0, 0), actual.GetAnswerArgument(0, 0));
+            CollectionAssert.AreEqual(a.GetAnswerArgument(0, 1), actual.GetAnswerArgument(0, 1));
+            Assert.AreEqual(a.ListOfVariables["new"], actual.ListOfVariables["new"]);
+            Assert.AreEqual(a.GetStatPrefix(0), actual.GetStatPrefix(0));
+            Assert.AreEqual(a.GetStatCalculate(0), actual.GetStatCalculate(0));
+            Assert.AreEqual(a.GetStatCalculate(0), actual.GetStatCalculate(0));
         }
     }
 }

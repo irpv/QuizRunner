@@ -72,11 +72,9 @@ namespace QuizRunner.Editor
                 SW.WriteLine(ListOfQuestions[i].AnswArr.Length.ToString());
                 SW.Close();
                 SW = File.AppendText(direction);
-                Debug.Write("\n" + ListOfQuestions[i].AnswArr.Length);
                 for (var j = 0; j < ListOfQuestions[i].AnswArr.Length; j++)
                 {
                     // Записываает вариант ответа.
-                    Debug.Write("\n Save:  " + ListOfQuestions[i].AnswArr[j].AnswerText);
                     SW.WriteLine(ListOfQuestions[i].AnswArr[j].AnswerText);
                     SW.Close();
                     // Записывает аргумент ответа.
@@ -211,7 +209,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numberOfQuest">номер вопроса</param>
         /// <returns>тип ответа</returns>
-        public bool GetAnswType(int numberOfQuest)
+        public bool GetAnswerType(int numberOfQuest)
         {
             return ListOfQuestions[numberOfQuest].AnswType;
         }
@@ -222,7 +220,7 @@ namespace QuizRunner.Editor
         /// <param name="numberOfQuest">номер вопроса</param>
         /// <param name="numberOfAnsw">номер ответа</param>
         /// <returns>текст ответа</returns>
-        public string GetAnswText(int numberOfQuest, int numberOfAnsw)
+        public string GetAnswerText(int numberOfQuest, int numberOfAnsw)
         {
             return ListOfQuestions[numberOfQuest].AnswArr[numberOfAnsw].AnswerText;
         }
@@ -233,7 +231,7 @@ namespace QuizRunner.Editor
         /// <param name="numberOfQuest">номер вопроса</param>
         /// <param name="numberOfAnsw">номер ответа</param>
         /// <returns>аргумент</returns>
-        public string[] GetAnswArgument(int numberOfQuest, int numberOfAnsw)
+        public string[] GetAnswerArgument(int numberOfQuest, int numberOfAnsw)
         {
             return ListOfQuestions[numberOfQuest].AnswArr[numberOfAnsw].Argument;
         }
@@ -243,7 +241,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numberOfStatLines">номер строки со статистикой</param>
         /// <returns>префикс</returns>
-        public string GetStatistPrefix(int numberOfStatLines)
+        public string GetStatPrefix(int numberOfStatLines)
         {
             return StaticsLines[numberOfStatLines].Prefix;
         }
@@ -253,7 +251,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numberOfStatLines">номер строки со статистикой</param>
         /// <returns>расчеты</returns>
-        public string GetStatistCalculate(int numberOfStatLines)
+        public string GetStatCalculate(int numberOfStatLines)
         {
             return StaticsLines[numberOfStatLines].Calculate;
         }
@@ -263,7 +261,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numberOfStatLines">номер строки со статистикой</param>
         /// <returns>постфикс</returns>
-        public string GetStatistPostfix(int numberOfStatLines)
+        public string GetStatPostfix(int numberOfStatLines)
         {
             return StaticsLines[numberOfStatLines].Postfix;
         }
@@ -343,10 +341,7 @@ namespace QuizRunner.Editor
             if (ListOfQuestions[numOfQuest].AnswArr.Length <= numOfAnsw)
             {
                 int TCount1 = ListOfQuestions[numOfQuest].AnswArr.Length;
-                //Debug.Write(atext);
                 Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, numOfAnsw + 1);
-                //Debug.Write(ListOfQuestions[numOfQuest].AnswArr.Length);
-                //Debug.Write(numOfAnsw);
                 for (var j = TCount1; j <= numOfAnsw; j++)
                 { 
                     ListOfQuestions[numOfQuest].AnswArr[j].AnswerText = "";
@@ -354,8 +349,6 @@ namespace QuizRunner.Editor
             }
             
             ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].AnswerText = atext;
-            Debug.Write(" "+ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].AnswerText + " n_Q " + numOfQuest+ "n_A " +numOfAnsw  );
-            Debug.Write(" " +ListOfQuestions[numOfQuest].AnswArr.Length + "\n");
         }
 
         /// <summary>
@@ -376,7 +369,6 @@ namespace QuizRunner.Editor
                     ListOfQuestions[i].AnswArr = new Answer[0];
                 }
             }
-            Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, 1);
             if (ListOfQuestions[numOfQuest].AnswArr.Length <= numOfAnsw)
             {
                 int TCount1 = ListOfQuestions[numOfQuest].AnswArr.Length;
