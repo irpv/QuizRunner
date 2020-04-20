@@ -249,7 +249,8 @@ namespace QuizRunner
                 Height = IpnLoading.Width / 5,
                 Image = Properties.Resources.Loading,
                 SizeMode = PictureBoxSizeMode.StretchImage,
-                Parent = IpnLoading
+                Parent = IpnLoading,
+                Visible = true
             };
             IpbLoading.Left = IpnLoading.Width / 2 - IpbLoading.Width / 2;
             IpbLoading.Top = IpnLoading.Height / 2 - IpbLoading.Height / 2 - 30;
@@ -262,7 +263,8 @@ namespace QuizRunner
                 Font = new Font("Verdana", 25, FontStyle.Bold),
                 ForeColor = Color.FromArgb(18, 136, 235),
                 Top = IpbLoading.Top + IpbLoading.Height + 20,
-                Parent = IpnLoading
+                Parent = IpnLoading,
+                Visible = true
             };
             IlbLoading.Left = IpnLoading.Width / 2 - IlbLoading.Width / 2;
 
@@ -663,8 +665,8 @@ namespace QuizRunner
         /// </summary>
         private void Open()
         {
-            //try
-            //{
+            try
+            {
                 if (Changed)
                 {
                     if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
@@ -673,6 +675,7 @@ namespace QuizRunner
                     {
                         if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                         {
+                            GEditor = new QuizRunner.Editor.Editor();
                             GEditor.Open(GIofdOpenDialog.FileName);
                             FillInTheInterface(GEditor);
                             Changed = false;
@@ -683,27 +686,28 @@ namespace QuizRunner
                 {
                     if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
+                        GEditor = new QuizRunner.Editor.Editor();
                         GEditor.Open(GIofdOpenDialog.FileName);
                         FillInTheInterface(GEditor);
                         Changed = false;
                     }
                 }
-            //}
-            //catch(System.FormatException)
-            //{
-            //    MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch(System.IO.IOException)
-            //{
-            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+        }
+            catch(System.FormatException)
+            {
+                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch(System.IO.IOException)
+            {
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
