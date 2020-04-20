@@ -611,8 +611,8 @@ namespace QuizRunner
         /// </summary>
         private void Open()
         {
-            //try
-            //{
+            try
+            {
                 if (Changed)
                 {
                     if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
@@ -636,23 +636,23 @@ namespace QuizRunner
                         Changed = false;
                     }
                 }
-            //}
-            //catch(System.FormatException)
-            //{
-            //    MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch(System.IO.IOException)
-            //{
-            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-}
+        }
+            catch(System.FormatException)
+            {
+                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch(System.IO.IOException)
+            {
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
         /// <summary>
         /// Заполняет интерфейс данными теста.
