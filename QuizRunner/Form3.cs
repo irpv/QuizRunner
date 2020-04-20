@@ -593,16 +593,29 @@ namespace QuizRunner
         /// </summary>
         private void Save()
         {
-            if (GIsfdSaveDialog.ShowDialog()==DialogResult.OK)
+            try
             {
-                GEditor = new QuizRunner.Editor.Editor();
-                bool TManaged = false;
-                FillInFromTheInterface(GEditor,ref TManaged);
-                if (TManaged)
+                if (GIsfdSaveDialog.ShowDialog() == DialogResult.OK)
                 {
-                    GEditor.Save(GIsfdSaveDialog.FileName);
+                    GEditor = new QuizRunner.Editor.Editor();
+                    bool TManaged = false;
+                    FillInFromTheInterface(GEditor, ref TManaged);
+                    if (TManaged)
+                    {
+                        GEditor.Save(GIsfdSaveDialog.FileName);
+                    }
+                    Changed = false;
                 }
-                Changed = false;
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при сохранении!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось сохранить файл.", "Ошибка при сохранении!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
