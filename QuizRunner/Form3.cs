@@ -614,6 +614,7 @@ namespace QuizRunner
                     if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
                         GEditor.Open(GIofdOpenDialog.FileName);
+                        FillInTheInterface(GEditor);
                         Changed = false;
                     }
                 }
@@ -623,8 +624,27 @@ namespace QuizRunner
                 if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                 {
                     GEditor.Open(GIofdOpenDialog.FileName);
+                    FillInTheInterface(GEditor);
                     Changed = false;
                 }
+            }
+        }
+
+        private void FillInTheInterface(QuizRunner.Editor.Editor editor)
+        {
+            var TItbTabControl = (TabControl)this.Controls[0];
+
+            // Заполнение имени теста.
+            TItbTabControl.TabPages[0].Controls[1].Text = editor.GetName();
+
+            //Заполнение описания теста.
+            var TIrtbDescription = (RichTextBox)TItbTabControl.TabPages[0].Controls[3];
+
+            string[] TDescription = editor.GetDescription();
+
+            for (var i = 0; i < TDescription.Length; i++)
+            {
+                TIrtbDescription.AppendText(TDescription[i] + "\n");
             }
         }
 
