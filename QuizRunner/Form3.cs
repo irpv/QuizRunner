@@ -825,6 +825,15 @@ namespace QuizRunner
                 }
             }
 
+            // Запись трок статистики.
+            for (var ii = 0; ii < GStatisticsLines.Length; ii++)
+            {
+                editor.SetStatPrefix(GStatisticsLines[ii].Prefix.Text, ii);
+                editor.SetStatCalculate(GStatisticsLines[ii].Calc.Text, ii);
+                editor.SetStatPostfix(GStatisticsLines[ii].Postfix.Text, ii);
+            }
+
+
 
 
         ExitFromFillin:;
