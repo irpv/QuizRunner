@@ -680,6 +680,12 @@ namespace QuizRunner
             for (var ii = 0; ii < editor.NumberOfQuestion(); ii++)
             {
                 CreateNewQuestionPage(ii + 1);
+                string[] TQuestionText = editor.GetQuestionText(ii);
+                var TIrtbQuestionText = (RichTextBox)TItbTabControl.TabPages[ii + 1].Controls[0];
+                for (var ij = 0; ij < TQuestionText.Length; ij++)
+                {
+                    TIrtbQuestionText.AppendText(TQuestionText[ij] + "\n");
+                }
             }
         }
 
