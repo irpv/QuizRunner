@@ -605,11 +605,23 @@ namespace QuizRunner
         /// </summary>
         private void Open()
         {
-            if (Changed)
+            try
             {
-                if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
-                    "действия они будут потеряны.\nЖелаете продолжить?", "Открыть",MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Exclamation)==DialogResult.Yes)
+                if (Changed)
+                {
+                    if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
+                        "действия они будут потеряны.\nЖелаете продолжить?", "Открыть", MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Exclamation) == DialogResult.Yes)
+                    {
+                        if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            GEditor.Open(GIofdOpenDialog.FileName);
+                            FillInTheInterface(GEditor);
+                            Changed = false;
+                        }
+                    }
+                }
+                else
                 {
                     if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
@@ -618,17 +630,23 @@ namespace QuizRunner
                         Changed = false;
                     }
                 }
-            }
-            else
-            {
-                if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
-                {
-                    GEditor.Open(GIofdOpenDialog.FileName);
-                    FillInTheInterface(GEditor);
-                    Changed = false;
-                }
-            }
         }
+            catch(System.FormatException)
+            {
+                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch(System.IO.IOException)
+            {
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+}
 
         private void FillInTheInterface(QuizRunner.Editor.Editor editor)
         {
