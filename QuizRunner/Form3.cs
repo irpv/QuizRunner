@@ -833,6 +833,11 @@ namespace QuizRunner
                 editor.SetStatPostfix(GStatisticsLines[ii].Postfix.Text, ii);
             }
 
+            // Запись пользовательских переменных.
+            for (var ii = 0; ii < GUserVariable.Length; ii++)
+            {
+                editor.ListOfVariables.Add(GUserVariable[ii].Name, GUserVariable[ii].Value);
+            }
 
 
 
