@@ -596,7 +596,12 @@ namespace QuizRunner
             if (GIsfdSaveDialog.ShowDialog()==DialogResult.OK)
             {
                 GEditor = new QuizRunner.Editor.Editor();
-                FillInFromTheInterface(GEditor);
+                bool TManaged = false;
+                FillInFromTheInterface(GEditor,ref TManaged);
+                if (TManaged)
+                {
+                    GEditor.Save(GIsfdSaveDialog.FileName);
+                }
                 Changed = false;
             }
         }
@@ -606,8 +611,8 @@ namespace QuizRunner
         /// </summary>
         private void Open()
         {
-            try
-            {
+            //try
+            //{
                 if (Changed)
                 {
                     if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
@@ -631,22 +636,22 @@ namespace QuizRunner
                         Changed = false;
                     }
                 }
-        }
-            catch(System.FormatException)
-            {
-                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch(System.IO.IOException)
-            {
-                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch
-            {
-                MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch(System.FormatException)
+            //{
+            //    MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch(System.IO.IOException)
+            //{
+            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 }
 
         /// <summary>
@@ -712,12 +717,9 @@ namespace QuizRunner
                     // Заполнение аргументов
                     for (var ik = 0; ik < editor.NumberOfArgument(ii,ij); ik++)
                     {
-                        if (editor.GetAnswerArgument(ii, ij)[ik] != "")
-                        {
                             CreateNewAnswerArgument(ij);
                             var TArgumetArray = TAnswerArray[ij].AnswerArguments;
                             TArgumetArray[ik].Text = editor.GetAnswerArgument(ii, ij)[ik];
-                        }
                     }
                 }
             }
@@ -755,19 +757,29 @@ namespace QuizRunner
                 GUserVariable[il].NameInput.Text = key;
                 GUserVariable[il].Value = editor.ListOfVariables[key];
                 GUserVariable[il].ValueInput.Value = (Decimal)editor.ListOfVariables[key];
+                GUserVariable[il].NameInput.ForeColor = Color.Black; 
+                il++;
             }
 
             // Возвращение к стартовой вкладке
             TItbTabControl.SelectedIndex = 0;
         }
 
-        private void FillInFromTheInterface(QuizRunner.Editor.Editor editor)
+        /// <summary>
+        /// Заполняет пустой тест из интерфейса.
+        /// </summary>
+        /// <param name="editor">Тест.</param>
+        /// <param name="managed">Удалось ли заполнение.</param>
+        private void FillInFromTheInterface(QuizRunner.Editor.Editor editor, ref  bool managed)
         {
+            managed = true;
+
             // Проверка параметров на доступность для сохранения.
             for (var ii = 0; ii < GUserVariable.Length; ii++)
             {
                 if (!ValidVariableName(ii))
                 {
+                    managed = false;
                     goto ExitFromFillin;
                 }
             }
@@ -779,6 +791,7 @@ namespace QuizRunner
                 TItbTabControl.Controls[0].Controls[1].Focus();
                 MessageBox.Show("Имя теста не может быть пустым.", "Ошибка при сохранении",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                managed = false;
                 goto ExitFromFillin;
             }
 
@@ -836,7 +849,7 @@ namespace QuizRunner
             // Запись пользовательских переменных.
             for (var ii = 0; ii < GUserVariable.Length; ii++)
             {
-                editor.ListOfVariables.Add(GUserVariable[ii].Name, GUserVariable[ii].Value);
+                editor.ListOfVariables.Add(GUserVariable[ii].Name, (double)GUserVariable[ii].ValueInput.Value);
             }
 
 
