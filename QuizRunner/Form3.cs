@@ -648,6 +648,10 @@ namespace QuizRunner
             //}
 }
 
+        /// <summary>
+        /// Заполняет интерфейс данными теста.
+        /// </summary>
+        /// <param name="editor">Тест</param>
         private void FillInTheInterface(QuizRunner.Editor.Editor editor)
         {
             var TItbTabControl = (TabControl)this.Controls[0];
