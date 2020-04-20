@@ -160,5 +160,63 @@ namespace EditorTests
             Assert.AreEqual(a.GetStatCalculate(0), actual.GetStatCalculate(0));
             Assert.AreEqual(a.GetStatCalculate(0), actual.GetStatCalculate(0));
         }
+
+        [TestMethod]
+        public void GetNumberOfQuestions()
+        {
+            int num = 2;
+            string[] text = { "When did Bell invent the telephone?", "Enter the year." };
+            string[] text1 = { "Why did Bell invent the telephone?", "Enter the year." };
+            Editor a = new Editor();
+            a.SetQuestionText(text, 0);
+            a.SetQuestionText(text1, 1);
+            int actual = a.NumberOfQuestion();
+            Assert.AreEqual(num, actual);
+        }
+
+        [TestMethod]
+        public void GetNumberOfAnswers()
+        {
+            int num = 2;
+            string answ = "1876";
+            string answ1 = "1877";
+            Editor a = new Editor();
+            a.SetAnswText(answ, 0, 0);
+            a.SetAnswText(answ1, 0, 1);
+            int actual = a.NumberOfAnswers(0);
+            Assert.AreEqual(num, actual);
+        }
+
+        [TestMethod]
+        public void GetNumberOfStatLine()
+        {
+            int num = 2;
+            string prfx = "[abc]";
+            string calclt = "/100";
+            string post = "%";
+            string prfx1 = "[cde]";
+            string calclt1 = "/100";
+            string post1 = "%";
+            Editor a = new Editor();
+            a.SetStatPrefix(prfx, 0);
+            a.SetStatCalculate(calclt, 0);
+            a.SetStatPostfix(post, 0);
+            a.SetStatPrefix(prfx1, 1);
+            a.SetStatCalculate(calclt1, 1);
+            a.SetStatPostfix(post1, 1);
+            int actual = a.NumberOfStatLine();
+            Assert.AreEqual(num, actual);
+        }
+
+        [TestMethod]
+        public void GetNumberOfArgument()
+        {
+            int num = 2;
+            string[] arg = { "[abc]", "+100" };
+            Editor a = new Editor();
+            a.SetAnswArgument(arg, 0, 0);
+            int actual = a.NumberOfArgument(0, 0);
+            Assert.AreEqual(num, actual);
+        }
     }
 }
