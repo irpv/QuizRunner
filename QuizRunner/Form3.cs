@@ -794,9 +794,18 @@ namespace QuizRunner
                 Changed = true;
                 if (TItbName.Text != (TItbName.Tag.ToString()))
                 {
-                    // Функция получения значения по имени переменной (Name.Tag.ToString())
-                    // Функция удаления переменной.
-                    // Функция создания переменной.
+                    if (ValidVariableName(TItbName.Text))
+                    {
+                        TItbName.ForeColor = Color.Black;
+                        GUserVariable[TNow].Name = TItbName.Text;
+                        TItbName.Tag = TItbName.Text;
+                    }
+                    else
+                    {
+                        TItbName.ForeColor = Color.Red;
+                        GUserVariable[TNow].Name = TItbName.Text;
+                        TItbName.Tag = TItbName.Text;
+                    }
                 }
             };
             TIttCreatorToolTip.SetToolTip(TItbName, "Имя");
