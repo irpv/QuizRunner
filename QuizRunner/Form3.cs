@@ -53,7 +53,7 @@ namespace QuizRunner
             public Label AddAnswerArgumets;
         };
 
-       private readonly QuizRunner.Editor.Editor GEditor = new QuizRunner.Editor.Editor();
+       private  QuizRunner.Editor.Editor GEditor = new QuizRunner.Editor.Editor();
 
         public IfrCreator()
         {
@@ -595,6 +595,7 @@ namespace QuizRunner
         {
             if (GIsfdSaveDialog.ShowDialog()==DialogResult.OK)
             {
+                GEditor = new QuizRunner.Editor.Editor();
                 FillInFromTheInterface(GEditor);
                 Changed = false;
             }
@@ -781,16 +782,17 @@ namespace QuizRunner
                 goto ExitFromFillin;
             }
 
-            // Обнуление теста.
-            editor = new QuizRunner.Editor.Editor();
-
             // Запись имени
             editor.SetName(TItbTabControl.Controls[0].Controls[1].Text);
 
-            
+            // Запись описания
+            var TrtbDescription = (RichTextBox)TItbTabControl.Controls[0].Controls[3];
+            editor.SetDescrip(TrtbDescription.Text.Split(new char[] {'\r', '\n'}, 
+                StringSplitOptions.RemoveEmptyEntries));
 
 
-            ExitFromFillin:;
+
+        ExitFromFillin:;
         }
 
         /// <summary>
