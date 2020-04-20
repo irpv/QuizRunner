@@ -595,7 +595,7 @@ namespace QuizRunner
         {
             if (GIsfdSaveDialog.ShowDialog()==DialogResult.OK)
             {
-                //Тут должна быть функция сохранения.
+                FillInFromTheInterface(GEditor);
                 Changed = false;
             }
         }
@@ -760,6 +760,39 @@ namespace QuizRunner
             TItbTabControl.SelectedIndex = 0;
         }
 
+        private void FillInFromTheInterface(QuizRunner.Editor.Editor editor)
+        {
+            // Проверка параметров на доступность для сохранения.
+            for (var ii = 0; ii < GUserVariable.Length; ii++)
+            {
+                if (!ValidVariableName(ii))
+                {
+                    goto ExitFromFillin;
+                }
+            }
+
+            var TItbTabControl = (TabControl)this.Controls[0];
+            if (TItbTabControl.Controls[0].Controls[1].Text == "")
+            {
+                TItbTabControl.SelectedIndex = 0;
+                TItbTabControl.Controls[0].Controls[1].Focus();
+                MessageBox.Show("Имя теста не может быть пустым.", "Ошибка при сохранении",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                goto ExitFromFillin;
+            }
+
+            // Обнуление теста.
+            editor = new QuizRunner.Editor.Editor();
+
+            // Запись имени
+            editor.SetName(TItbTabControl.Controls[0].Controls[1].Text);
+
+            
+
+
+            ExitFromFillin:;
+        }
+
         /// <summary>
         /// Создаёт пользовательскую переменную.
         /// </summary>
@@ -885,7 +918,7 @@ namespace QuizRunner
                 {
                     if (GUserVariable[i].Name == GUserVariable[index].Name)
                     {
-                        if (i > index)
+                        if (i < index)
                         {
                             GUserVariable[index].NameInput.ForeColor = Color.Red;
                             GUserVariable[index].NameInput.Focus();
