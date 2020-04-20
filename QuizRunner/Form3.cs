@@ -613,7 +613,7 @@ namespace QuizRunner
                 {
                     if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
-                        //Тут должна быть функция открытия.
+                        GEditor.Open(GIofdOpenDialog.FileName);
                         Changed = false;
                     }
                 }
@@ -622,7 +622,7 @@ namespace QuizRunner
             {
                 if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Тут должна быть функция открытия.
+                    GEditor.Open(GIofdOpenDialog.FileName);
                     Changed = false;
                 }
             }
