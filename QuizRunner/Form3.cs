@@ -53,6 +53,8 @@ namespace QuizRunner
             public Label AddAnswerArgumets;
         };
 
+        QuizRunner.Editor.Editor GEditor = new QuizRunner.Editor.Editor();
+
         public IfrCreator()
         {
             InitializeComponent();
