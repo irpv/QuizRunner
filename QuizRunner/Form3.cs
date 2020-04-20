@@ -676,9 +676,9 @@ namespace QuizRunner
             }
 
             // Создание новых вкладок вопросов.
-
             for (var ii = 0; ii < editor.NumberOfQuestion(); ii++)
             {
+                // Заполнение текста вопроса.
                 CreateNewQuestionPage(ii + 1);
                 string[] TQuestionText = editor.GetQuestionText(ii);
                 var TIrtbQuestionText = (RichTextBox)TItbTabControl.TabPages[ii + 1].Controls[0];
@@ -686,6 +686,19 @@ namespace QuizRunner
                 {
                     TIrtbQuestionText.AppendText(TQuestionText[ij] + "\n");
                 }
+
+                // Заполнение типа вопроса.
+                var TIrbRadioButton = (RadioButton)TItbTabControl.TabPages[ii + 1]
+                    .Controls[2].Controls[0];
+                var TIrbCheckBox = (RadioButton)TItbTabControl.TabPages[ii + 1]
+                    .Controls[2].Controls[1];
+
+                TIrbRadioButton.Checked = editor.GetAnswerType(ii);
+                TIrbCheckBox.Checked = !TIrbRadioButton.Checked;
+
+                
+
+
             }
         }
 
