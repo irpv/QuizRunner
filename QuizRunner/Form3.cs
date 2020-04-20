@@ -755,6 +755,9 @@ namespace QuizRunner
                 GUserVariable[il].Value = editor.ListOfVariables[key];
                 GUserVariable[il].ValueInput.Value = (Decimal)editor.ListOfVariables[key];
             }
+
+            // Возвращение к стартовой вкладке
+            TItbTabControl.SelectedIndex = 0;
         }
 
         /// <summary>
