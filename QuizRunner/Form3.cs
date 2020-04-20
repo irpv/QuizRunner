@@ -53,7 +53,7 @@ namespace QuizRunner
             public Label AddAnswerArgumets;
         };
 
-        QuizRunner.Editor.Editor GEditor = new QuizRunner.Editor.Editor();
+       private readonly QuizRunner.Editor.Editor GEditor = new QuizRunner.Editor.Editor();
 
         public IfrCreator()
         {
@@ -680,6 +680,7 @@ namespace QuizRunner
             {
                 // Заполнение текста вопроса.
                 CreateNewQuestionPage(ii + 1);
+                TItbTabControl.SelectedIndex = ii + 1;
                 string[] TQuestionText = editor.GetQuestionText(ii);
                 var TIrtbQuestionText = (RichTextBox)TItbTabControl.TabPages[ii + 1].Controls[0];
                 for (var ij = 0; ij < TQuestionText.Length; ij++)
@@ -696,7 +697,19 @@ namespace QuizRunner
                 TIrbRadioButton.Checked = editor.GetAnswerType(ii);
                 TIrbCheckBox.Checked = !TIrbRadioButton.Checked;
 
-                
+                // Заполнение ответов
+                for (var ij = 0; ij < editor.NumberOfAnswers(ii); ij++)
+                {
+                    CreateNewAnswer((Panel)(TItbTabControl.TabPages[ii + 1].Controls[3].Controls[0]));
+                    var TAnswerArray = (Answer[])TItbTabControl.TabPages[ii + 1].Tag;
+                    TAnswerArray[ij].AnswerIntput.Text = editor.GetAnswerText(ii, ij);
+                    for (var ik = 0; ik < editor.NumberOfArgument(ii,ij); ik++)
+                    {
+                        CreateNewAnswerArgument(ij);
+                        var TArgumetArray = TAnswerArray[ij].AnswerArguments;
+                        TArgumetArray[ik].Text = editor.GetAnswerArgument(ii, ij)[ik];
+                    }
+                }
 
 
             }
