@@ -422,5 +422,44 @@ namespace QuizRunner.Editor
             }
             StaticsLines[numOfStatLine].Postfix = pstfx;
         }
+
+        /// <summary>
+        /// Возвращает количество вопросов.
+        /// </summary>
+        /// <returns>количество вопросов</returns>
+        public int NumberOfQuestion()
+        {
+            return ListOfQuestions.Length;
+        }
+
+        /// <summary>
+        /// Возвращает количество ответов.
+        /// </summary>
+        /// <param name="numOfQuest">номер вопроса</param>
+        /// <returns>количество ответов</returns>
+        public int NumberOfAnswers(int numOfQuest)
+        {
+            return ListOfQuestions[numOfQuest].AnswArr.Length;
+        }
+
+        /// <summary>
+        /// Возвращает количество строк статистики.
+        /// </summary>
+        /// <returns>количество строк статистики</returns>
+        public int NumberOfStatLine()
+        {
+            return StaticsLines.Length;
+        }
+
+        /// <summary>
+        /// Возвращает количество аргументов ответа.
+        /// </summary>
+        /// <param name="numOfQuest">номер вопроса</param>
+        /// <param name="numOfAnsw">номер ответа</param>
+        /// <returns>количество аргументов</returns>
+        public int NumberOfArgument(int numOfQuest, int numOfAnsw)
+        {
+            return ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument.Length;
+        }
     }
 }
