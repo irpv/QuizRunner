@@ -605,8 +605,8 @@ namespace QuizRunner
         /// </summary>
         private void Open()
         {
-            try
-            {
+            //try
+            //{
                 if (Changed)
                 {
                     if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
@@ -630,22 +630,22 @@ namespace QuizRunner
                         Changed = false;
                     }
                 }
-        }
-            catch(System.FormatException)
-            {
-                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch(System.IO.IOException)
-            {
-                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch
-            {
-                MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch(System.FormatException)
+            //{
+            //    MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch(System.IO.IOException)
+            //{
+            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
 }
 
         private void FillInTheInterface(QuizRunner.Editor.Editor editor)
@@ -663,6 +663,23 @@ namespace QuizRunner
             for (var i = 0; i < TDescription.Length; i++)
             {
                 TIrtbDescription.AppendText(TDescription[i] + "\n");
+            }
+
+            // Удаление старых вкладок вопросов.
+            if (TItbTabControl.TabPages.Count > 2)
+            {
+                int TTabPagesCount = TItbTabControl.TabPages.Count;
+                for (var ii = 1; ii < TTabPagesCount - 1; ii++)
+                {
+                    TItbTabControl.TabPages.Remove(TItbTabControl.TabPages[1]);
+                }
+            }
+
+            // Создание новых вкладок вопросов.
+
+            for (var ii = 0; ii < editor.NumberOfQuestion(); ii++)
+            {
+                CreateNewQuestionPage(ii + 1);
             }
         }
 
