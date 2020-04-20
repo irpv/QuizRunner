@@ -710,8 +710,23 @@ namespace QuizRunner
                         TArgumetArray[ik].Text = editor.GetAnswerArgument(ii, ij)[ik];
                     }
                 }
+            }
 
+            // Удаление старых строк статистики
+            int TStatisticLinesLength = GStatisticsLines.Length;
+            for (var ii = 0; ii < TStatisticLinesLength; ii++)
+            {
+                RemoveStatisticLine(0);
+            }
 
+            // Заполнение строк статистики
+            for (var ii = 0; ii < editor.NumberOfStatLine(); ii++)
+            {
+                AddStatisticLine(TItbTabControl.TabPages[TItbTabControl.TabPages.Count - 1]
+                    .Controls[1].Controls[0]);
+                GStatisticsLines[ii].Prefix.Text = editor.GetStatPrefix(ii);
+                GStatisticsLines[ii].Calc.Text = editor.GetStatCalculate(ii);
+                GStatisticsLines[ii].Postfix.Text = editor.GetStatPostfix(ii);
             }
         }
 
