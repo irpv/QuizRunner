@@ -790,6 +790,41 @@ namespace QuizRunner
             editor.SetDescrip(TrtbDescription.Text.Split(new char[] {'\r', '\n'}, 
                 StringSplitOptions.RemoveEmptyEntries));
 
+            // Запись страниц теста.
+            if (TItbTabControl.TabPages.Count > 2)
+            {
+                for (var ii = 1; ii < TItbTabControl.TabPages.Count - 1; ii++)
+                {
+                    // Запись текста вопроса.
+                    var TIrtbQuestionText = (RichTextBox)TItbTabControl.TabPages[ii].Controls[0];
+                    editor.SetQuestionText(TIrtbQuestionText.Text.Split(new char[] { '\r', '\n' },
+                        StringSplitOptions.RemoveEmptyEntries), ii - 1);
+
+                    // Запись типа вопроса.
+                    var TIrbRadioButton = (RadioButton)TItbTabControl.TabPages[ii]
+                    .Controls[2].Controls[0];
+                    editor.SetAnswType(TIrbRadioButton.Checked, ii - 1);
+
+                    // Запись ответов.
+                    var TAnswerArray = (Answer[])TItbTabControl.TabPages[ii].Tag;
+
+                    for (var ij = 0; ij < TAnswerArray.Length; ij++)
+                    {
+                        editor.SetAnswText(TAnswerArray[ij].AnswerIntput.Text,
+                            ii - 1, ij);
+
+                        // Запись аргументов.
+                        var TArgumentArray = new string[TAnswerArray[ij].AnswerArguments.Length];
+                        for (var ik = 0; ik < TAnswerArray[ij].AnswerArguments.Length; ik++)
+                        {
+                            TArgumentArray[ik] = TAnswerArray[ij].AnswerArguments[ik].Text;
+                        }
+                        editor.SetAnswArgument(TArgumentArray, ii - 1, ij);
+
+                    }
+                }
+            }
+
 
 
         ExitFromFillin:;
