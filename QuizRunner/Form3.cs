@@ -728,6 +728,24 @@ namespace QuizRunner
                 GStatisticsLines[ii].Calc.Text = editor.GetStatCalculate(ii);
                 GStatisticsLines[ii].Postfix.Text = editor.GetStatPostfix(ii);
             }
+
+            // Удаление старых переменных
+            int TVarianlesLength = GUserVariable.Length;
+            for (var ii = 0; ii < TVarianlesLength; ii++)
+            {
+                RemoveVariable(0);
+            }
+
+            // Заполнение новых переменных
+            var il = 0;
+            foreach (string key in editor.ListOfVariables.Keys)
+            {
+                AddVariable(this.Controls[2], this.Controls[2].Controls[1]);
+                GUserVariable[il].Name = key;
+                GUserVariable[il].NameInput.Text = key;
+                GUserVariable[il].Value = editor.ListOfVariables[key];
+                GUserVariable[il].ValueInput.Value = (Decimal)editor.ListOfVariables[key];
+            }
         }
 
         /// <summary>
