@@ -864,6 +864,73 @@ namespace QuizRunner
         }
 
         /// <summary>
+        /// Возращает доступность имени пользовательской переменной и выводит причину недоступности.
+        /// </summary>
+        /// <param name="index"> Индекс пользовательской переменной.</param>
+        /// <returns>Доступность.</returns>
+        private bool ValidVariableName(int index)
+        {
+            for (var i = 0; i < GUserVariable.Length; i++)
+            {
+                if (i != index)
+                {
+                    if (GUserVariable[i].Name == GUserVariable[index].Name)
+                    {
+                        if (i > index)
+                        {
+                            GUserVariable[index].NameInput.ForeColor = Color.Red;
+                            GUserVariable[index].NameInput.Focus();
+                        }
+                        else
+                        {
+                            GUserVariable[i].NameInput.ForeColor = Color.Red;
+                            GUserVariable[i].NameInput.Focus();
+                        }
+
+                        MessageBox.Show("Некоторые переменные имеют одинаковые имена!", "Переменные",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return false;
+                    }
+                }
+            }
+
+            if ((GUserVariable[index].Name.Contains("[")) 
+                || (GUserVariable[index].Name.Contains("]")))
+            {
+                MessageBox.Show("Имя перемменой имеет недопустимые символы!", "Переменные",
+                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                GUserVariable[index].NameInput.ForeColor = Color.Red;
+                GUserVariable[index].NameInput.Focus();
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Возращает доступность имени пользовательской переменной.
+        /// </summary>
+        /// <param name="name"> Индекс пользовательской переменной.</param>
+        /// <returns>Доступность.</returns>
+        private bool ValidVariableName(string name)
+        {
+            for (var i = 0; i < GUserVariable.Length; i++)
+            {
+                if (GUserVariable[i].Name == name)
+                {
+                    return false;
+                }
+            }
+
+            if ((name.Contains("[")) || (name.Contains("]")))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Удаляет пользовательскую переменную по индексу в массиве.
         /// </summary>
         /// <param name="index">Индекс.</param>
