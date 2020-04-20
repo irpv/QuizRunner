@@ -703,11 +703,16 @@ namespace QuizRunner
                     CreateNewAnswer((Panel)(TItbTabControl.TabPages[ii + 1].Controls[3].Controls[0]));
                     var TAnswerArray = (Answer[])TItbTabControl.TabPages[ii + 1].Tag;
                     TAnswerArray[ij].AnswerIntput.Text = editor.GetAnswerText(ii, ij);
+                    
+                    // Заполнение аргументов
                     for (var ik = 0; ik < editor.NumberOfArgument(ii,ij); ik++)
                     {
-                        CreateNewAnswerArgument(ij);
-                        var TArgumetArray = TAnswerArray[ij].AnswerArguments;
-                        TArgumetArray[ik].Text = editor.GetAnswerArgument(ii, ij)[ik];
+                        if (editor.GetAnswerArgument(ii, ij)[ik] != "")
+                        {
+                            CreateNewAnswerArgument(ij);
+                            var TArgumetArray = TAnswerArray[ij].AnswerArguments;
+                            TArgumetArray[ik].Text = editor.GetAnswerArgument(ii, ij)[ik];
+                        }
                     }
                 }
             }
