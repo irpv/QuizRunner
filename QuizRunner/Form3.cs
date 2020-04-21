@@ -892,7 +892,6 @@ namespace QuizRunner
 
                     for (var ij = 0; ij < TAnswerArray.Length; ij++)
                     {
-                        MessageBox.Show(TAnswerArray[ij].AnswerIntput.Text);
                         editor.SetAnswText(TAnswerArray[ij].AnswerIntput.Text,
                             ii - 1, ij);
                     }
