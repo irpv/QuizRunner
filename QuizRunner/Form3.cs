@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace QuizRunner
 {
@@ -228,45 +229,6 @@ namespace QuizRunner
                 Parent = this
             };
             ItcQuizEditor.BringToFront();
-
-            // Панель загрузки.
-            var IpnLoading = new Panel
-            {
-                Left = 0,
-                Top = 0,
-                Width = this.Width,
-                Height = this.Height,
-                BackColor = Color.White,
-                Visible = false,
-                Parent = this
-            };
-            IpnLoading.BringToFront();
-
-            // Картинка панели загрузок.
-            var IpbLoading = new PictureBox
-            {
-                Width = IpnLoading.Width / 5,
-                Height = IpnLoading.Width / 5,
-                Image = Properties.Resources.Loading,
-                SizeMode = PictureBoxSizeMode.StretchImage,
-                Parent = IpnLoading,
-                Visible = true
-            };
-            IpbLoading.Left = IpnLoading.Width / 2 - IpbLoading.Width / 2;
-            IpbLoading.Top = IpnLoading.Height / 2 - IpbLoading.Height / 2 - 30;
-
-            // Текст панели загрузки.
-            var IlbLoading = new Label
-            {
-                AutoSize = true,
-                Text = "Загрузка",
-                Font = new Font("Verdana", 25, FontStyle.Bold),
-                ForeColor = Color.FromArgb(18, 136, 235),
-                Top = IpbLoading.Top + IpbLoading.Height + 20,
-                Parent = IpnLoading,
-                Visible = true
-            };
-            IlbLoading.Left = IpnLoading.Width / 2 - IlbLoading.Width / 2;
 
             /// Главная страница.
             #region
@@ -620,7 +582,7 @@ namespace QuizRunner
 
         private void IlbAddTabPage_Click(object sender, EventArgs e)
         {
-            CreateNewQuestionPage(((TabControl)this.Controls[1]).SelectedIndex + 1);
+            CreateNewQuestionPage(((TabControl)this.Controls[0]).SelectedIndex + 1);
         }
 
         private void IlbAddStatisticsLine_Click(object sender,EventArgs e)
@@ -665,8 +627,8 @@ namespace QuizRunner
         /// </summary>
         private void Open()
         {
-            try
-            {
+            //try
+            //{
                 if (Changed)
                 {
                     if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
@@ -692,22 +654,22 @@ namespace QuizRunner
                         Changed = false;
                     }
                 }
-        }
-            catch(System.FormatException)
-            {
-                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch(System.IO.IOException)
-            {
-                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch
-            {
-                MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (System.FormatException)
+            //{
+            //    MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch (System.IO.IOException)
+            //{
+            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         /// <summary>
@@ -717,9 +679,11 @@ namespace QuizRunner
         private void FillInTheInterface(QuizRunner.Editor.Editor editor)
         {
             // Включение экрана загрузки.
-            this.Controls[0].Visible = true;
+            Thread TTHLoadingScreen = new Thread(ShowLoadingScreen);
+            TTHLoadingScreen.Start((object)"Открытие");
 
-            var TItbTabControl = (TabControl)this.Controls[1];
+
+            var TItbTabControl = (TabControl)this.Controls[0];
 
             // Заполнение имени теста.
             TItbTabControl.TabPages[0].Controls[1].Text = editor.GetName();
@@ -820,7 +784,7 @@ namespace QuizRunner
              var il = 0;
             foreach (string key in editor.ListOfVariables.Keys)
             {
-                AddVariable(this.Controls[3], this.Controls[3].Controls[1]);
+                AddVariable(this.Controls[2], this.Controls[2].Controls[1]);
                 GUserVariable[il].Name = key;
                 GUserVariable[il].NameInput.Text = key;
                 GUserVariable[il].Value = editor.ListOfVariables[key];
@@ -833,7 +797,7 @@ namespace QuizRunner
             TItbTabControl.SelectedIndex = 0;
 
             // Выключение экрана загрузки.
-            this.Controls[0].Visible = false;
+            TTHLoadingScreen.Abort();
         }
 
         /// <summary>
@@ -855,7 +819,7 @@ namespace QuizRunner
                 }
             }
 
-            var TItbTabControl = (TabControl)this.Controls[1];
+            var TItbTabControl = (TabControl)this.Controls[0];
             if (TItbTabControl.Controls[0].Controls[1].Text == "")
             {
                 TItbTabControl.SelectedIndex = 0;
@@ -1296,7 +1260,7 @@ namespace QuizRunner
             var TIttToolTip = new ToolTip();
 
             // Cтраница.
-            var TItcTabController = (TabControl)this.Controls[1];
+            var TItcTabController = (TabControl)this.Controls[0];
             var TItpQuestionPage = new TabPage
             {
                 Width = TItcTabController.ClientSize.Width,
@@ -1607,7 +1571,7 @@ namespace QuizRunner
         /// <param name="index">Индекс</param>
         private void RemoveAnswer(int index)
         {
-            var TItcTabController = (TabControl)this.Controls[1];
+            var TItcTabController = (TabControl)this.Controls[0];
             var TITabPage = TItcTabController.SelectedTab;
             var TAnswerArray = (Answer[])TITabPage.Tag;
 
@@ -1692,7 +1656,7 @@ namespace QuizRunner
         /// <param name="index">Индекс ответа</param>
         private void CreateNewAnswerArgument(int index)
         {
-            var TItcTabController = (TabControl)this.Controls[1];
+            var TItcTabController = (TabControl)this.Controls[0];
             var TItpTabPage = TItcTabController.SelectedTab;
             var TAnswerArray = (Answer[])TItpTabPage.Tag;
             var TAnswer = TAnswerArray[index];
@@ -1764,6 +1728,12 @@ namespace QuizRunner
             #endregion
 
             TItpTabPage.Tag = TAnswerArray;
+        }
+
+        private void ShowLoadingScreen(object message)
+        {
+            LoadingScreen TIfrLoadScreen = new LoadingScreen((string)message);
+            TIfrLoadScreen.ShowDialog();
         }
     }
 }
