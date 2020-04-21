@@ -603,6 +603,7 @@ namespace QuizRunner
             {
                 if (GIsfdSaveDialog.ShowDialog() == DialogResult.OK)
                 {
+                    this.LoadingProcess = true;
                     GEditor = new QuizRunner.Editor.Editor();
                     bool TManaged = false;
                     FillInFromTheInterface(GEditor, ref TManaged);
@@ -611,6 +612,7 @@ namespace QuizRunner
                         GEditor.Save(GIsfdSaveDialog.FileName);
                     }
                     Changed = false;
+                    this.LoadingProcess = false;
                 }
         }
             catch (System.IO.IOException)
@@ -630,8 +632,8 @@ namespace QuizRunner
         /// </summary>
         private void Open()
         {
-            //try
-            //{
+            try
+            {
                 if (Changed)
                 {
                     if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
@@ -640,10 +642,12 @@ namespace QuizRunner
                     {
                         if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                         {
+                            this.LoadingProcess = true;
                             GEditor = new QuizRunner.Editor.Editor();
                             GEditor.Open(GIofdOpenDialog.FileName);
                             FillInTheInterface(GEditor);
                             Changed = false;
+                            this.LoadingProcess = false;
                         }
                     }
                 }
@@ -651,28 +655,30 @@ namespace QuizRunner
                 {
                     if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
+                        this.LoadingProcess = true;
                         GEditor = new QuizRunner.Editor.Editor();
                         GEditor.Open(GIofdOpenDialog.FileName);
                         FillInTheInterface(GEditor);
                         Changed = false;
+                        this.LoadingProcess = false;
                     }
                 }
-            //}
-            //catch (System.FormatException)
-            //{
-            //    MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch (System.IO.IOException)
-            //{
-            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            }
+            catch (System.FormatException)
+            {
+                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -682,10 +688,9 @@ namespace QuizRunner
         private void FillInTheInterface(QuizRunner.Editor.Editor editor)
         {
             // Включение экрана загрузки.
-            this.LoadingProcess = true;
             Task.Run(() =>
             {
-                LoadingScreen TIfrLoadScreen = new LoadingScreen("Открытие", this);
+                LoadingScreen TIfrLoadScreen = new LoadingScreen("Секундочку, тест открывается.", this);
                 TIfrLoadScreen.ShowDialog();
             });
             Thread.Sleep(500);
@@ -808,7 +813,6 @@ namespace QuizRunner
             // Выключение экрана загрузки.
             this.Show();
             Thread.Sleep(500);
-            this.LoadingProcess = false;
         }
 
         /// <summary>
@@ -818,6 +822,16 @@ namespace QuizRunner
         /// <param name="managed">Удалось ли заполнение.</param>
         private void FillInFromTheInterface(QuizRunner.Editor.Editor editor, ref  bool managed)
         {
+            // Включение экрана загрузки.
+            Task.Run(() =>
+            {
+                LoadingScreen TIfrLoadScreen 
+                = new LoadingScreen("Подождите немного, мы сохраняем ваш тест.", this);
+                TIfrLoadScreen.ShowDialog();
+            });
+            Thread.Sleep(500);
+            this.Hide();
+
             managed = true;
 
             // Проверка параметров на доступность для сохранения.
@@ -904,7 +918,10 @@ namespace QuizRunner
 
 
 
-        ExitFromFillin:;
+        ExitFromFillin:
+
+            this.Show();
+            Thread.Sleep(500);
         }
 
         /// <summary>

@@ -39,7 +39,7 @@ namespace QuizRunner
             {
                 AutoSize = true,
                 Text = GMessage,
-                Font = new Font("Verdana", 25, FontStyle.Bold),
+                Font = new Font("Verdana", 20, FontStyle.Bold),
                 ForeColor = Color.FromArgb(18, 136, 235),
                 Parent = this
             };
