@@ -892,15 +892,20 @@ namespace QuizRunner
 
                     for (var ij = 0; ij < TAnswerArray.Length; ij++)
                     {
+                        MessageBox.Show(TAnswerArray[ij].AnswerIntput.Text);
                         editor.SetAnswText(TAnswerArray[ij].AnswerIntput.Text,
                             ii - 1, ij);
+                    }
 
-                        // Запись аргументов.
+                    // Запись аргументов.
+                    for (var ij = 0; ij < TAnswerArray.Length; ij++)
+                    {
+
                         var TArgumentArray = new string[TAnswerArray[ij].AnswerArguments.Length];
-                            for (var ik = 0; ik < TAnswerArray[ij].AnswerArguments.Length; ik++)
-                            {
-                                    TArgumentArray[ik] = TAnswerArray[ij].AnswerArguments[ik].Text;
-                            }
+                        for (var ik = 0; ik < TAnswerArray[ij].AnswerArguments.Length; ik++)
+                        {
+                            TArgumentArray[ik] = TAnswerArray[ij].AnswerArguments[ik].Text;
+                        }
                         editor.SetAnswArgument(TArgumentArray, ii - 1, ij);
 
                     }

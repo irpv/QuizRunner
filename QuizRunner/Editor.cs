@@ -337,13 +337,23 @@ namespace QuizRunner.Editor
                     ListOfQuestions[numOfQuest].AnswArr = new Answer[0];
                 }
             }
-            Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, 1);
+
+            try
+            {
+                Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr,
+                    ListOfQuestions[numOfQuest].AnswArr.Length + 1);
+            }
+            catch(System.NullReferenceException)
+            {
+                Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, 1);
+            }
+
             if (ListOfQuestions[numOfQuest].AnswArr.Length <= numOfAnsw)
             {
                 int TCount1 = ListOfQuestions[numOfQuest].AnswArr.Length;
                 Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, numOfAnsw + 1);
                 for (var j = TCount1; j <= numOfAnsw; j++)
-                { 
+                {
                     ListOfQuestions[numOfQuest].AnswArr[j].AnswerText = "";
                 }
             }
