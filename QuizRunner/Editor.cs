@@ -461,5 +461,107 @@ namespace QuizRunner.Editor
         {
             return ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument.Length;
         }
-    }
+        public bool IsCorrect(string inpt)
+        {
+            bool flag = false;
+            int N = inpt.Length;
+            int coord = -1;
+            int eq = 0;
+            for (var i = 0; i < N; i++)
+            {
+                if (inpt[i] == '[')
+                {
+                    for (var j = i + 1; j < N; j++)
+                    {
+                        if (inpt[j] == '[')
+                        {
+                            flag = false;
+                            break;
+                        }
+                        if (inpt[j] == ']')
+                        {
+                            flag = true;
+                            coord = j;
+                        }
+                    }
+                    for (int k = i + 1; k < coord; k++)
+                    {
+                        if (inpt[k] >= 'a' && inpt[k] <= 'z' || inpt[k] >= 'A' && inpt[k] <= 'Z' ||
+                            inpt[k] >= '0' && inpt[k] <= '9' || inpt[k] == '_') 
+                        {
+                            flag = true;
+                        }
+                    }
+                    if (flag == false)
+                    {
+                        break;
+                    }
+                }
+                
+            }
+            if (flag == false)
+            {
+                goto Exit;
+            }
+            int meetings = 0;
+            for (var i = 0; i < N; i++)
+            {
+                if (inpt[i] == '(')
+                {
+                    meetings++;
+                }
+                else if (inpt[i] == ')')
+                {
+                    meetings--;
+                }
+            }
+            if (meetings < 0)
+            {
+                flag = false;
+            }
+            if (flag == false)
+            {
+                goto Exit;
+            }
+            for (var i = 0; i < N; i++)
+            {
+                if (inpt[i] == '+' || inpt[i] == '-' || inpt[i] == '/' || inpt[i] == '*') 
+                {
+                    if (i == 0 && inpt[i] == '-' && (inpt[i + 1] >= '0' && inpt[i + 1] <= '9'
+                        || inpt[i + 1] == '[' || inpt[i + 1] == '(')) 
+                    {
+                        flag = true;
+                    }
+                    if (i != 0 && i != N - 1 && (inpt[i - 1] >= '0' && inpt[i - 1] <= '9' || inpt[i - 1] == ']' || inpt[i - 1] == '(')
+                      && (inpt[i + 1] >= '0' && inpt[i + 1] <= '9' || inpt[i + 1] == '[' || inpt[i + 1] == ')')) 
+                    {
+                        flag = true;
+                    }
+                    if (i == N - 1)
+                    {
+                        flag = false;
+                    }
+                    if (inpt[i + 1] == '+' || inpt[i + 1] == '-' || inpt[i + 1] == '/' || inpt[i + 1] == '*')
+                    {
+                        flag = false;
+                    }
+                    if (flag == false)
+                    {
+                        break;
+                    }
+                }
+                if (inpt[i] == '=')
+                {
+                    eq++;
+                }
+                if (eq > 1)
+                {
+                    flag = false;
+                    break;
+                }
+            }
+        Exit:
+            return flag;
+        }
+        }
 }

@@ -218,5 +218,16 @@ namespace EditorTests
             int actual = a.NumberOfArgument(0, 0);
             Assert.AreEqual(num, actual);
         }
+
+       [TestMethod]
+       public void Correctness()
+        {
+            string input = "(-[abc])=[abc]+((-100))+60*20";
+            bool expected = true;
+            Editor a = new Editor();
+            bool actual = a.IsCorrect(input);
+            Assert.AreEqual(expected, actual);
+        }
+        
     }
 }
