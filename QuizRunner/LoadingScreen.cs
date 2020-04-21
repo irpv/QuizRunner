@@ -7,16 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace QuizRunner
 {
     public partial class LoadingScreen : Form
     {
         string GMessage;
-        public LoadingScreen(string message)
+        IfrCreator GIfrCreator;
+        public LoadingScreen(string message, IfrCreator sender)
         {
             InitializeComponent();
             GMessage = message;
+            GIfrCreator = sender;
         }
 
         private void LoadingScreen_Load(object sender, EventArgs e)
@@ -42,6 +45,26 @@ namespace QuizRunner
             };
             IlbLoading.Left = this.Width / 2 - IlbLoading.Width / 2;
             IlbLoading.Top = IpbLoading.Top + IpbLoading.Height + 20;
+
+            var ItmTimer = new System.Windows.Forms.Timer();
+            ItmTimer.Tick += ItmTimer_Tick;
+            ItmTimer.Start();
+
+
+        }
+
+        private void ItmTimer_Tick(object sender, EventArgs e)
+        {
+            if (GIfrCreator.LoadingProcess == false)
+            {
+                this.Close();
+                this.Dispose();
+            }
+        }
+
+        private void LoadingScreen_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            this.Dispose();
         }
     }
 }

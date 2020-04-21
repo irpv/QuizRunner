@@ -19,6 +19,9 @@ namespace QuizRunner
         // Свойство формы, указывающее были ли изменены данные, после открытия или создания.
         public bool Changed;
 
+        // Свойство формы, указывающее, проходит ли на ней какая либо загрузка в данный момент.
+        public bool LoadingProcess;
+
         // Структура для хранения интерфейсов пользовательских переменных.
         public struct UVariable
         {
@@ -679,8 +682,14 @@ namespace QuizRunner
         private void FillInTheInterface(QuizRunner.Editor.Editor editor)
         {
             // Включение экрана загрузки.
-            Thread TTHLoadingScreen = new Thread(ShowLoadingScreen);
-            TTHLoadingScreen.Start((object)"Открытие");
+            this.LoadingProcess = true;
+            Task.Run(() =>
+            {
+                LoadingScreen TIfrLoadScreen = new LoadingScreen("Открытие", this);
+                TIfrLoadScreen.ShowDialog();
+            });
+            Thread.Sleep(500);
+            this.Hide();
 
 
             var TItbTabControl = (TabControl)this.Controls[0];
@@ -797,7 +806,9 @@ namespace QuizRunner
             TItbTabControl.SelectedIndex = 0;
 
             // Выключение экрана загрузки.
-            TTHLoadingScreen.Abort();
+            this.Show();
+            Thread.Sleep(500);
+            this.LoadingProcess = false;
         }
 
         /// <summary>
@@ -1730,10 +1741,20 @@ namespace QuizRunner
             TItpTabPage.Tag = TAnswerArray;
         }
 
+        /// <summary>
+        /// Запускает загрузачный экран.
+        /// </summary>
+        /// <param name="message">Сообщение на экране</param>
         private void ShowLoadingScreen(object message)
         {
-            LoadingScreen TIfrLoadScreen = new LoadingScreen((string)message);
-            TIfrLoadScreen.ShowDialog();
+            try
+            {
+                
+            }
+            catch(System.Threading.ThreadAbortException)
+            {
+
+            }
         }
     }
 }
