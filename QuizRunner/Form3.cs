@@ -614,15 +614,19 @@ namespace QuizRunner
                     Changed = false;
                     this.LoadingProcess = false;
                 }
-        }
+            }
             catch (System.IO.IOException)
             {
+                this.LoadingProcess = false;
+                this.Show();
                 MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при сохранении!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch
+            catch (Exception e)
             {
-                MessageBox.Show("Не удалось сохранить файл.", "Ошибка при сохранении!",
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Не удалось сохранить файл. \n" + e.Message, "Ошибка при сохранении!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -667,17 +671,23 @@ namespace QuizRunner
             }
             catch (System.FormatException)
             {
+                this.LoadingProcess = false;
+                this.Show();
                 MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             catch (System.IO.IOException)
             {
+                this.LoadingProcess = false;
+                this.Show();
                 MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch
+            catch(Exception e)
             {
-                MessageBox.Show("Не удалось открыть файл.", "Ошибка при открытии!",
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Не удалось открыть файл.\n" + e.Message, "Ошибка при открытии!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
