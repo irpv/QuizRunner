@@ -655,6 +655,7 @@ namespace QuizRunner
                 {
                     if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
+
                         this.LoadingProcess = true;
                         GEditor = new QuizRunner.Editor.Editor();
                         GEditor.Open(GIofdOpenDialog.FileName);
@@ -681,6 +682,7 @@ namespace QuizRunner
             }
         }
 
+
         /// <summary>
         /// Заполняет интерфейс данными теста.
         /// </summary>
@@ -688,12 +690,23 @@ namespace QuizRunner
         private void FillInTheInterface(QuizRunner.Editor.Editor editor)
         {
             // Включение экрана загрузки.
-            Task.Run(() =>
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
-                LoadingScreen TIfrLoadScreen = new LoadingScreen("Секундочку, тест открывается.", this);
-                TIfrLoadScreen.ShowDialog();
-            });
-            Thread.Sleep(500);
+                LoadingScreen TIfrLoadScreen =
+                        new LoadingScreen("Секундочку, тест открывается.", this);
+                TIfrLoadScreen.Show();
+            }
+            else
+            {
+                Task.Run(() =>
+                {
+                    LoadingScreen TIfrLoadScreen = 
+                        new LoadingScreen("Секундочку, тест открывается.", this);
+                    TIfrLoadScreen.ShowDialog();
+                });
+                Thread.Sleep(500);
+            }
+
             this.Hide();
 
 
@@ -823,13 +836,24 @@ namespace QuizRunner
         private void FillInFromTheInterface(QuizRunner.Editor.Editor editor, ref  bool managed)
         {
             // Включение экрана загрузки.
-            Task.Run(() =>
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
             {
-                LoadingScreen TIfrLoadScreen 
-                = new LoadingScreen("Подождите немного, мы сохраняем ваш тест.", this);
-                TIfrLoadScreen.ShowDialog();
-            });
-            Thread.Sleep(500);
+                LoadingScreen TIfrLoadScreen
+                       = new LoadingScreen("Подождите немного, мы сохраняем ваш тест.",
+                        this);
+                TIfrLoadScreen.Show();
+            }
+            else
+            {
+                Task.Run(() =>
+                {
+                    LoadingScreen TIfrLoadScreen
+                        = new LoadingScreen("Подождите немного, мы сохраняем ваш тест.",
+                         this);
+                    TIfrLoadScreen.ShowDialog();
+                });
+                Thread.Sleep(500);
+            }
             this.Hide();
 
             managed = true;
@@ -991,9 +1015,7 @@ namespace QuizRunner
             TInudValue.ValueChanged += (s, e) =>
             {
                 Changed = true;
-                // var Value = (NumericUpDown)sender; Что бы не мешался, пока нет функции.
-                // Функция изменения значения переменной по имени 
-                //(UserVariable[Convert.ToInt32(Value.Tag].Name)).
+
             };
             TIttCreatorToolTip.SetToolTip(TInudValue, "Значение");
             GUserVariable[TNow].ValueInput = TInudValue;
@@ -1758,20 +1780,5 @@ namespace QuizRunner
             TItpTabPage.Tag = TAnswerArray;
         }
 
-        /// <summary>
-        /// Запускает загрузачный экран.
-        /// </summary>
-        /// <param name="message">Сообщение на экране</param>
-        private void ShowLoadingScreen(object message)
-        {
-            try
-            {
-                
-            }
-            catch(System.Threading.ThreadAbortException)
-            {
-
-            }
-        }
     }
 }
