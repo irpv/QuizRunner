@@ -634,8 +634,8 @@ namespace QuizRunner
         /// </summary>
         private void Save()
         {
-            //try
-            //{
+            try
+            {
                 if (GIsfdSaveDialog.ShowDialog() == DialogResult.OK)
                 {
                     GEditor = new QuizRunner.Editor.Editor();
@@ -647,17 +647,17 @@ namespace QuizRunner
                     }
                     Changed = false;
                 }
-            //}
-            //catch (System.IO.IOException)
-            //{
-            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при сохранении!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Не удалось сохранить файл.", "Ошибка при сохранении!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+        }
+            catch (System.IO.IOException)
+            {
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при сохранении!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch
+            {
+                MessageBox.Show("Не удалось сохранить файл.", "Ошибка при сохранении!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -726,6 +726,8 @@ namespace QuizRunner
 
             //Заполнение описания теста.
             var TIrtbDescription = (RichTextBox)TItbTabControl.TabPages[0].Controls[3];
+            TIrtbDescription.Text = "";
+
 
             string[] TDescription = editor.GetDescription();
 
