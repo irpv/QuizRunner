@@ -634,8 +634,8 @@ namespace QuizRunner
         /// </summary>
         private void Save()
         {
-            try
-            {
+            //try
+            //{
                 if (GIsfdSaveDialog.ShowDialog() == DialogResult.OK)
                 {
                     GEditor = new QuizRunner.Editor.Editor();
@@ -647,17 +647,17 @@ namespace QuizRunner
                     }
                     Changed = false;
                 }
-            }
-            catch (System.IO.IOException)
-            {
-                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при сохранении!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch
-            {
-                MessageBox.Show("Не удалось сохранить файл.", "Ошибка при сохранении!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (System.IO.IOException)
+            //{
+            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при сохранении!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Не удалось сохранить файл.", "Ошибка при сохранении!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
         /// <summary>
@@ -772,13 +772,20 @@ namespace QuizRunner
                     CreateNewAnswer((Panel)(TItbTabControl.TabPages[ii + 1].Controls[3].Controls[0]));
                     var TAnswerArray = (Answer[])TItbTabControl.TabPages[ii + 1].Tag;
                     TAnswerArray[ij].AnswerIntput.Text = editor.GetAnswerText(ii, ij);
-                    
+
+                    var ik = 0;
+                    var im = 0;
                     // Заполнение аргументов
-                    for (var ik = 0; ik < editor.NumberOfArgument(ii,ij); ik++)
+                    while (ik < editor.NumberOfArgument(ii,ij))
                     {
+                        if (editor.GetAnswerArgument(ii, ij)[ik] != "")
+                        {
                             CreateNewAnswerArgument(ij);
                             var TArgumetArray = TAnswerArray[ij].AnswerArguments;
-                            TArgumetArray[ik].Text = editor.GetAnswerArgument(ii, ij)[ik];
+                            TArgumetArray[im].Text = editor.GetAnswerArgument(ii, ij)[ik];
+                            im++;
+                        }
+                        ik++;
                     }
                 }
             }
@@ -808,7 +815,7 @@ namespace QuizRunner
             }
 
             // Заполнение новых переменных
-            var il = 0;
+             var il = 0;
             foreach (string key in editor.ListOfVariables.Keys)
             {
                 AddVariable(this.Controls[3], this.Controls[3].Controls[1]);
@@ -890,10 +897,10 @@ namespace QuizRunner
 
                         // Запись аргументов.
                         var TArgumentArray = new string[TAnswerArray[ij].AnswerArguments.Length];
-                        for (var ik = 0; ik < TAnswerArray[ij].AnswerArguments.Length; ik++)
-                        {
-                            TArgumentArray[ik] = TAnswerArray[ij].AnswerArguments[ik].Text;
-                        }
+                            for (var ik = 0; ik < TAnswerArray[ij].AnswerArguments.Length; ik++)
+                            {
+                                    TArgumentArray[ik] = TAnswerArray[ij].AnswerArguments[ik].Text;
+                            }
                         editor.SetAnswArgument(TArgumentArray, ii - 1, ij);
 
                     }
