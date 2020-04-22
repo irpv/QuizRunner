@@ -152,6 +152,20 @@ namespace QuizRunner
             IlbDrop.DragEnter += IlbDrop_DragEnter;
             IlbDrop.DragLeave += IlbDrop_DragLeave;
             IlbDrop.DragDrop += IlbDrop_DragDrop;
+
+            var IbtOpen = new Button
+            {
+                AutoSize = false,
+                Width = IlbDrop.Width / 3,
+                Height = IlbDrop.Height / 5,
+                Text = "Выбрать файл...",
+                FlatStyle = FlatStyle.System,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                Parent = IlbDrop
+            };
+            IbtOpen.Left = IlbDrop.Width / 2 - IbtOpen.Width / 2;
+            IbtOpen.Top = IlbDrop.Height / 2 + 25;
+            IbtOpen.Click += IpbOpen_Click;
             #endregion
             #endregion
         }
