@@ -36,7 +36,7 @@ namespace QuizRunner
             Filter = "QuizRunner Test File(*.qrtf)|*.qrtf|Все файлы|*.*"
         };
 
-        private readonly QuizRunner.Editor.Editor GEditor = new QuizRunner.Editor.Editor();
+        private  QuizRunner.Editor.Editor GEditor = new QuizRunner.Editor.Editor();
 
         private void IfrTesting_Load(object sender, EventArgs e)
         {
@@ -139,6 +139,8 @@ namespace QuizRunner
                 BackColor = Color.LightGray,
                 BorderStyle = BorderStyle.FixedSingle,
                 Text = "Перетащите файл сюда.",
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Font = new Font("Verdana", 10, FontStyle.Bold),
                 TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
                 AllowDrop = true,
                 Width = IpnMain.Width / 2,
@@ -147,6 +149,9 @@ namespace QuizRunner
             };
             IlbDrop.Left = IpnMain.Width / 2 - IlbDrop.Width / 2;
             IlbDrop.Top = IpnMain.Height / 2 - IlbDrop.Height / 2;
+            IlbDrop.DragEnter += IlbDrop_DragEnter;
+            IlbDrop.DragLeave += IlbDrop_DragLeave;
+            IlbDrop.DragDrop += IlbDrop_DragDrop;
             #endregion
             #endregion
         }
@@ -189,6 +194,30 @@ namespace QuizRunner
             Application.Exit();
         }
 
+        private void IlbDrop_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
+            {
+                ((Label)sender).BorderStyle = BorderStyle.Fixed3D;
+                ((Label)sender).ForeColor = Color.Green;
+                e.Effect = DragDropEffects.All;
+            }
+        }
+
+        private void IlbDrop_DragLeave(object sender, EventArgs e)
+        {
+            ((Label)sender).BorderStyle = BorderStyle.FixedSingle;
+            ((Label)sender).ForeColor = Color.FromArgb(18, 136, 235);
+        }
+
+        private void IlbDrop_DragDrop(object sender, DragEventArgs e)
+        {
+            var TPath = (string[])e.Data.GetData(DataFormats.FileDrop, true);
+            Open(TPath[0]);
+            ((Label)sender).BorderStyle = BorderStyle.FixedSingle;
+            ((Label)sender).ForeColor = Color.FromArgb(18, 136, 235);
+        }
+
         private void IpbOpen_Click(object sender, EventArgs e)
         {
             Open();
@@ -203,6 +232,9 @@ namespace QuizRunner
 
         #endregion
 
+        /// <summary>
+        /// Открывает файл, с помощью диалого открытия файла.
+        /// </summary>
         private void Open()
         {
             try
@@ -216,6 +248,7 @@ namespace QuizRunner
                     {
                         if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                         {
+                            GEditor = new QuizRunner.Editor.Editor();
                             GEditor.Open(GIofdOpenDialog.FileName);
                         }
                     }
@@ -224,8 +257,57 @@ namespace QuizRunner
                 {
                     if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
+                        GEditor = new QuizRunner.Editor.Editor();
                         GEditor.Open(GIofdOpenDialog.FileName);
                     }
+                }
+            }
+            catch (System.FormatException)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (System.IO.IOException)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception e)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Не удалось открыть файл.\n" + e.Message, "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        /// <summary>
+        /// Открывает файл, по указанному пути.
+        /// </summary>
+        /// <param name="path">путь</param>
+        private void Open(string path)
+        {
+            try
+            {
+                if (InProcess)
+                {
+                    if (MessageBox.Show("Тест в процессе прохождения!" +
+                        "\nЕсли вы продолжите это действие, вы потеряете все результаты." +
+                        "\nЖелаете продолжиь?", "Открыть файл",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        GEditor = new QuizRunner.Editor.Editor();
+                        GEditor.Open(path);
+                    }
+                }
+                else
+                {
+                    GEditor = new QuizRunner.Editor.Editor();
+                    GEditor.Open(path);
                 }
             }
             catch (System.FormatException)
