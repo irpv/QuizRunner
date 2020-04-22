@@ -461,8 +461,9 @@ namespace QuizRunner.Editor
         {
             return ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument.Length;
         }
-        public bool IsCorrect(string inpt)
+        public bool IsCorrect(string input)
         {
+            string inpt = input.Replace(" ", "");
             bool flag = false;
             int N = inpt.Length;
             int coord = -1;

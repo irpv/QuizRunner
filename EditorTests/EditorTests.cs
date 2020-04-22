@@ -222,11 +222,14 @@ namespace EditorTests
        [TestMethod]
        public void Correctness()
         {
-            string input = "(-[abc])=[abc]+((-100))+60*20";
+            string input = "(-[abc]) = [abc]+((-100)) + 60*20";
+            string input_wrong = "(-[abc]) = [abc]           ++(((-100)       ) + 60*20";
             bool expected = true;
             Editor a = new Editor();
             bool actual = a.IsCorrect(input);
+            bool actual1 = a.IsCorrect(input_wrong);
             Assert.AreEqual(expected, actual);
+            Assert.AreNotEqual(expected, actual1);
         }
         
     }
