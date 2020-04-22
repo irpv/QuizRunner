@@ -497,7 +497,8 @@ namespace QuizRunner.Editor
                     }
                     for (int k = i + 1; k < coord; k++)
                     {
-                        if (inpt[k] >= 'a' && inpt[k] <= 'z' || inpt[k] >= 'A' && inpt[k] <= 'Z' ||
+                        if (inpt[k] >= 'a' && inpt[k] <= 'z' || inpt[k] >= 'A' && inpt[k] <= 'Z' 
+                            || inpt[k] >= 'а' && inpt[k] <= 'я' || inpt[k] >= 'А' && inpt[k] <= 'Я' ||
                             inpt[k] >= '0' && inpt[k] <= '9' || inpt[k] == '_') 
                         {
                             flag = true;
