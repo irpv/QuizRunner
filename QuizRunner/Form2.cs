@@ -117,6 +117,7 @@ namespace QuizRunner
             IpbQuizButton.Top = this.Height / 2 - IpbQuizButton.Height / 2;
             IpbQuizButton.MouseEnter += MainButtons_MouseEnter;
             IpbQuizButton.MouseLeave += MainButtons_MouseLeave;
+            IpbQuizButton.Click += IpbQuizButton_Click;
             IttMainToolTip.SetToolTip(IpbQuizButton, "Пройти тест");
 
             // Кнопка перехода к просмотру результатов теста.
@@ -223,6 +224,13 @@ namespace QuizRunner
             new IfrCreator().Show();
             this.Close();
 
+        }
+
+        private void IpbQuizButton_Click(object sender, EventArgs e)
+        {
+            this.CanClose = true;
+            new IfrTesting().Show();
+            this.Close();
         }
         #endregion
     }
