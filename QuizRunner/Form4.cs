@@ -103,6 +103,39 @@ namespace QuizRunner
             IpbBack.Click += IpbBack_Click;
             IttCreatorToolTip.SetToolTip(IpbBack, "Вернуться в меню");
             #endregion
+
+            /// Основные элементы.
+            #region
+            // Главная панель.
+            var IpnMain = new Panel
+            {
+                BackColor = Color.White,
+                Left = IpnMenu.Width,
+                Top = 0,
+                Width = this.Width - IpnMenu.Width,
+                Height = this.Height,
+                Parent = this
+            };
+            IpnMain.BringToFront();
+
+            /// Открытие теста
+            #region
+            var IlbDrop = new Label
+            {
+                AutoSize = false,
+                BackColor = Color.LightGray,
+                BorderStyle = BorderStyle.FixedSingle,
+                Text = "Перетащите файл сюда.",
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                AllowDrop = true,
+                Width = IpnMain.Width / 2,
+                Height = IpnMain.Height / 5,
+                Parent = IpnMain
+            };
+            IlbDrop.Left = IpnMain.Width / 2 - IlbDrop.Width / 2;
+            IlbDrop.Top = IpnMain.Height / 2 - IlbDrop.Height / 2;
+            #endregion
+            #endregion
         }
 
         /// События основных графических элементов.
