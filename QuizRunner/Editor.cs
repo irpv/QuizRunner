@@ -471,9 +471,19 @@ namespace QuizRunner.Editor
         {
             return ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument.Length;
         }
+        
+        /// <summary>
+        /// Возвращает валидность строки расчётов.
+        /// </summary>
+        /// <param name="input">строка расчетов.</param>
+        /// <returns>валидность</returns>
         public bool IsCorrect(string input)
         {
             string inpt = input.Replace(" ", "");
+            if (input == "")
+            {
+                return true;
+            }
             bool flag = false;
             int N = inpt.Length;
             int coord = -1;
