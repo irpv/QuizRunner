@@ -1155,6 +1155,7 @@ namespace QuizRunner
                             GUserVariable[i].NameInput.Focus();
                         }
 
+                        this.LoadingProcess = false;
                         MessageBox.Show("Некоторые переменные имеют одинаковые имена!", "Переменные",
                             MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return false;
@@ -1162,14 +1163,24 @@ namespace QuizRunner
                 }
             }
 
-            if ((GUserVariable[index].Name.Contains("[")) 
-                || (GUserVariable[index].Name.Contains("]")))
+            string TInput = GUserVariable[index].NameInput.Text;
+            for (var i = 0; i < TInput.Length; i++)
             {
-                MessageBox.Show("Имя перемменой имеет недопустимые символы!", "Переменные",
-                            MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                GUserVariable[index].NameInput.ForeColor = Color.Red;
-                GUserVariable[index].NameInput.Focus();
-                return false;
+
+                if (!(((TInput[i] >= 'a') && (TInput[i] <= 'z')) 
+                    || ((TInput[i] >= 'A') && (TInput[i] <= 'Z'))
+                    || ((TInput[i] >= 'а') && (TInput[i] <= 'я')) 
+                    || ((TInput[i] >= 'А') && (TInput[i] <= 'Я')) 
+                    || ((TInput[i] >= '0') && (TInput[i] <= '9')) 
+                    || (TInput[i] == '_')))
+                {
+                    this.LoadingProcess = false;
+                    MessageBox.Show("Имя перемменой имеет недопустимые символы!", "Переменные",
+                                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    GUserVariable[index].NameInput.ForeColor = Color.Red;
+                    GUserVariable[index].NameInput.Focus();
+                    return false;
+                }
             }
 
             return true;
@@ -1190,9 +1201,19 @@ namespace QuizRunner
                 }
             }
 
-            if ((name.Contains("[")) || (name.Contains("]")))
+            string TInput = name;
+            for (var i = 0; i < TInput.Length; i++)
             {
-                return false;
+
+                if (!(((TInput[i] >= 'a') && (TInput[i] <= 'z'))
+                    || ((TInput[i] >= 'A') && (TInput[i] <= 'Z'))
+                    || ((TInput[i] >= 'а') && (TInput[i] <= 'я'))
+                    || ((TInput[i] >= 'А') && (TInput[i] <= 'Я'))
+                    || ((TInput[i] >= '0') && (TInput[i] <= '9'))
+                    || (TInput[i] == '_')))
+                {
+                    return false;
+                }
             }
 
             return true;
