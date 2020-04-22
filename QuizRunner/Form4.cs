@@ -21,10 +21,22 @@ namespace QuizRunner
         // Свойство формы, указывающее, проходит ли на ней какая либо загрузка в данный момент.
         public bool LoadingProcess;
 
+        // Свойство форму, указывающее, проходит ли сейчас тест.
+        public bool InProcess;
+
         public IfrTesting()
         {
             InitializeComponent();
         }
+
+        private readonly OpenFileDialog GIofdOpenDialog = new OpenFileDialog
+        {
+            Title = "Открыть",
+            FileName = "Test.qrtf",
+            Filter = "QuizRunner Test File(*.qrtf)|*.qrtf|Все файлы|*.*"
+        };
+
+        private readonly QuizRunner.Editor.Editor GEditor = new QuizRunner.Editor.Editor();
 
         private void IfrTesting_Load(object sender, EventArgs e)
         {
@@ -56,6 +68,7 @@ namespace QuizRunner
             };
             IpbOpen.MouseEnter += MenuButtons_MouseEnter;
             IpbOpen.MouseLeave += MenuButtons_MouseLeave;
+            IpbOpen.MouseClick += IpbOpen_Click;
             //IpbOpen.Click += IpbOpen_Click;
             IttCreatorToolTip.SetToolTip(IpbOpen, "Открыть...");
 
@@ -176,6 +189,11 @@ namespace QuizRunner
             Application.Exit();
         }
 
+        private void IpbOpen_Click(object sender, EventArgs e)
+        {
+            Open();
+        }
+
         private void IpbBack_Click(object sender, EventArgs e)
         {
             CanClose = true;
@@ -184,5 +202,53 @@ namespace QuizRunner
         }
 
         #endregion
+
+        private void Open()
+        {
+            try
+            {
+                if (InProcess)
+                {
+                    if (MessageBox.Show("Тест в процессе прохождения!" +
+                        "\nЕсли вы продолжите это действие, вы потеряете все результаты." +
+                        "\nЖелаете продолжиь?", "Открыть файл",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                    {
+                        if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            GEditor.Open(GIofdOpenDialog.FileName);
+                        }
+                    }
+                }
+                else
+                {
+                    if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        GEditor.Open(GIofdOpenDialog.FileName);
+                    }
+                }
+            }
+            catch (System.FormatException)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (System.IO.IOException)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception e)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Не удалось открыть файл.\n" + e.Message, "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }
