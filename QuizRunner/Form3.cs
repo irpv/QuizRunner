@@ -568,7 +568,21 @@ namespace QuizRunner
         // Установка статуса "Изменено" при изменении одного из текстовых полей.
         private void UnsavedText_TextChanged(object sender, EventArgs e)
         {
-            Changed = true;
+            try
+            {
+                var TItbTextBox = (TextBox)sender;
+                TItbTextBox.ForeColor = Color.Black;
+            }
+            catch
+            {
+                var TIrtbTextBox = (RichTextBox)sender;
+                TIrtbTextBox.ForeColor = Color.Black;
+            }
+            finally
+            {
+                Changed = true;
+            }
+
         }
 
         private void IlbAddTabPage_MouseEnter(object sender,EventArgs e)
@@ -866,9 +880,12 @@ namespace QuizRunner
             }
             this.Hide();
 
+            var TItbTabControl = (TabControl)this.Controls[0];
             managed = true;
 
-            // Проверка параметров на доступность для сохранения.
+            /// Проверка параметров на доступность для сохранения.
+            #region
+            // Имена переменных
             for (var ii = 0; ii < GUserVariable.Length; ii++)
             {
                 if (!ValidVariableName(ii))
@@ -878,16 +895,62 @@ namespace QuizRunner
                 }
             }
 
-            var TItbTabControl = (TabControl)this.Controls[0];
+            // Аргументы вопросов.
+            if (TItbTabControl.TabPages.Count > 2)
+            {
+                for (var ii = 1; ii<TItbTabControl.TabPages.Count -1; ii++)
+                {
+                    var TAnswerArray = (Answer[])TItbTabControl.TabPages[ii].Tag;
+                    for (var ij = 0; ij < TAnswerArray.Length; ij++)
+                    {
+
+                        var TArgumentArray = new string[TAnswerArray[ij].AnswerArguments.Length];
+                        for (var ik = 0; ik < TAnswerArray[ij].AnswerArguments.Length; ik++)
+                        {
+                            if (!editor.IsCorrect(TAnswerArray[ij].AnswerArguments[ik].Text))
+                            {
+                                TItbTabControl.SelectedIndex = ii;
+                                TAnswerArray[ij].AnswerArguments[ik].ForeColor = Color.Red;
+                                TAnswerArray[ij].AnswerArguments[ik].Focus();
+                                this.LoadingProcess = false;
+                                MessageBox.Show("Недопустимый аргумент.", "Ошибка при сохранении",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                managed = false;
+                                goto ExitFromFillin;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Строки статистики
+            for (var ii = 0; ii < GStatisticsLines.Length; ii++)
+            {
+                if (!editor.IsCorrect(GStatisticsLines[ii].Calc.Text))
+                {
+                    TItbTabControl.SelectedIndex = TItbTabControl.TabPages.Count - 1;
+                    GStatisticsLines[ii].Calc.ForeColor = Color.Red;
+                    GStatisticsLines[ii].Calc.Focus();
+                    this.LoadingProcess = false;
+                    MessageBox.Show("Недопустимые расчёты статистики.", "Ошибка при сохранении",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    managed = false;
+                    goto ExitFromFillin;
+                }
+            }
+
+            // Название теста.
             if (TItbTabControl.Controls[0].Controls[1].Text == "")
             {
                 TItbTabControl.SelectedIndex = 0;
                 TItbTabControl.Controls[0].Controls[1].Focus();
+                this.LoadingProcess = false;
                 MessageBox.Show("Имя теста не может быть пустым.", "Ошибка при сохранении",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 managed = false;
                 goto ExitFromFillin;
             }
+            #endregion
 
             // Запись имени
             editor.SetName(TItbTabControl.Controls[0].Controls[1].Text);
@@ -1730,6 +1793,11 @@ namespace QuizRunner
                 Width = TAnswer.AnswerIntput.Width / 2,
                 Left = TAnswer.AnswerIntput.Left + TAnswer.AnswerIntput.Width / 2,
                 Parent = TAnswer.AnswerIntput.Parent
+            };
+            TItbNewAnswerArgument.TextChanged += (s, e) =>
+            {
+                Changed = true;
+                TItbNewAnswerArgument.ForeColor = Color.Black;
             };
             if (TAnswer.AnswerArguments.Length==1)
             {
