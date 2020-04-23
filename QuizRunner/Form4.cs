@@ -147,6 +147,7 @@ namespace QuizRunner
             // Главная панель.
             var IpnMain = new Panel
             {
+                AutoScroll = true,
                 BackColor = Color.White,
                 Left = IpnMenu.Width,
                 Top = 0,
@@ -388,6 +389,7 @@ namespace QuizRunner
             var TIpnMain = (Panel)this.Controls[0];
             TIpnMain = new Panel
             {
+                AutoScroll = true,
                 BackColor = Color.White,
                 Left = this.Controls[1].Width,
                 Top = 0,
