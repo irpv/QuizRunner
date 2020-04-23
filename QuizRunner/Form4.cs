@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Threading;
 
 namespace QuizRunner
 {
@@ -317,11 +318,13 @@ namespace QuizRunner
                     {
                         if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                         {
+                            this.LoadingProcess = true;
                             GEditor = new QuizRunner.Editor.Editor();
                             GEditor.Open(GIofdOpenDialog.FileName);
                             this.Controls[0].Controls[0].Visible = false;
                             LoadTest(ref GTest, GEditor);
                             this.InProcess = false;
+                            this.LoadingProcess = false;
                         }
                     }
                 }
@@ -329,11 +332,13 @@ namespace QuizRunner
                 {
                     if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
                     {
+                        this.LoadingProcess = true;
                         GEditor = new QuizRunner.Editor.Editor();
                         GEditor.Open(GIofdOpenDialog.FileName);
                         this.Controls[0].Controls[0].Visible = false;
                         LoadTest(ref GTest, GEditor);
                         this.InProcess = false;
+                        this.LoadingProcess = false;
                     }
                 }
 
@@ -376,20 +381,24 @@ namespace QuizRunner
                         "\nЖелаете продолжиь?", "Открыть файл?",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
+                        this.LoadingProcess = true;
                         GEditor = new QuizRunner.Editor.Editor();
                         GEditor.Open(path);
                         this.Controls[0].Controls[0].Visible = false;
                         LoadTest(ref GTest, GEditor);
                         this.InProcess = false;
+                        this.LoadingProcess = false;
                     }
                 }
                 else
                 {
+                    this.LoadingProcess = true;
                     GEditor = new QuizRunner.Editor.Editor();
                     GEditor.Open(path);
                     this.Controls[0].Controls[0].Visible = false;
                     LoadTest(ref GTest, GEditor);
                     this.InProcess = false;
+                    this.LoadingProcess = false;
                 }
 
             }
@@ -423,6 +432,18 @@ namespace QuizRunner
         /// <param name="editor">тест</param>
         private void LoadTest(ref Test test,QuizRunner.Editor.Editor editor)
         {
+            if (Environment.OSVersion.Platform != PlatformID.Unix)
+            {
+                Task.Run(() =>
+                {
+                    LoadingScreen TIfrLoadScreen =
+                        new LoadingScreen("Секундочку, тест открывается.", this);
+                    TIfrLoadScreen.ShowDialog();
+                });
+                Thread.Sleep(2000);
+                this.Hide();
+            }
+
             /// Основные элементы
             #region
             this.Controls[0].Dispose();
@@ -761,6 +782,10 @@ namespace QuizRunner
                 }
             }
             #endregion
+
+            this.Show();
+            ItbHideCursor.Focus();
+            Thread.Sleep(500);
         }
 
         /// <summary>
