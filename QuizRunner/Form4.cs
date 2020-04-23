@@ -32,7 +32,7 @@ namespace QuizRunner
         // Структура интерфейсов вопроса
         private struct Question
         {
-            public Label IlbQuestion;
+            public RichTextBox IlbQuestion;
             public bool Type;
             public RadioButton[] RadioButtonList;
             public CheckBox[] CheckBoxeList;
@@ -503,19 +503,29 @@ namespace QuizRunner
                 Array.Resize<Question>(ref test.QuestionList, test.QuestionList.Length + 1);
 
                 // Лейбл вопроса.
-                test.QuestionList[i].IlbQuestion = new Label
+                test.QuestionList[i].IlbQuestion = new RichTextBox
                 {
-                    AutoSize = true,
-                    Font = new Font("Verdana", 20, FontStyle.Bold),
-                    TextAlign = System.Drawing.ContentAlignment.TopCenter,
+                    Top = 5,
+                    BackColor = Color.White,
+                    Width = TIpnMain.Width - 40,
+                    Left = 20,
+                    Font = new Font("Verdana", 15, FontStyle.Bold),
+                    SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center,
+                    ReadOnly = true,
+                    ContextMenu = new ContextMenu(),
+                    ShortcutsEnabled = false,
+                    BorderStyle = BorderStyle.None,
                     Parent = IpnQuestionPanel
                 };
-                var TStringBuilder = new StringBuilder();
+                test.QuestionList[i].IlbQuestion.LinkClicked += (s, e) =>
+                {
+                    System.Diagnostics.Process.Start(e.LinkText);
+                };
                 for (var j = 0; j < editor.GetQuestionText(i).Length; j++)
                 {
-                    TStringBuilder.Append(editor.GetQuestionText(i)[j] + "\n");
+                    test.QuestionList[i].IlbQuestion.
+                        AppendText(editor.GetQuestionText(i)[j] + "\n");
                 }
-                test.QuestionList[i].IlbQuestion.Text = TStringBuilder.ToString();
                 test.QuestionList[i].IlbQuestion.Left = IpnQuestionPanel.Width / 2 -
                     test.QuestionList[i].IlbQuestion.Width / 2;
 
