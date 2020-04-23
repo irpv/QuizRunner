@@ -46,6 +46,8 @@ namespace QuizRunner
             public RichTextBox IrtbDescription;
             public Question[] QuestionList;
             public Button IbtStart;
+            public Label[] StatisticsLines;
+            public Dictionary<string, Double> UserVariables;
         }
 
         // Переменная для теста.
@@ -377,6 +379,18 @@ namespace QuizRunner
 
         private void LoadTest(ref Test test,QuizRunner.Editor.Editor editor)
         {
+            var TIpnMain = (Panel)this.Controls[0];
+            TIpnMain = new Panel
+            {
+                BackColor = Color.White,
+                Left = this.Controls[1].Width,
+                Top = 0,
+                Width = this.Width - this.Controls[1].Width,
+                Height = this.Height,
+                Parent = this
+            };
+            TIpnMain.BringToFront();
+
             test = new Test();
 
             // Название теста
@@ -387,22 +401,22 @@ namespace QuizRunner
                 ForeColor = Color.FromArgb(18, 136, 235),
                 Font = new Font("Verdana", 25, FontStyle.Bold),
                 TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
-                Parent = this.Controls[0]
+                Parent = TIpnMain
             };
-            test.IlbTestName.Left = this.Controls[0].Width / 2 - test.IlbTestName.Width / 2;
+            test.IlbTestName.Left = TIpnMain.Width / 2 - test.IlbTestName.Width / 2;
 
             // Описание теста
             test.IrtbDescription = new RichTextBox
             {
-                Width = this.Controls[0].Width - 40,
-                Height = this.Controls[0].Height - test.IlbTestName.Height - 60,
+                Width = TIpnMain.Width - 40,
+                Height = TIpnMain.Height - test.IlbTestName.Height - 60,
                 BorderStyle = BorderStyle.None,
                 Font = new Font("Verdana", 20, FontStyle.Bold),
                 SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center,
                 ReadOnly = true,
-                Parent = this.Controls[0]
+                Parent = TIpnMain
             };
-            test.IrtbDescription.Left = this.Controls[0].Width / 2 - test.IrtbDescription.Width / 2;
+            test.IrtbDescription.Left = TIpnMain.Width / 2 - test.IrtbDescription.Width / 2;
             test.IrtbDescription.Top = test.IlbTestName.Height + 20;
             for (var i = 0; i < editor.GetDescription().Length; i++)
             {
@@ -413,6 +427,200 @@ namespace QuizRunner
                 System.Diagnostics.Process.Start(e.LinkText);
             };
 
+            // Кнопка для старта тестирования
+            test.IbtStart = new Button
+            {
+                Text = "Начать тест",
+                BackColor = Color.FromArgb(18, 136, 235),
+                FlatStyle = FlatStyle.Flat,
+                ForeColor = Color.White,
+                Cursor = System.Windows.Forms.Cursors.Hand,
+                AutoSize = true,
+                Top = test.IrtbDescription.Top + test.IrtbDescription.Height + 10,
+                Parent = TIpnMain
+            };
+            test.IbtStart.Left = TIpnMain.Width / 2 - test.IbtStart.Width / 2;
+            test.IbtStart.Click += (s, e) =>
+            {
+
+            };
+
+            // Панель для лейбла вопроса.
+            var IpnQuestionPanel = new Panel
+            {
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.None,
+                Width = TIpnMain.Width,
+                Height = TIpnMain.Height / 3,
+                Visible = false,
+                Parent = TIpnMain
+            };
+
+            // Груп бок сдля ответов
+            var IgbAnswer = new GroupBox
+            {
+                Text = "Ответы",
+                Font = new Font("Verdana", 10, FontStyle.Bold),
+                Width = TIpnMain.Width - 40,
+                Height = TIpnMain.Height - IpnQuestionPanel.Height - 50,
+                Left = 20,
+                Top = IpnQuestionPanel.Height + 20,
+                Visible = false,
+                Parent = TIpnMain
+            };
+
+            // Панель для скролинга ответов
+            var IpnAnswer = new Panel
+            {
+                Left = 5,
+                Top = 5,
+                Width = IgbAnswer.Width - 10,
+                Height = IgbAnswer.Height - 10,
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.None,
+                Parent = IgbAnswer
+            };
+
+            test.QuestionList = new Question[0];
+            for (var i = 0; i < editor.NumberOfQuestion(); i++)
+            {
+                Array.Resize<Question>(ref test.QuestionList, test.QuestionList.Length + 1);
+
+                // Лейбл вопроса.
+                test.QuestionList[i].IlbQuestion = new Label
+                {
+                    AutoSize = true,
+                    Font = new Font("Verdana", 20, FontStyle.Bold),
+                    TextAlign = System.Drawing.ContentAlignment.TopCenter,
+                    Parent = IpnQuestionPanel
+                };
+                var TStringBuilder = new StringBuilder();
+                for (var j = 0; j < editor.GetQuestionText(i).Length; i++)
+                {
+                    TStringBuilder.Append(editor.GetQuestionText(i)[j] + "\n");
+                }
+                test.QuestionList[i].IlbQuestion.Text = TStringBuilder.ToString();
+                test.QuestionList[i].IlbQuestion.Left = IpnQuestionPanel.Width / 2 -
+                    test.QuestionList[i].IlbQuestion.Width / 2;
+
+                // Тип ответа
+                test.QuestionList[i].Type = editor.GetAnswerType(i);
+
+                // Ответы
+                if (test.QuestionList[i].Type)
+                {
+                    // Радиобаттаны
+                    if (editor.NumberOfAnswers(i) > 0)
+                    {
+                        test.QuestionList[i].RadioButtonList = new RadioButton[1];
+                        test.QuestionList[i].RadioButtonList[0] = new RadioButton
+                        {
+                            AutoSize = true,
+                            Left = 2,
+                            Top = 2,
+                            Font = new Font("Verdana", 10, FontStyle.Bold),
+                            Text = editor.GetAnswerText(i, 0),
+                            Tag = editor.GetAnswerArgument(i, 0),
+                            Parent = IpnAnswer
+                        };
+                        for (var j = 1; j < editor.NumberOfAnswers(i); j++)
+                        {
+                            Array.Resize<RadioButton>(ref test.QuestionList[i].RadioButtonList,
+                                test.QuestionList[i].RadioButtonList.Length + 1);
+                            test.QuestionList[i].RadioButtonList[j] = new RadioButton
+                            {
+                                AutoSize = true,
+                                Left = 2,
+                                Top = test.QuestionList[i].RadioButtonList[j - 1].Top
+                                    + test.QuestionList[i].RadioButtonList[j - 1].Height + 4,
+                                Font = new Font("Verdana", 10, FontStyle.Bold),
+                                Text = editor.GetAnswerText(i, j),
+                                Tag = editor.GetAnswerArgument(i, j),
+                                Parent = IpnAnswer
+                            };
+                        }
+                    }
+                }
+                else
+                {
+                    // Чекбоксы
+                    if (editor.NumberOfAnswers(i) > 0)
+                    {
+                        test.QuestionList[i].CheckBoxeList = new CheckBox[1];
+                        test.QuestionList[i].CheckBoxeList[0] = new CheckBox
+                        {
+                            AutoSize = true,
+                            Left = 2,
+                            Top = 2,
+                            Font = new Font("Verdana", 10, FontStyle.Bold),
+                            Text = editor.GetAnswerText(i, 0),
+                            Tag = editor.GetAnswerArgument(i, 0),
+                            Parent = IpnAnswer
+                        };
+                        for (var j = 1; j < editor.NumberOfAnswers(i); j++)
+                        {
+                            Array.Resize<CheckBox>(ref test.QuestionList[i].CheckBoxeList,
+                                test.QuestionList[i].CheckBoxeList.Length + 1);
+                            test.QuestionList[i].CheckBoxeList[j] = new CheckBox
+                            {
+                                AutoSize = true,
+                                Left = 2,
+                                Top = test.QuestionList[i].RadioButtonList[j - 1].Top
+                                    + test.QuestionList[i].RadioButtonList[j - 1].Height + 4,
+                                Font = new Font("Verdana", 10, FontStyle.Bold),
+                                Text = editor.GetAnswerText(i, j),
+                                Tag = editor.GetAnswerArgument(i, j),
+                                Parent = IpnAnswer
+                            };
+                        }
+                    }
+                }
+
+                test.QuestionList[i].IbtNext = new Button
+                {
+                    Text = "Следующий вопрос",
+                    BackColor = Color.FromArgb(18, 136, 235),
+                    FlatStyle = FlatStyle.Flat,
+                    ForeColor = Color.White,
+                    Cursor = System.Windows.Forms.Cursors.Hand,
+                    AutoSize = true,
+                    Top = IgbAnswer.Top + IgbAnswer.Height + 10,
+                    Parent = TIpnMain
+                };
+                test.QuestionList[i].IbtNext.Left = TIpnMain.Width / 2 
+                    - test.QuestionList[i].IbtNext.Width / 2;
+
+            }
+
+            // Строки статистики.
+            if (editor.NumberOfStatLine() > 0)
+            {
+                test.StatisticsLines = new Label[1];
+                test.StatisticsLines[0] = new Label
+                {
+                    AutoSize = true,
+                    Font = new Font("Verdana", 15, FontStyle.Bold),
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                    Parent = TIpnMain
+                };
+                test.StatisticsLines[0].Left = TIpnMain.Width / 2 - test.StatisticsLines[0].Width / 2;
+
+                for (var i = 1; i < editor.NumberOfStatLine(); i++)
+                {
+                    Array.Resize<Label>(ref test.StatisticsLines, test.StatisticsLines.Length + 1);
+                    test.StatisticsLines[i] = new Label
+                    {
+                        Top = TIpnMain.Controls[TIpnMain.Controls.Count - 1].Top +
+                            TIpnMain.Controls[TIpnMain.Controls.Count - 1].Height + 10,
+                        AutoSize = true,
+                        Font = new Font("Verdana", 15, FontStyle.Bold),
+                        TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                        Parent = TIpnMain
+                    };
+                    test.StatisticsLines[i].Left = TIpnMain.Width / 2 
+                        - test.StatisticsLines[i].Width / 2;
+                }
+            }
 
         }
     }
