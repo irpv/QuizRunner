@@ -290,6 +290,8 @@ namespace QuizRunner
                         {
                             GEditor = new QuizRunner.Editor.Editor();
                             GEditor.Open(GIofdOpenDialog.FileName);
+                            this.Controls[0].Controls[0].Visible = false;
+                            LoadTest(ref GTest, GEditor);
                         }
                     }
                 }
@@ -299,11 +301,12 @@ namespace QuizRunner
                     {
                         GEditor = new QuizRunner.Editor.Editor();
                         GEditor.Open(GIofdOpenDialog.FileName);
+                        this.Controls[0].Controls[0].Visible = false;
+                        LoadTest(ref GTest, GEditor);
+
                     }
                 }
 
-                this.Controls[0].Controls[0].Visible = false;
-                LoadTest(ref GTest, GEditor);
             }
             catch (System.FormatException)
             {
@@ -345,16 +348,18 @@ namespace QuizRunner
                     {
                         GEditor = new QuizRunner.Editor.Editor();
                         GEditor.Open(path);
+                        this.Controls[0].Controls[0].Visible = false;
+                        LoadTest(ref GTest, GEditor);
                     }
                 }
                 else
                 {
                     GEditor = new QuizRunner.Editor.Editor();
                     GEditor.Open(path);
+                    this.Controls[0].Controls[0].Visible = false;
+                    LoadTest(ref GTest, GEditor);
                 }
 
-                this.Controls[0].Controls[0].Visible = false;
-                LoadTest(ref GTest, GEditor);
             }
             catch (System.FormatException)
             {
