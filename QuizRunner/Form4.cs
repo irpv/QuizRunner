@@ -32,7 +32,7 @@ namespace QuizRunner
         // Структура интерфейсов вопроса
         private struct Question
         {
-            public RichTextBox IlbQuestion;
+            public RichTextBox IrtbQuestion;
             public bool Type;
             public RadioButton[] RadioButtonList;
             public CheckBox[] CheckBoxeList;
@@ -455,7 +455,7 @@ namespace QuizRunner
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.None,
                 Width = TIpnMain.Width,
-                Height = TIpnMain.Height / 3,
+                Height = TIpnMain.Height / 3 - 20,
                 Visible = false,
                 Parent = TIpnMain
             };
@@ -464,7 +464,7 @@ namespace QuizRunner
             var IgbAnswer = new GroupBox
             {
                 Text = "Ответы",
-                Font = new Font("Verdana", 10, FontStyle.Bold),
+                Font = new Font("Verdana", 8, FontStyle.Bold),
                 Width = TIpnMain.Width - 40,
                 Height = TIpnMain.Height - IpnQuestionPanel.Height - 50,
                 Left = 20,
@@ -476,10 +476,11 @@ namespace QuizRunner
             // Панель для скролинга ответов
             var IpnAnswer = new Panel
             {
-                Left = 5,
-                Top = 5,
-                Width = IgbAnswer.Width - 10,
-                Height = IgbAnswer.Height - 10,
+                AutoScroll = true,
+                Left = 15,
+                Top = 15,
+                Width = IgbAnswer.Width - 30,
+                Height = IgbAnswer.Height - 30,
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.None,
                 Parent = IgbAnswer
@@ -496,6 +497,14 @@ namespace QuizRunner
                 MoveNext(0, GTest);
             };
 
+            // Текстбокс для перехвата курсора.
+            var ItbHideCursor = new TextBox
+            {
+                Left = -100,
+                Top = -100,
+                Parent = TIpnMain
+            };
+
             // Вопросы
             test.QuestionList = new Question[0];
             for (var i = 0; i < editor.NumberOfQuestion(); i++)
@@ -503,10 +512,11 @@ namespace QuizRunner
                 Array.Resize<Question>(ref test.QuestionList, test.QuestionList.Length + 1);
 
                 // Лейбл вопроса.
-                test.QuestionList[i].IlbQuestion = new RichTextBox
+                test.QuestionList[i].IrtbQuestion = new RichTextBox
                 {
                     Top = 5,
                     BackColor = Color.White,
+                    Height = IpnQuestionPanel.Height - 10,
                     Width = TIpnMain.Width - 40,
                     Left = 20,
                     Font = new Font("Verdana", 15, FontStyle.Bold),
@@ -517,17 +527,22 @@ namespace QuizRunner
                     BorderStyle = BorderStyle.None,
                     Parent = IpnQuestionPanel
                 };
-                test.QuestionList[i].IlbQuestion.LinkClicked += (s, e) =>
+                test.QuestionList[i].IrtbQuestion.LinkClicked += (s, e) =>
                 {
                     System.Diagnostics.Process.Start(e.LinkText);
                 };
                 for (var j = 0; j < editor.GetQuestionText(i).Length; j++)
                 {
-                    test.QuestionList[i].IlbQuestion.
+                    test.QuestionList[i].IrtbQuestion.
                         AppendText(editor.GetQuestionText(i)[j] + "\n");
                 }
-                test.QuestionList[i].IlbQuestion.Left = IpnQuestionPanel.Width / 2 -
-                    test.QuestionList[i].IlbQuestion.Width / 2;
+                test.QuestionList[i].IrtbQuestion.Left = IpnQuestionPanel.Width / 2 -
+                    test.QuestionList[i].IrtbQuestion.Width / 2;
+                test.QuestionList[i].IrtbQuestion.GotFocus += (s, e) =>
+                {
+                    ItbHideCursor.Focus();
+                    ItbHideCursor.Select(0, -1);
+                };
 
                 // Тип ответа
                 test.QuestionList[i].Type = editor.GetAnswerType(i);
@@ -615,7 +630,7 @@ namespace QuizRunner
                     ForeColor = Color.White,
                     Cursor = System.Windows.Forms.Cursors.Hand,
                     AutoSize = true,
-                    Top = IgbAnswer.Top + IgbAnswer.Height + 10,
+                    Top = IgbAnswer.Top + IgbAnswer.Height + 2,
                     Visible = false,
                     Parent = TIpnMain
                 };
@@ -708,7 +723,7 @@ namespace QuizRunner
             if ((index > 0) && (index < test.QuestionList.Length))
             {
                 // Выключаем старые интерфейсы.
-                test.QuestionList[index - 1].IlbQuestion.Visible = false;
+                test.QuestionList[index - 1].IrtbQuestion.Visible = false;
                 test.QuestionList[index - 1].IbtNext.Visible = false;
                 if (test.QuestionList[index - 1].Type)
                 {
@@ -727,7 +742,7 @@ namespace QuizRunner
 
                 // Включаем новые интерфейсы.
 
-                test.QuestionList[index].IlbQuestion.Visible = true;
+                test.QuestionList[index].IrtbQuestion.Visible = true;
                 test.QuestionList[index].IbtNext.Visible = true;
                 if (test.QuestionList[index].Type)
                 {
@@ -749,7 +764,7 @@ namespace QuizRunner
             {
                 // Включаем новые интерфейсы.
 
-                test.QuestionList[index].IlbQuestion.Visible = true;
+                test.QuestionList[index].IrtbQuestion.Visible = true;
                 test.QuestionList[index].IbtNext.Visible = true;
                 if (test.QuestionList[index].Type)
                 {
@@ -770,7 +785,7 @@ namespace QuizRunner
             else
             {
                 // Выключаем старые интерфейсы.
-                test.QuestionList[index - 1].IlbQuestion.Visible = false;
+                test.QuestionList[index - 1].IrtbQuestion.Visible = false;
                 test.QuestionList[index - 1].IbtNext.Visible = false;
                 if (test.QuestionList[index - 1].Type)
                 {
