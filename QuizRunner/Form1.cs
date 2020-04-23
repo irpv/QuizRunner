@@ -21,6 +21,12 @@ namespace QuizRunner
 
         private void IfrMain_Load(object sender, EventArgs e)
         {
+
+        }
+
+        private void IfrMain_Activated(object sender, EventArgs e)
+        {
+            this.Hide();
             if (GArgs.Length > 0)
             {
                 var ITestingPage = new IfrTesting();
@@ -32,11 +38,6 @@ namespace QuizRunner
                 var IStartPage = new IfrStartPage();
                 IStartPage.Show();
             }
-        }
-
-        private void IfrMain_Activated(object sender, EventArgs e)
-        {
-            this.Hide();
         }
     }
 }
