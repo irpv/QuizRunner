@@ -821,7 +821,7 @@ namespace QuizRunner
                 // Заполняем строки статистики
                 for (var i = 0; i < test.StatisticsLines.Length; i++)
                 {
-                    test.StatisticsLines[i].Text = $"{GEditor.GetStatPrefix(i)} вычисления " +
+                    test.StatisticsLines[i].Text = $"{GEditor.GetStatPrefix(i)} [вычисления] " +
                         $"{GEditor.GetStatPostfix(i)}";
                     test.StatisticsLines[i].Left = test.StatisticsLines[i].Parent.Width / 2 
                         - test.StatisticsLines[i].Width / 2;
@@ -842,6 +842,20 @@ namespace QuizRunner
                     test.StatisticsLines[i].Visible = true;
                 }
                 GTest.NowQuestion = index ;
+
+                var IbtSaveResult = new Button
+                {
+                    Text = "Сохранить результаты",
+                    BackColor = Color.FromArgb(18, 136, 235),
+                    FlatStyle = FlatStyle.Flat,
+                    ForeColor = Color.White,
+                    Cursor = System.Windows.Forms.Cursors.Hand,
+                    AutoSize = true,
+                    Top = test.StatisticsLines[test.StatisticsLines.Length - 1].Top
+                       + test.StatisticsLines[test.StatisticsLines.Length - 1].Height + 10,
+                    Parent = this.Controls[0]
+                };
+                IbtSaveResult.Left = IbtSaveResult.Parent.Width / 2 - IbtSaveResult.Width / 2;
             }
         }
     }
