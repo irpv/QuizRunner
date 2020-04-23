@@ -691,7 +691,6 @@ namespace QuizRunner
                     Visible = false,
                     Parent = TIpnMain
                 };
-                test.StatisticsLines[0].Left = TIpnMain.Width / 2 - test.StatisticsLines[0].Width / 2;
 
                 for (var i = 1; i < editor.NumberOfStatLine(); i++)
                 {
@@ -706,8 +705,6 @@ namespace QuizRunner
                         Visible = false,
                         Parent = TIpnMain
                     };
-                    test.StatisticsLines[i].Left = TIpnMain.Width / 2 
-                        - test.StatisticsLines[i].Width / 2;
                 }
             }
 
@@ -802,8 +799,23 @@ namespace QuizRunner
                     }
                 }
 
+                // Выключаем все визаульные элементы главной панели.
+                for (var i = 0; i < this.Controls[0].Controls.Count; i++)
+                {
+                    this.Controls[0].Controls[i].Visible = false;
+                }
+
+                // Заполняем строки статистики
+                for (var i = 0; i < test.StatisticsLines.Length; i++)
+                {
+                    test.StatisticsLines[i].Text = $"{GEditor.GetStatPrefix(i)} вычисления " +
+                        $"{GEditor.GetStatPostfix(i)}";
+                    test.StatisticsLines[i].Left = test.StatisticsLines[i].Parent.Width / 2 
+                        - test.StatisticsLines[i].Width / 2;
+                }
+
                 // Включаем строки статистики.
-                for (var i = 0; i< test.StatisticsLines.Length; i++)
+                for (var i = 0; i < test.StatisticsLines.Length; i++)
                 {
                     test.StatisticsLines[i].Visible = true;
                 }
