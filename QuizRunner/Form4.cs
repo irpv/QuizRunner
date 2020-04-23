@@ -230,8 +230,22 @@ namespace QuizRunner
 
         private void IlbExit_Click(object sender, EventArgs e)
         {
-            CanClose = true;
-            Application.Exit();
+            if (InProcess)
+            {
+                if (MessageBox.Show("Тест в процессе прохождения!" +
+                    "\nЕсли вы продолжите это действие, вы потеряете все результаты." +
+                    "\nЖелаете продолжиь?", "Открыть файл",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    CanClose = true;
+                    Application.Exit();
+                }
+            }
+            else
+            {
+                CanClose = true;
+                Application.Exit();
+            }
         }
 
         private void IlbDrop_DragEnter(object sender, DragEventArgs e)
@@ -265,9 +279,24 @@ namespace QuizRunner
 
         private void IpbBack_Click(object sender, EventArgs e)
         {
-            CanClose = true;
-            new IfrStartPage().Show();
-            Close();
+            if (InProcess)
+            {
+                if (MessageBox.Show("Тест в процессе прохождения!" +
+                    "\nЕсли вы продолжите это действие, вы потеряете все результаты." +
+                    "\nЖелаете продолжиь?", "Открыть файл",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    CanClose = true;
+                    new IfrStartPage().Show();
+                    Close();
+                }
+            }
+            else
+            {
+                CanClose = true;
+                new IfrStartPage().Show();
+                Close();
+            }
         }
 
         #endregion
@@ -292,6 +321,7 @@ namespace QuizRunner
                             GEditor.Open(GIofdOpenDialog.FileName);
                             this.Controls[0].Controls[0].Visible = false;
                             LoadTest(ref GTest, GEditor);
+                            this.InProcess = false;
                         }
                     }
                 }
@@ -303,7 +333,7 @@ namespace QuizRunner
                         GEditor.Open(GIofdOpenDialog.FileName);
                         this.Controls[0].Controls[0].Visible = false;
                         LoadTest(ref GTest, GEditor);
-
+                        this.InProcess = false;
                     }
                 }
 
@@ -350,6 +380,7 @@ namespace QuizRunner
                         GEditor.Open(path);
                         this.Controls[0].Controls[0].Visible = false;
                         LoadTest(ref GTest, GEditor);
+                        this.InProcess = false;
                     }
                 }
                 else
@@ -358,6 +389,7 @@ namespace QuizRunner
                     GEditor.Open(path);
                     this.Controls[0].Controls[0].Visible = false;
                     LoadTest(ref GTest, GEditor);
+                    this.InProcess = false;
                 }
 
             }
@@ -502,6 +534,7 @@ namespace QuizRunner
                 IpnQuestionPanel.Visible = true;
                 IgbAnswer.Visible = true;
                 MoveNext(0, GTest);
+                this.InProcess = true;
             };
 
             // Текстбокс для перехвата курсора.
