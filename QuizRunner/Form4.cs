@@ -370,7 +370,7 @@ namespace QuizRunner
         /// Открывает файл, по указанному пути.
         /// </summary>
         /// <param name="path">путь</param>
-        private void Open(string path)
+        public void Open(string path)
         {
             try
             {

@@ -12,15 +12,26 @@ namespace QuizRunner
 {
     public partial class IfrMain : Form
     {
-        public IfrMain()
+        private readonly String[] GArgs;
+        public IfrMain(string[] args)
         {
             InitializeComponent();
+            GArgs = args;
         }
 
         private void IfrMain_Load(object sender, EventArgs e)
         {
-            IfrStartPage IStartPage = new IfrStartPage();
-            IStartPage.Show();
+            if (GArgs.Length > 0)
+            {
+                var ITestingPage = new IfrTesting();
+                ITestingPage.Show();
+                ITestingPage.Open(GArgs[0]);
+            }
+            else
+            {
+                var IStartPage = new IfrStartPage();
+                IStartPage.Show();
+            }
         }
 
         private void IfrMain_Activated(object sender, EventArgs e)
