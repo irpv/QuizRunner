@@ -48,6 +48,7 @@ namespace QuizRunner
             public Button IbtStart;
             public Label[] StatisticsLines;
             public Dictionary<string, Double> UserVariables;
+            public int NowQuestion;
         }
 
         // Переменная для теста.
@@ -332,8 +333,8 @@ namespace QuizRunner
         /// <param name="path">путь</param>
         private void Open(string path)
         {
-            try
-            {
+            //try
+            //{
                 if (InProcess)
                 {
                     if (MessageBox.Show("Тест в процессе прохождения!" +
@@ -353,30 +354,35 @@ namespace QuizRunner
 
                 this.Controls[0].Controls[0].Visible = false;
                 LoadTest(ref GTest, GEditor);
-            }
-            catch (System.FormatException)
-            {
-                this.LoadingProcess = false;
-                this.Show();
-                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (System.IO.IOException)
-            {
-                this.LoadingProcess = false;
-                this.Show();
-                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            catch (Exception e)
-            {
-                this.LoadingProcess = false;
-                this.Show();
-                MessageBox.Show("Не удалось открыть файл.\n" + e.Message, "Ошибка при открытии!",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            //}
+            //catch (System.FormatException)
+            //{
+            //    this.LoadingProcess = false;
+            //    this.Show();
+            //    MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch (System.IO.IOException)
+            //{
+            //    this.LoadingProcess = false;
+            //    this.Show();
+            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+            //catch (Exception e)
+            //{
+            //    this.LoadingProcess = false;
+            //    this.Show();
+            //    MessageBox.Show("Не удалось открыть файл.\n" + e.Message, "Ошибка при открытии!",
+            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
         }
 
+        /// <summary>
+        /// Загружает интерфейсы тестирования.
+        /// </summary>
+        /// <param name="test">интерфейсы тестирования</param>
+        /// <param name="editor">тест</param>
         private void LoadTest(ref Test test,QuizRunner.Editor.Editor editor)
         {
             var TIpnMain = (Panel)this.Controls[0];
@@ -392,6 +398,8 @@ namespace QuizRunner
             TIpnMain.BringToFront();
 
             test = new Test();
+
+            test.UserVariables = editor.ListOfVariables;
 
             // Название теста
             test.IlbTestName = new Label
@@ -440,10 +448,6 @@ namespace QuizRunner
                 Parent = TIpnMain
             };
             test.IbtStart.Left = TIpnMain.Width / 2 - test.IbtStart.Width / 2;
-            test.IbtStart.Click += (s, e) =>
-            {
-
-            };
 
             // Панель для лейбла вопроса.
             var IpnQuestionPanel = new Panel
@@ -481,6 +485,18 @@ namespace QuizRunner
                 Parent = IgbAnswer
             };
 
+            // Нажатие на кнопку старта
+            test.IbtStart.Click += (s, e) =>
+            {
+                GTest.IlbTestName.Visible = false;
+                GTest.IrtbDescription.Visible = false;
+                GTest.IbtStart.Visible = false;
+                IpnQuestionPanel.Visible = true;
+                IgbAnswer.Visible = true;
+                MoveNext(0, GTest);
+            };
+
+            // Вопросы
             test.QuestionList = new Question[0];
             for (var i = 0; i < editor.NumberOfQuestion(); i++)
             {
@@ -495,7 +511,7 @@ namespace QuizRunner
                     Parent = IpnQuestionPanel
                 };
                 var TStringBuilder = new StringBuilder();
-                for (var j = 0; j < editor.GetQuestionText(i).Length; i++)
+                for (var j = 0; j < editor.GetQuestionText(i).Length; j++)
                 {
                     TStringBuilder.Append(editor.GetQuestionText(i)[j] + "\n");
                 }
@@ -521,6 +537,7 @@ namespace QuizRunner
                             Font = new Font("Verdana", 10, FontStyle.Bold),
                             Text = editor.GetAnswerText(i, 0),
                             Tag = editor.GetAnswerArgument(i, 0),
+                            Visible = false,
                             Parent = IpnAnswer
                         };
                         for (var j = 1; j < editor.NumberOfAnswers(i); j++)
@@ -536,6 +553,7 @@ namespace QuizRunner
                                 Font = new Font("Verdana", 10, FontStyle.Bold),
                                 Text = editor.GetAnswerText(i, j),
                                 Tag = editor.GetAnswerArgument(i, j),
+                                Visible = false, 
                                 Parent = IpnAnswer
                             };
                         }
@@ -555,6 +573,7 @@ namespace QuizRunner
                             Font = new Font("Verdana", 10, FontStyle.Bold),
                             Text = editor.GetAnswerText(i, 0),
                             Tag = editor.GetAnswerArgument(i, 0),
+                            Visible = false,
                             Parent = IpnAnswer
                         };
                         for (var j = 1; j < editor.NumberOfAnswers(i); j++)
@@ -570,12 +589,14 @@ namespace QuizRunner
                                 Font = new Font("Verdana", 10, FontStyle.Bold),
                                 Text = editor.GetAnswerText(i, j),
                                 Tag = editor.GetAnswerArgument(i, j),
+                                Visible = false,
                                 Parent = IpnAnswer
                             };
                         }
                     }
                 }
 
+                // Кнопка перехода.
                 test.QuestionList[i].IbtNext = new Button
                 {
                     Text = "Следующий вопрос",
@@ -585,10 +606,51 @@ namespace QuizRunner
                     Cursor = System.Windows.Forms.Cursors.Hand,
                     AutoSize = true,
                     Top = IgbAnswer.Top + IgbAnswer.Height + 10,
+                    Visible = false,
                     Parent = TIpnMain
                 };
                 test.QuestionList[i].IbtNext.Left = TIpnMain.Width / 2 
                     - test.QuestionList[i].IbtNext.Width / 2;
+                // Лямбда кнопки.
+                test.QuestionList[i].IbtNext.Click += (s, e) =>
+                {
+                    if (GTest.QuestionList[GTest.NowQuestion].Type)
+                    {
+                        for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
+                        .RadioButtonList.Length; k++)
+                        {
+                            if (GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Checked)
+                            {
+                                var TArgumentArray =
+                                    (String[])GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Tag;
+
+                                for (var l = 0; l < TArgumentArray.Length; l++)
+                                {
+                                    //Функция выполнения аргумента
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
+                        .CheckBoxeList.Length; k++)
+                        {
+                            if (GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Checked)
+                            {
+                                var TArgumentArray =
+                                    (String[])GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Tag;
+
+                                for (var l = 0; l < TArgumentArray.Length; l++)
+                                {
+                                    //Функция выполнения аргумента
+                                }
+                            }
+                        }
+                    }
+
+                    MoveNext(GTest.NowQuestion + 1, GTest);
+                };
 
             }
 
@@ -601,6 +663,7 @@ namespace QuizRunner
                     AutoSize = true,
                     Font = new Font("Verdana", 15, FontStyle.Bold),
                     TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                    Visible = false,
                     Parent = TIpnMain
                 };
                 test.StatisticsLines[0].Left = TIpnMain.Width / 2 - test.StatisticsLines[0].Width / 2;
@@ -615,6 +678,7 @@ namespace QuizRunner
                         AutoSize = true,
                         Font = new Font("Verdana", 15, FontStyle.Bold),
                         TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                        Visible = false,
                         Parent = TIpnMain
                     };
                     test.StatisticsLines[i].Left = TIpnMain.Width / 2 
@@ -622,6 +686,104 @@ namespace QuizRunner
                 }
             }
 
+        }
+
+        /// <summary>
+        /// Выключает интерфейс предидущей страницы, и включает новый.
+        /// </summary>
+        /// <param name="index">номер новой страницы</param>
+        /// <param name="test">интерфейсы тестов</param>
+        private void MoveNext(int index, Test test)
+        {
+            if ((index > 0) && (index < test.QuestionList.Length))
+            {
+                // Выключаем старые интерфейсы.
+                test.QuestionList[index - 1].IlbQuestion.Visible = false;
+                test.QuestionList[index - 1].IbtNext.Visible = false;
+                if (test.QuestionList[index - 1].Type)
+                {
+                    for (var i = 0; i < test.QuestionList[index - 1].RadioButtonList.Length; i++)
+                    {
+                        test.QuestionList[index - 1].RadioButtonList[i].Visible = false;
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < test.QuestionList[index - 1].CheckBoxeList.Length; i++)
+                    {
+                        test.QuestionList[index - 1].CheckBoxeList[i].Visible = false;
+                    }
+                }
+
+                // Включаем новые интерфейсы.
+
+                test.QuestionList[index].IlbQuestion.Visible = true;
+                test.QuestionList[index].IbtNext.Visible = true;
+                if (test.QuestionList[index].Type)
+                {
+                    for (var i = 0; i < test.QuestionList[index].RadioButtonList.Length; i++)
+                    {
+                        test.QuestionList[index].RadioButtonList[i].Visible = true;
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < test.QuestionList[index].CheckBoxeList.Length; i++)
+                    {
+                        test.QuestionList[index].CheckBoxeList[i].Visible = true;
+                    }
+                }
+                GTest.NowQuestion = index;
+            }
+            else if (index == 0)
+            {
+                // Включаем новые интерфейсы.
+
+                test.QuestionList[index].IlbQuestion.Visible = true;
+                test.QuestionList[index].IbtNext.Visible = true;
+                if (test.QuestionList[index].Type)
+                {
+                    for (var i = 0; i < test.QuestionList[index].RadioButtonList.Length; i++)
+                    {
+                        test.QuestionList[index].RadioButtonList[i].Visible = true;
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < test.QuestionList[index].CheckBoxeList.Length; i++)
+                    {
+                        test.QuestionList[index].CheckBoxeList[i].Visible = true;
+                    }
+                }
+                GTest.NowQuestion = index;
+            }
+            else
+            {
+                // Выключаем старые интерфейсы.
+                test.QuestionList[index - 1].IlbQuestion.Visible = false;
+                test.QuestionList[index - 1].IbtNext.Visible = false;
+                if (test.QuestionList[index - 1].Type)
+                {
+                    for (var i = 0; i < test.QuestionList[index - 1].RadioButtonList.Length; i++)
+                    {
+                        test.QuestionList[index - 1].RadioButtonList[i].Visible = false;
+                    }
+                }
+                else
+                {
+                    for (var i = 0; i < test.QuestionList[index - 1].CheckBoxeList.Length; i++)
+                    {
+                        test.QuestionList[index - 1].CheckBoxeList[i].Visible = false;
+                    }
+                }
+
+                // Включаем строки статистики.
+                for (var i = 0; i< test.StatisticsLines.Length; i++)
+                {
+                    test.StatisticsLines[i].Visible = true;
+                }
+                GTest.NowQuestion = index ;
+            }
         }
     }
 }
