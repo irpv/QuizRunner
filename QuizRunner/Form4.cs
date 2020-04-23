@@ -611,14 +611,15 @@ namespace QuizRunner
                             {
                                 AutoSize = true,
                                 Left = 2,
-                                Top = test.QuestionList[i].RadioButtonList[j - 1].Top
-                                    + test.QuestionList[i].RadioButtonList[j - 1].Height + 4,
+                                Top = test.QuestionList[i].CheckBoxeList[j - 1].Top
+                                    + test.QuestionList[i].CheckBoxeList[j - 1].Height + 4,
                                 Font = new Font("Verdana", 10, FontStyle.Bold),
                                 Text = editor.GetAnswerText(i, j),
                                 Tag = editor.GetAnswerArgument(i, j),
                                 Visible = false,
                                 Parent = IpnAnswer
                             };
+
                         }
                     }
                 }
