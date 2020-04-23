@@ -29,6 +29,26 @@ namespace QuizRunner
             InitializeComponent();
         }
 
+        // Структура интерфейсов вопроса
+        private struct Question
+        {
+            public Label IlbQuestion;
+            public bool Type;
+            public RadioButton[] RadioButtonList;
+            public CheckBox[] CheckBoxeList;
+        }
+
+        // Структура интерффейсов теста.
+        private struct Test
+        {
+            public Label IlbTestName;
+            public RichTextBox IrtbDescription;
+            public Question[] QuestionList;
+        }
+
+        // Переменная для теста.
+        private Test GTest;
+
         private readonly OpenFileDialog GIofdOpenDialog = new OpenFileDialog
         {
             Title = "Открыть",
