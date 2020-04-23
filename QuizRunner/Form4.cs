@@ -423,6 +423,8 @@ namespace QuizRunner
         /// <param name="editor">тест</param>
         private void LoadTest(ref Test test,QuizRunner.Editor.Editor editor)
         {
+            /// Основные элементы
+            #region
             this.Controls[0].Dispose();
             var TIpnMain = new Panel
             {
@@ -544,8 +546,10 @@ namespace QuizRunner
                 Top = -100,
                 Parent = TIpnMain
             };
+            #endregion
 
-            // Вопросы
+            /// Вопросы
+            #region
             test.QuestionList = new Question[0];
             for (var i = 0; i < editor.NumberOfQuestion(); i++)
             {
@@ -680,47 +684,55 @@ namespace QuizRunner
                 // Лямбда кнопки.
                 test.QuestionList[i].IbtNext.Click += (s, e) =>
                 {
-                    if (GTest.QuestionList[GTest.NowQuestion].Type)
+                    if (MessageBox.Show("Вы уверены, что хотите перейти к следующиму вопросу?\n" +
+                        "Вы не сможете вернутся к этому вопросу.", "Сохранить ответ?",
+                        MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                        == DialogResult.Yes)
                     {
-                        for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
-                        .RadioButtonList.Length; k++)
+                        if (GTest.QuestionList[GTest.NowQuestion].Type)
                         {
-                            if (GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Checked)
+                            for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
+                            .RadioButtonList.Length; k++)
                             {
-                                var TArgumentArray =
-                                    (String[])GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Tag;
-
-                                for (var l = 0; l < TArgumentArray.Length; l++)
+                                if (GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Checked)
                                 {
-                                    //Функция выполнения аргумента
+                                    var TArgumentArray =
+                                        (String[])GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Tag;
+
+                                    for (var l = 0; l < TArgumentArray.Length; l++)
+                                    {
+                                        //Функция выполнения аргумента
+                                    }
                                 }
                             }
                         }
-                    }
-                    else
-                    {
-                        for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
-                        .CheckBoxeList.Length; k++)
+                        else
                         {
-                            if (GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Checked)
+                            for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
+                            .CheckBoxeList.Length; k++)
                             {
-                                var TArgumentArray =
-                                    (String[])GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Tag;
-
-                                for (var l = 0; l < TArgumentArray.Length; l++)
+                                if (GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Checked)
                                 {
-                                    //Функция выполнения аргумента
+                                    var TArgumentArray =
+                                        (String[])GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Tag;
+
+                                    for (var l = 0; l < TArgumentArray.Length; l++)
+                                    {
+                                        //Функция выполнения аргумента
+                                    }
                                 }
                             }
                         }
-                    }
 
-                    MoveNext(GTest.NowQuestion + 1, GTest);
+                        MoveNext(GTest.NowQuestion + 1, GTest);
+                    }
                 };
 
             }
+            #endregion
 
-            // Строки статистики.
+            /// Строки статистики.
+            #region
             if (editor.NumberOfStatLine() > 0)
             {
                 test.StatisticsLines = new Label[1];
@@ -748,7 +760,7 @@ namespace QuizRunner
                     };
                 }
             }
-
+            #endregion
         }
 
         /// <summary>
