@@ -13,13 +13,13 @@ namespace QuizRunner
 {
     public partial class LoadingScreen : Form
     {
-        string GMessage;
-        IfrCreator GIfrCreator;
-        public LoadingScreen(string message, IfrCreator sender)
+        public string GMessage;
+        public Form GIfrForm;
+        public LoadingScreen(string message, Form sender)
         {
             InitializeComponent();
             GMessage = message;
-            GIfrCreator = sender;
+            GIfrForm = sender;
         }
 
         private void LoadingScreen_Load(object sender, EventArgs e)
@@ -55,10 +55,23 @@ namespace QuizRunner
 
         private void ItmTimer_Tick(object sender, EventArgs e)
         {
-            if (GIfrCreator.LoadingProcess == false)
+            try
             {
-                this.Close();
-                this.Dispose();
+                var IfrForm = (IfrCreator)GIfrForm;
+                if (IfrForm.LoadingProcess == false)
+                {
+                    this.Close();
+                    this.Dispose();
+                }
+            }
+            catch
+            {
+                var IfrForm = (IfrTesting)GIfrForm;
+                if (IfrForm.LoadingProcess == false)
+                {
+                    this.Close();
+                    this.Dispose();
+                }
             }
         }
 
