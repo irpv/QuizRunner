@@ -36,6 +36,7 @@ namespace QuizRunner
             public bool Type;
             public RadioButton[] RadioButtonList;
             public CheckBox[] CheckBoxeList;
+            public Button IbtNext;
         }
 
         // Структура интерффейсов теста.
@@ -44,6 +45,7 @@ namespace QuizRunner
             public Label IlbTestName;
             public RichTextBox IrtbDescription;
             public Question[] QuestionList;
+            public Button IbtStart;
         }
 
         // Переменная для теста.
@@ -295,6 +297,9 @@ namespace QuizRunner
                         GEditor.Open(GIofdOpenDialog.FileName);
                     }
                 }
+
+                this.Controls[0].Controls[0].Visible = false;
+                LoadTest(ref GTest, GEditor);
             }
             catch (System.FormatException)
             {
@@ -343,6 +348,9 @@ namespace QuizRunner
                     GEditor = new QuizRunner.Editor.Editor();
                     GEditor.Open(path);
                 }
+
+                this.Controls[0].Controls[0].Visible = false;
+                LoadTest(ref GTest, GEditor);
             }
             catch (System.FormatException)
             {
@@ -365,6 +373,47 @@ namespace QuizRunner
                 MessageBox.Show("Не удалось открыть файл.\n" + e.Message, "Ошибка при открытии!",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LoadTest(ref Test test,QuizRunner.Editor.Editor editor)
+        {
+            test = new Test();
+
+            // Название теста
+            test.IlbTestName = new Label
+            {
+                AutoSize = true,
+                Text = editor.GetName(),
+                ForeColor = Color.FromArgb(18, 136, 235),
+                Font = new Font("Verdana", 25, FontStyle.Bold),
+                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                Parent = this.Controls[0]
+            };
+            test.IlbTestName.Left = this.Controls[0].Width / 2 - test.IlbTestName.Width / 2;
+
+            // Описание теста
+            test.IrtbDescription = new RichTextBox
+            {
+                Width = this.Controls[0].Width - 40,
+                Height = this.Controls[0].Height - test.IlbTestName.Height - 60,
+                BorderStyle = BorderStyle.None,
+                Font = new Font("Verdana", 20, FontStyle.Bold),
+                SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center,
+                ReadOnly = true,
+                Parent = this.Controls[0]
+            };
+            test.IrtbDescription.Left = this.Controls[0].Width / 2 - test.IrtbDescription.Width / 2;
+            test.IrtbDescription.Top = test.IlbTestName.Height + 20;
+            for (var i = 0; i < editor.GetDescription().Length; i++)
+            {
+                test.IrtbDescription.AppendText(editor.GetDescription()[i] + "\n");
+            }
+            test.IrtbDescription.LinkClicked += (s, e) =>
+            {
+                System.Diagnostics.Process.Start(e.LinkText);
+            };
+
+
         }
     }
 }

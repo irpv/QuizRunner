@@ -742,6 +742,10 @@ namespace QuizRunner
             //Заполнение описания теста.
             var TIrtbDescription = (RichTextBox)TItbTabControl.TabPages[0].Controls[3];
             TIrtbDescription.Text = "";
+            TIrtbDescription.LinkClicked += (s, e) =>
+            {
+                System.Diagnostics.Process.Start(e.LinkText);
+            };
 
 
             string[] TDescription = editor.GetDescription();

@@ -5,3 +5,5 @@
 
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Качество кода", "IDE0067:Ликвидировать объекты перед потерей области", Justification = "<Ожидание>", Scope = "member", Target = "~M:QuizRunner.IfrStartPage.IfrStartPage_Load(System.Object,System.EventArgs)")]
 [assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Качество кода", "IDE0067:Ликвидировать объекты перед потерей области", Justification = "<Ожидание>", Scope = "member", Target = "~M:QuizRunner.IfrCreator.IfrCreator_Load(System.Object,System.EventArgs)")]
+
+[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Стиль", "IDE0017:Упростите инициализацию объекта", Justification = "<Ожидание>", Scope = "member", Target = "~M:QuizRunner.IfrTesting.LoadTest(QuizRunner.IfrTesting.Test@,QuizRunner.Editor.Editor)")]
