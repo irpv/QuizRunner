@@ -234,7 +234,7 @@ namespace QuizRunner
             {
                 if (MessageBox.Show("Тест в процессе прохождения!" +
                     "\nЕсли вы продолжите это действие, вы потеряете все результаты." +
-                    "\nЖелаете продолжиь?", "Открыть файл",
+                    "\nЖелаете продолжиь?", "Закрыть программу?",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     CanClose = true;
@@ -283,7 +283,7 @@ namespace QuizRunner
             {
                 if (MessageBox.Show("Тест в процессе прохождения!" +
                     "\nЕсли вы продолжите это действие, вы потеряете все результаты." +
-                    "\nЖелаете продолжиь?", "Открыть файл",
+                    "\nЖелаете продолжиь?", "Выти в меню?",
                     MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
                     CanClose = true;
@@ -312,7 +312,7 @@ namespace QuizRunner
                 {
                     if (MessageBox.Show("Тест в процессе прохождения!" +
                         "\nЕсли вы продолжите это действие, вы потеряете все результаты." +
-                        "\nЖелаете продолжиь?", "Открыть файл",
+                        "\nЖелаете продолжиь?", "Открыть файл?",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
                         if (GIofdOpenDialog.ShowDialog() == DialogResult.OK)
@@ -373,7 +373,7 @@ namespace QuizRunner
                 {
                     if (MessageBox.Show("Тест в процессе прохождения!" +
                         "\nЕсли вы продолжите это действие, вы потеряете все результаты." +
-                        "\nЖелаете продолжиь?", "Открыть файл",
+                        "\nЖелаете продолжиь?", "Открыть файл?",
                         MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                     {
                         GEditor = new QuizRunner.Editor.Editor();
