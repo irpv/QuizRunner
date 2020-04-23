@@ -386,14 +386,14 @@ namespace QuizRunner
         /// <param name="editor">тест</param>
         private void LoadTest(ref Test test,QuizRunner.Editor.Editor editor)
         {
-            var TIpnMain = (Panel)this.Controls[0];
-            TIpnMain = new Panel
+            this.Controls[0].Dispose();
+            var TIpnMain = new Panel
             {
                 AutoScroll = true,
                 BackColor = Color.White,
-                Left = this.Controls[1].Width,
+                Left = this.Controls[0].Width,
                 Top = 0,
-                Width = this.Width - this.Controls[1].Width,
+                Width = this.Width - this.Controls[0].Width,
                 Height = this.Height,
                 Parent = this
             };
