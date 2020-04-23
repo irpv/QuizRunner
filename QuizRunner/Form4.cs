@@ -333,8 +333,8 @@ namespace QuizRunner
         /// <param name="path">путь</param>
         private void Open(string path)
         {
-            //try
-            //{
+            try
+            {
                 if (InProcess)
                 {
                     if (MessageBox.Show("Тест в процессе прохождения!" +
@@ -354,28 +354,28 @@ namespace QuizRunner
 
                 this.Controls[0].Controls[0].Visible = false;
                 LoadTest(ref GTest, GEditor);
-            //}
-            //catch (System.FormatException)
-            //{
-            //    this.LoadingProcess = false;
-            //    this.Show();
-            //    MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch (System.IO.IOException)
-            //{
-            //    this.LoadingProcess = false;
-            //    this.Show();
-            //    MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-            //catch (Exception e)
-            //{
-            //    this.LoadingProcess = false;
-            //    this.Show();
-            //    MessageBox.Show("Не удалось открыть файл.\n" + e.Message, "Ошибка при открытии!",
-            //        MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
+            }
+            catch (System.FormatException)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Файл имеет неверный формат.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (System.IO.IOException)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Не удалось получить доступ к файлу.", "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception e)
+            {
+                this.LoadingProcess = false;
+                this.Show();
+                MessageBox.Show("Не удалось открыть файл.\n" + e.Message, "Ошибка при открытии!",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         /// <summary>
@@ -805,6 +805,19 @@ namespace QuizRunner
                     this.Controls[0].Controls[i].Visible = false;
                 }
 
+                // Лейбл завершения теста.
+                var IlbTestEnd = new Label
+                {
+                    AutoSize = true,
+                    Text = "Тест завершен",
+                    ForeColor = Color.FromArgb(18, 136, 235),
+                    Font = new Font("Verdana", 25, FontStyle.Bold),
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                    Parent = this.Controls[0]
+                };
+                IlbTestEnd.Left = this.Controls[0].Width / 2 - IlbTestEnd.Width / 2;
+
+
                 // Заполняем строки статистики
                 for (var i = 0; i < test.StatisticsLines.Length; i++)
                 {
@@ -812,6 +825,15 @@ namespace QuizRunner
                         $"{GEditor.GetStatPostfix(i)}";
                     test.StatisticsLines[i].Left = test.StatisticsLines[i].Parent.Width / 2 
                         - test.StatisticsLines[i].Width / 2;
+                    if (i == 0)
+                    {
+                        test.StatisticsLines[i].Top = IlbTestEnd.Height + 25;
+                    }
+                    else
+                    {
+                        test.StatisticsLines[i].Top = test.StatisticsLines[i - 1].Top
+                            + test.StatisticsLines[i - 1].Height + 10;
+                    }
                 }
 
                 // Включаем строки статистики.
