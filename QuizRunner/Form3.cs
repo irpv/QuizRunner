@@ -744,7 +744,19 @@ namespace QuizRunner
             TIrtbDescription.Text = "";
             TIrtbDescription.LinkClicked += (s, e) =>
             {
-                System.Diagnostics.Process.Start(e.LinkText);
+                if (Environment.OSVersion.Platform != PlatformID.Unix)
+                {
+                    System.Diagnostics.Process.Start(e.LinkText);
+                }
+                else
+                {
+                    if (MessageBox.Show("Скопировать ссылку в буфер обмена?",
+                        "Копировать ссылку?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                        == DialogResult.Yes)
+                    {
+                        Clipboard.SetText(e.LinkText);
+                    }
+                }
             };
 
 
@@ -1429,6 +1441,22 @@ namespace QuizRunner
             TIrtbQuestion.Left = TItpQuestionPage.Width / 2
                 - TIrtbQuestion.Width / 2;
             TIrtbQuestion.TextChanged += UnsavedText_TextChanged;
+            TIrtbQuestion.LinkClicked += (s, e) =>
+            {
+                if (Environment.OSVersion.Platform != PlatformID.Unix)
+                {
+                    System.Diagnostics.Process.Start(e.LinkText);
+                }
+                else
+                {
+                    if (MessageBox.Show("Скопировать ссылку в буфер обмена?",
+                        "Копировать ссылку?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                        == DialogResult.Yes)
+                    {
+                        Clipboard.SetText(e.LinkText);
+                    }
+                }
+            };
             // Лейбл вопроса.
             var ITlbQuestion = new Label
             {

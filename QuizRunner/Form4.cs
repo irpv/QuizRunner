@@ -516,7 +516,19 @@ namespace QuizRunner
             }
             test.IrtbDescription.LinkClicked += (s, e) =>
             {
-                System.Diagnostics.Process.Start(e.LinkText);
+                if (Environment.OSVersion.Platform != PlatformID.Unix)
+                {
+                    System.Diagnostics.Process.Start(e.LinkText);
+                }
+                else
+                {
+                    if (MessageBox.Show("Скопировать ссылку в буфер обмена?",
+                        "Копировать ссылку?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                        == DialogResult.Yes)
+                    {
+                        Clipboard.SetText(e.LinkText);
+                    }
+                }
             };
 
             // Кнопка для старта тестирования
@@ -616,7 +628,19 @@ namespace QuizRunner
                 };
                 test.QuestionList[i].IrtbQuestion.LinkClicked += (s, e) =>
                 {
-                    System.Diagnostics.Process.Start(e.LinkText);
+                    if (Environment.OSVersion.Platform != PlatformID.Unix)
+                    {
+                        System.Diagnostics.Process.Start(e.LinkText);
+                    }
+                    else
+                    {
+                        if (MessageBox.Show("Скопировать ссылку в буфер обмена?",
+                            "Копировать ссылку?", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                            == DialogResult.Yes)
+                        {
+                            Clipboard.SetText(e.LinkText);
+                        }
+                    }
                 };
                 for (var j = 0; j < editor.GetQuestionText(i).Length; j++)
                 {
