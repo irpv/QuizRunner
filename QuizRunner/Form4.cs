@@ -160,39 +160,60 @@ namespace QuizRunner
 
             /// Открытие теста
             #region
-            var IlbDrop = new Label
-            {
-                AutoSize = false,
-                BackColor = Color.LightGray,
-                BorderStyle = BorderStyle.FixedSingle,
-                Text = "Перетащите файл сюда.",
-                ForeColor = Color.FromArgb(18, 136, 235),
-                Font = new Font("Verdana", 10, FontStyle.Bold),
-                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
-                AllowDrop = true,
-                Width = IpnMain.Width / 2,
-                Height = IpnMain.Height / 5,
-                Parent = IpnMain
-            };
-            IlbDrop.Left = IpnMain.Width / 2 - IlbDrop.Width / 2;
-            IlbDrop.Top = IpnMain.Height / 2 - IlbDrop.Height / 2;
-            IlbDrop.DragEnter += IlbDrop_DragEnter;
-            IlbDrop.DragLeave += IlbDrop_DragLeave;
-            IlbDrop.DragDrop += IlbDrop_DragDrop;
 
-            var IbtOpen = new Button
+            if (Environment.OSVersion.Platform != PlatformID.Unix)
             {
-                AutoSize = false,
-                Width = IlbDrop.Width / 3,
-                Height = IlbDrop.Height / 5,
-                Text = "Выбрать файл...",
-                FlatStyle = FlatStyle.System,
-                Cursor = System.Windows.Forms.Cursors.Hand,
-                Parent = IlbDrop
-            };
-            IbtOpen.Left = IlbDrop.Width / 2 - IbtOpen.Width / 2;
-            IbtOpen.Top = IlbDrop.Height / 2 + 25;
-            IbtOpen.Click += IpbOpen_Click;
+                var IlbDrop = new Label
+                {
+                    AutoSize = false,
+                    BackColor = Color.LightGray,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    Text = "Перетащите файл сюда.",
+                    ForeColor = Color.FromArgb(18, 136, 235),
+                    Font = new Font("Verdana", 10, FontStyle.Bold),
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                    AllowDrop = true,
+                    Width = IpnMain.Width / 2,
+                    Height = IpnMain.Height / 5,
+                    Parent = IpnMain
+                };
+                IlbDrop.Left = IpnMain.Width / 2 - IlbDrop.Width / 2;
+                IlbDrop.Top = IpnMain.Height / 2 - IlbDrop.Height / 2;
+                IlbDrop.DragEnter += IlbDrop_DragEnter;
+                IlbDrop.DragLeave += IlbDrop_DragLeave;
+                IlbDrop.DragDrop += IlbDrop_DragDrop;
+
+                var IbtOpen = new Button
+                {
+                    AutoSize = false,
+                    Width = IlbDrop.Width / 3,
+                    Height = IlbDrop.Height / 5,
+                    Text = "Выбрать файл...",
+                    FlatStyle = FlatStyle.System,
+                    Cursor = System.Windows.Forms.Cursors.Hand,
+                    Parent = IlbDrop
+                };
+                IbtOpen.Left = IlbDrop.Width / 2 - IbtOpen.Width / 2;
+                IbtOpen.Top = IlbDrop.Height / 2 + 25;
+                IbtOpen.Click += IpbOpen_Click;
+            }
+            else
+            {
+                var IbtOpen = new Button
+                {
+                    Text = "Выбрать файл...",
+                    BackColor = Color.FromArgb(18, 136, 235),
+                    Font = new Font("Verdana", 25, FontStyle.Bold),
+                    FlatStyle = FlatStyle.Flat,
+                    ForeColor = Color.White,
+                    Cursor = System.Windows.Forms.Cursors.Hand,
+                    AutoSize = true,
+                    Parent = IpnMain
+                };
+                IbtOpen.Left = IpnMain.Width / 2 - IbtOpen.Width / 2;
+                IbtOpen.Top = IpnMain.Height / 2 - IbtOpen.Height / 2;
+                IbtOpen.Click += IpbOpen_Click;
+            }
             #endregion
             #endregion
         }
