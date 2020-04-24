@@ -478,6 +478,7 @@ namespace QuizRunner
             // Описание теста
             test.IrtbDescription = new RichTextBox
             {
+                BackColor = Color.White,
                 Width = TIpnMain.Width - 40,
                 Height = TIpnMain.Height - test.IlbTestName.Height - 60,
                 BorderStyle = BorderStyle.None,
