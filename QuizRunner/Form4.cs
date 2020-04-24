@@ -651,8 +651,16 @@ namespace QuizRunner
                     test.QuestionList[i].IrtbQuestion.Width / 2;
                 test.QuestionList[i].IrtbQuestion.GotFocus += (s, e) =>
                 {
-                    ItbHideCursor.Focus();
-                    ItbHideCursor.Select(0, -1);
+                    if (Environment.OSVersion.Platform != PlatformID.Unix)
+                    {
+                        ItbHideCursor.Focus();
+                        ItbHideCursor.Select(0, -1);
+                    }
+                    else
+                    {
+                        ItbHideCursor.Focus();
+                        ItbHideCursor.Select(0, 1);
+                    }
                 };
 
                 // Тип ответа
