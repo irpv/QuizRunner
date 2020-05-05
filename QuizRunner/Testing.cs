@@ -13,7 +13,7 @@ namespace QuizRunner.Testing
         /// <summary>
         /// Удаляет все пробелы из строки.
         /// </summary>
-        public string SimplifyArg(string arg)
+        public string SimplifyArg(string arg) // arg - строка типа [] = [] + x. ( GetAnswerArgument(k, 0) )
         {
             return Regex.Replace(arg, @"\s+", "");
         }
