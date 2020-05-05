@@ -48,6 +48,9 @@ namespace QuizRunner.Testing
             return increaseValue;
         }
 
+        /// <summary>
+        /// Счётчик результат в соответствии с математической операцией.
+        /// </summary>
         public int Calculate(char mathOperator, string increaseValue, int result)
         {
             switch (mathOperator)
