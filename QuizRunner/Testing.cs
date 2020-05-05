@@ -39,5 +39,28 @@ namespace QuizRunner.Testing
             return increaseValue;
         }
 
+        public int Calculate(char mathOperator, string increaseValue, int result)
+        {
+            switch (mathOperator)
+            {
+                case '+':
+                    return result + int.Parse(increaseValue);
+                case '-':
+                    return result - int.Parse(increaseValue);
+                case '*':
+                    if (result == 0)
+                    {
+                        return int.Parse(increaseValue);
+                    }
+                    else
+                    {
+                        return result * int.Parse(increaseValue);
+                    }
+                case '/':
+                    return result / int.Parse(increaseValue);
+            }
+
+            return result + 1;
+        }
     }
 }
