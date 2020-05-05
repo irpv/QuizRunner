@@ -18,6 +18,9 @@ namespace QuizRunner.Testing
             return Regex.Replace(arg, @"\s+", "");
         }
 
+        /// <summary>
+        /// Находит математический знак операции.
+        /// </summary>
         public char GetMathOperator(string arg)
         {
             foreach (var item in arg.Select((value, i) => new { i, value }))
