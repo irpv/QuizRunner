@@ -34,6 +34,9 @@ namespace QuizRunner.Testing
             return arg[_closingBracket + 1];
         }
 
+        /// <summary>
+        /// Находит значение, на которое увеличивается результат.
+        /// </summary>
         public string GetIncreaseValue(string arg)
         {
             string increaseValue = "";
