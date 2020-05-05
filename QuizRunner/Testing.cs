@@ -14,5 +14,19 @@ namespace QuizRunner.Testing
         {
             return Regex.Replace(arg, @"\s+", "");
         }
+
+        public char GetMathOperator(string arg)
+        {
+            foreach (var item in arg.Select((value, i) => new { i, value }))
+            {
+                if (item.value == ']')
+                {
+                    _closingBracket = item.i;
+                }
+            }
+
+            return arg[_closingBracket + 1];
+        }
+
     }
 }
