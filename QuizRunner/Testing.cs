@@ -8,8 +8,11 @@ namespace QuizRunner.Testing
 {
     public class Testing
     {
-        private int _closingBracket = 0;
+        private int _closingBracket = 0; // Хранит индекс последней ']' в строке
 
+        /// <summary>
+        /// Удаляет все пробелы из строки.
+        /// </summary>
         public string SimplifyArg(string arg)
         {
             return Regex.Replace(arg, @"\s+", "");
