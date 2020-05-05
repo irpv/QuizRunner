@@ -28,5 +28,16 @@ namespace QuizRunner.Testing
             return arg[_closingBracket + 1];
         }
 
+        public string GetIncreaseValue(string arg)
+        {
+            string increaseValue = "";
+            for (var x = _closingBracket + 2; x < arg.Length; x++)
+            {
+                increaseValue += arg[x];
+            }
+
+            return increaseValue;
+        }
+
     }
 }
