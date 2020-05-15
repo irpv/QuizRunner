@@ -48,6 +48,13 @@ namespace QuizRunner.Testing
             return increaseValue;
         }
 
+        public string GetArgumentName(string arg)
+        {
+            var argName = "";
+
+            return argName;
+        }
+
         /// <summary>
         /// Счётчик результат в соответствии с математической операцией.
         /// </summary>
