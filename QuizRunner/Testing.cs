@@ -52,14 +52,17 @@ namespace QuizRunner.Testing
         {
             var argName = "";
 
-            if (item != '[' && item != ']' && item != '=')
-            {
-                argName += item;
-            }
+            foreach (var item in arg)
+            {            
+                if (item != '[' && item != ']' && item != '=')
+                {
+                    argName += item;
+                }
 
-            if (item != '=')
-            {
-                break;
+                if (item != '=')
+                {
+                    break;
+                }
             }
 
             return argName;
