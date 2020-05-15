@@ -52,6 +52,16 @@ namespace QuizRunner.Testing
         {
             var argName = "";
 
+            if (item != '[' && item != ']' && item != '=')
+            {
+                argName += item;
+            }
+
+            if (item != '=')
+            {
+                break;
+            }
+
             return argName;
         }
 
