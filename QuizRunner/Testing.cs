@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Data;
 
 namespace QuizRunner.Testing
 {
@@ -93,6 +94,19 @@ namespace QuizRunner.Testing
             }
 
             return result + 1;
+        }
+
+        public object GetCompute(string arg, Dictionary<string, double> D)
+        {
+            string Comp = arg.Substring(arg.LastIndexOf('=') + 1).TrimStart(' ');;
+
+            while (Comp.Contains("["))
+            {
+                string Name = GetArgumentName(arg);
+                Comp = Comp.Replace("[" + Name + "]", D[Name].ToString());
+            }
+
+            return new DataTable().Compute(Comp, "");
         }
     }
 }
