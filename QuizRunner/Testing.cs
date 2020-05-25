@@ -117,7 +117,7 @@ namespace QuizRunner.Testing
 
             while (Comp.Contains("["))
             {
-                string Name = GetArgumentName(arg);
+                string Name = Comp.Substring(Comp.IndexOf("[") + 1, Comp.IndexOf("]") - (Comp.IndexOf("[") + 1));
                 Comp = Comp.Replace("[" + Name + "]", D[Name].ToString());
             }
 
