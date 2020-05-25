@@ -10,19 +10,6 @@ namespace QuizRunner.Testing
 {
     public class Testing
     {
-        public struct Answer
-        {
-            public string AnswerText;
-
-            public string[] Argument;
-        }
-
-        public struct Question
-        {
-            public string[] QuestionText;
-            public bool AnswType;
-            public Answer[] AnswArr;
-        }
 
         private int _closingBracket = 0; // Хранит индекс последней ']' в строке
 
@@ -110,7 +97,7 @@ namespace QuizRunner.Testing
 
             return result + 1;
         }
-
+        
         public object GetCompute(string arg, Dictionary<string, double> D)
         {
             string Comp = arg.Substring(arg.LastIndexOf('=') + 1).TrimStart(' ');;
@@ -122,16 +109,6 @@ namespace QuizRunner.Testing
             }
 
             return new DataTable().Compute(Comp, "");
-        }
-
-        public void Save(string direction,Question[] ListOfQuestions, int result)
-        {
-            File.Create(direction).Close();
-            StreamWriter SW = File.AppendText(direction);
-
-            SW.WriteLine(((ListOfQuestions.Length / result) * 100).ToString());
-
-            SW.Close();
         }
     }
 }
