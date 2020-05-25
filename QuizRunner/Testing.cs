@@ -4,11 +4,26 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Data;
+using System.IO;
 
 namespace QuizRunner.Testing
 {
     public class Testing
     {
+        public struct Answer
+        {
+            public string AnswerText;
+
+            public string[] Argument;
+        }
+
+        public struct Question
+        {
+            public string[] QuestionText;
+            public bool AnswType;
+            public Answer[] AnswArr;
+        }
+
         private int _closingBracket = 0; // Хранит индекс последней ']' в строке
 
         /// <summary>
@@ -107,6 +122,16 @@ namespace QuizRunner.Testing
             }
 
             return new DataTable().Compute(Comp, "");
+        }
+
+        public void Save(string direction,Question[] ListOfQuestions, int result)
+        {
+            File.Create(direction).Close();
+            StreamWriter SW = File.AppendText(direction);
+
+            SW.WriteLine(((ListOfQuestions.Length / result) * 100).ToString());
+
+            SW.Close();
         }
     }
 }
