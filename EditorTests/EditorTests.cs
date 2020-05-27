@@ -226,7 +226,7 @@ namespace EditorTests
        public void Correctness()
         {
             char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
-            string input = "-100+200,9=(100)+[abc]".Replace(',', separator);
+            string input = "-100+200,9+[abc]=(100)+[abc]".Replace(',', separator);
 
             // First symbol
             string input_wrong = "*(-[abc]) = [abc]           +((-100)       ) + 60*20";

@@ -605,13 +605,9 @@ namespace QuizRunner.Editor
             if (eq != 1)
             {
                 flag = false;
-            }
-            if (flag == false)
-            {
                 goto Exit;
             }
-
-
+          
             // Проверка на арифметические знаки
             for (var i = 0; i < N; i++)
             {
