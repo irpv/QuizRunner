@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Data;
 using System.IO;
+using System.Windows.Forms;
 
 namespace QuizRunner.Testing
 {
@@ -57,12 +58,12 @@ namespace QuizRunner.Testing
 
             foreach (var item in arg)
             {            
-                if (item != '[' && item != ']' && item != '=')
+                if ((item != '[') && (item != ']') && (item != '='))
                 {
                     argName += item;
                 }
 
-                if (item != '=')
+                if (item == '=')
                 {
                     break;
                 }

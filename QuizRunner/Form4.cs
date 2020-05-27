@@ -37,6 +37,8 @@ namespace QuizRunner
             public bool Type;
             public RadioButton[] RadioButtonList;
             public CheckBox[] CheckBoxeList;
+            public GroupBox IgbAnswerGroupBox;
+            public Panel IpnAnswerPanel;
             public Button IbtNext;
         }
 
@@ -556,31 +558,6 @@ namespace QuizRunner
                 Parent = TIpnMain
             };
 
-            // Груп бок сдля ответов
-            var IgbAnswer = new GroupBox
-            {
-                Text = "Ответы",
-                Font = new Font("Verdana", 8, FontStyle.Bold),
-                Width = TIpnMain.Width - 40,
-                Height = TIpnMain.Height - IpnQuestionPanel.Height - 50,
-                Left = 20,
-                Top = IpnQuestionPanel.Height + 20,
-                Visible = false,
-                Parent = TIpnMain
-            };
-
-            // Панель для скролинга ответов
-            var IpnAnswer = new Panel
-            {
-                AutoScroll = true,
-                Left = 15,
-                Top = 15,
-                Width = IgbAnswer.Width - 30,
-                Height = IgbAnswer.Height - 30,
-                BackColor = Color.White,
-                BorderStyle = BorderStyle.None,
-                Parent = IgbAnswer
-            };
 
             // Нажатие на кнопку старта
             test.IbtStart.Click += (s, e) =>
@@ -589,8 +566,8 @@ namespace QuizRunner
                 GTest.IrtbDescription.Visible = false;
                 GTest.IbtStart.Visible = false;
                 IpnQuestionPanel.Visible = true;
-                IgbAnswer.Visible = true;
-                MoveNext(0, GTest);
+                //IgbAnswer.Visible = true;
+                MoveNext(0,0, GTest);
                 this.InProcess = true;
             };
 
@@ -666,6 +643,30 @@ namespace QuizRunner
                 // Тип ответа
                 test.QuestionList[i].Type = editor.GetAnswerType(i);
 
+                test.QuestionList[i].IgbAnswerGroupBox = new GroupBox
+                {
+                    Text = "Ответы",
+                    Font = new Font("Verdana", 8, FontStyle.Bold),
+                    Width = TIpnMain.Width - 40,
+                    Height = TIpnMain.Height - IpnQuestionPanel.Height - 50,
+                    Left = 20,
+                    Top = IpnQuestionPanel.Height + 20,
+                    Visible = false,
+                    Parent = TIpnMain
+                };
+
+                test.QuestionList[i].IpnAnswerPanel = new Panel
+                {
+                    AutoScroll = true,
+                    Left = 15,
+                    Top = 15,
+                    Width = test.QuestionList[i].IgbAnswerGroupBox.Width - 30,
+                    Height = test.QuestionList[i].IgbAnswerGroupBox.Height - 30,
+                    BackColor = Color.White,
+                    BorderStyle = BorderStyle.None,
+                    Parent = test.QuestionList[i].IgbAnswerGroupBox
+                };
+
                 // Ответы
                 if (test.QuestionList[i].Type)
                 {
@@ -682,7 +683,7 @@ namespace QuizRunner
                             Text = editor.GetAnswerText(i, 0),
                             Tag = editor.GetAnswerArgument(i, 0),
                             Visible = false,
-                            Parent = IpnAnswer
+                            Parent = test.QuestionList[i].IpnAnswerPanel
                         };
                         for (var j = 1; j < editor.NumberOfAnswers(i); j++)
                         {
@@ -698,7 +699,7 @@ namespace QuizRunner
                                 Text = editor.GetAnswerText(i, j),
                                 Tag = editor.GetAnswerArgument(i, j),
                                 Visible = false, 
-                                Parent = IpnAnswer
+                                Parent = test.QuestionList[i].IpnAnswerPanel
                             };
                         }
                     }
@@ -718,7 +719,7 @@ namespace QuizRunner
                             Text = editor.GetAnswerText(i, 0),
                             Tag = editor.GetAnswerArgument(i, 0),
                             Visible = false,
-                            Parent = IpnAnswer
+                            Parent = test.QuestionList[i].IpnAnswerPanel
                         };
                         for (var j = 1; j < editor.NumberOfAnswers(i); j++)
                         {
@@ -734,7 +735,7 @@ namespace QuizRunner
                                 Text = editor.GetAnswerText(i, j),
                                 Tag = editor.GetAnswerArgument(i, j),
                                 Visible = false,
-                                Parent = IpnAnswer
+                                Parent = test.QuestionList[i].IpnAnswerPanel
                             };
 
                         }
@@ -750,7 +751,7 @@ namespace QuizRunner
                     ForeColor = Color.White,
                     Cursor = System.Windows.Forms.Cursors.Hand,
                     AutoSize = true,
-                    Top = IgbAnswer.Top + IgbAnswer.Height + 2,
+                    Top = test.QuestionList[i].IgbAnswerGroupBox.Top + test.QuestionList[i].IgbAnswerGroupBox.Height + 2,
                     Visible = false,
                     Parent = TIpnMain
                 };
@@ -773,11 +774,6 @@ namespace QuizRunner
                                 {
                                     var TArgumentArray =
                                         (String[])GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Tag;
-
-                                    for (var l = 0; l < TArgumentArray.Length; l++)
-                                    {
-                                        //Функция выполнения аргумента
-                                    }
                                 }
                             }
                         }
@@ -790,16 +786,11 @@ namespace QuizRunner
                                 {
                                     var TArgumentArray =
                                         (String[])GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Tag;
-
-                                    for (var l = 0; l < TArgumentArray.Length; l++)
-                                    {
-                                        //Функция выполнения аргумента
-                                    }
                                 }
                             }
                         }
 
-                        MoveNext(GTest.NowQuestion + 1, GTest);
+                        MoveNext(GTest.NowQuestion, GTest.NowQuestion + 1, GTest);
                     }
                 };
 
@@ -847,25 +838,26 @@ namespace QuizRunner
         /// </summary>
         /// <param name="index">номер новой страницы</param>
         /// <param name="test">интерфейсы тестов</param>
-        private void MoveNext(int index, Test test)
+        private void MoveNext(int oldindex, int index, Test test)
         {
-            if ((index > 0) && (index < test.QuestionList.Length))
+            if ((oldindex >= 0) && (index < test.QuestionList.Length))
             {
                 // Выключаем старые интерфейсы.
-                test.QuestionList[index - 1].IrtbQuestion.Visible = false;
-                test.QuestionList[index - 1].IbtNext.Visible = false;
-                if (test.QuestionList[index - 1].Type)
+                test.QuestionList[oldindex].IrtbQuestion.Visible = false;
+                test.QuestionList[oldindex].IbtNext.Visible = false;
+                test.QuestionList[oldindex].IgbAnswerGroupBox.Visible = false;
+                if (test.QuestionList[oldindex].Type)
                 {
-                    for (var i = 0; i < test.QuestionList[index - 1].RadioButtonList.Length; i++)
+                    for (var i = 0; i < test.QuestionList[oldindex].RadioButtonList.Length; i++)
                     {
-                        test.QuestionList[index - 1].RadioButtonList[i].Visible = false;
+                        test.QuestionList[oldindex].RadioButtonList[i].Visible = false;
                     }
                 }
                 else
                 {
-                    for (var i = 0; i < test.QuestionList[index - 1].CheckBoxeList.Length; i++)
+                    for (var i = 0; i < test.QuestionList[oldindex].CheckBoxeList.Length; i++)
                     {
-                        test.QuestionList[index - 1].CheckBoxeList[i].Visible = false;
+                        test.QuestionList[oldindex].CheckBoxeList[i].Visible = false;
                     }
                 }
 
@@ -873,6 +865,7 @@ namespace QuizRunner
 
                 test.QuestionList[index].IrtbQuestion.Visible = true;
                 test.QuestionList[index].IbtNext.Visible = true;
+                test.QuestionList[index].IgbAnswerGroupBox.Visible = true;
                 if (test.QuestionList[index].Type)
                 {
                     for (var i = 0; i < test.QuestionList[index].RadioButtonList.Length; i++)
@@ -889,12 +882,13 @@ namespace QuizRunner
                 }
                 GTest.NowQuestion = index;
             }
-            else if (index == 0)
+            else if (oldindex < 0)
             {
                 // Включаем новые интерфейсы.
 
                 test.QuestionList[index].IrtbQuestion.Visible = true;
                 test.QuestionList[index].IbtNext.Visible = true;
+                test.QuestionList[index].IgbAnswerGroupBox.Visible = false;
                 if (test.QuestionList[index].Type)
                 {
                     for (var i = 0; i < test.QuestionList[index].RadioButtonList.Length; i++)
@@ -914,20 +908,21 @@ namespace QuizRunner
             else
             {
                 // Выключаем старые интерфейсы.
-                test.QuestionList[index - 1].IrtbQuestion.Visible = false;
-                test.QuestionList[index - 1].IbtNext.Visible = false;
-                if (test.QuestionList[index - 1].Type)
+                test.QuestionList[oldindex].IrtbQuestion.Visible = false;
+                test.QuestionList[oldindex].IbtNext.Visible = false;
+                test.QuestionList[oldindex].IgbAnswerGroupBox.Visible = false;
+                if (test.QuestionList[oldindex].Type)
                 {
-                    for (var i = 0; i < test.QuestionList[index - 1].RadioButtonList.Length; i++)
+                    for (var i = 0; i < test.QuestionList[oldindex].RadioButtonList.Length; i++)
                     {
-                        test.QuestionList[index - 1].RadioButtonList[i].Visible = false;
+                        test.QuestionList[oldindex].RadioButtonList[i].Visible = false;
                     }
                 }
                 else
                 {
-                    for (var i = 0; i < test.QuestionList[index - 1].CheckBoxeList.Length; i++)
+                    for (var i = 0; i < test.QuestionList[oldindex].CheckBoxeList.Length; i++)
                     {
-                        test.QuestionList[index - 1].CheckBoxeList[i].Visible = false;
+                        test.QuestionList[oldindex].CheckBoxeList[i].Visible = false;
                     }
                 }
 
@@ -935,6 +930,53 @@ namespace QuizRunner
                 for (var i = 0; i < this.Controls[0].Controls.Count; i++)
                 {
                     this.Controls[0].Controls[i].Visible = false;
+                }
+
+                
+
+                // Подсчитываем все аргументы. 
+
+                for (var i = 0; i < GTest.QuestionList.Length; i++)
+                {
+                    if (GTest.QuestionList[i].Type)
+                    {
+                        for (var k = 0; k < GTest.QuestionList[i]
+                        .RadioButtonList.Length; k++)
+                        {
+                            if (GTest.QuestionList[i].RadioButtonList[k].Checked)
+                            {
+                                var TArgumentArray =
+                                    (String[])GTest.QuestionList[i].RadioButtonList[k].Tag;
+
+                                for (var l = 0; l < TArgumentArray.Length; l++)
+                                {
+                                    QuizRunner.Testing.Testing TTesting = new QuizRunner.Testing.Testing();
+                                    TArgumentArray[l] = TTesting.SimplifyArg(TArgumentArray[l]);
+                                    GTest.UserVariables[TTesting.GetArgumentName(TArgumentArray[l])]
+                                        = Convert.ToDouble(TTesting.GetCompute(TArgumentArray[l], GTest.UserVariables));
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        for (var k = 0; k < GTest.QuestionList[i]
+                        .CheckBoxeList.Length; k++)
+                        {
+                            if (GTest.QuestionList[i].CheckBoxeList[k].Checked)
+                            {
+                                var TArgumentArray =
+                                    (String[])GTest.QuestionList[i].CheckBoxeList[k].Tag;
+                                for (var l = 0; l < TArgumentArray.Length; l++)
+                                {
+                                    QuizRunner.Testing.Testing TTesting = new QuizRunner.Testing.Testing();
+                                    TArgumentArray[l] = TTesting.SimplifyArg(TArgumentArray[l]);
+                                    GTest.UserVariables[TTesting.GetArgumentName(TArgumentArray[l])]
+                                        = Convert.ToDouble(TTesting.GetCompute(TArgumentArray[l], GTest.UserVariables));
+                                }
+                            }
+                        }
+                    }
                 }
 
                 // Лейбл завершения теста.
@@ -953,9 +995,10 @@ namespace QuizRunner
                 // Заполняем строки статистики
                 for (var i = 0; i < test.StatisticsLines.Length; i++)
                 {
-                    test.StatisticsLines[i].Text = $"{GEditor.GetStatPrefix(i)} [вычисления] " +
+                    test.StatisticsLines[i].Text = $"{GEditor.GetStatPrefix(i)}  " +
+                        $"{String.Format("{0:0.00}", new QuizRunner.Testing.Testing().GetCompute(GEditor.GetStatCalculate(i), GTest.UserVariables))}" +
                         $"{GEditor.GetStatPostfix(i)}";
-                    test.StatisticsLines[i].Left = test.StatisticsLines[i].Parent.Width / 2 
+                    test.StatisticsLines[i].Left = test.StatisticsLines[i].Parent.Width / 2
                         - test.StatisticsLines[i].Width / 2;
                     if (i == 0)
                     {
