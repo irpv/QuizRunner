@@ -743,27 +743,24 @@ namespace QuizRunner
                 }
 
                 // Кнопка перехода.
-                test.QuestionList[i].IbtNext = new Button
+                if (i != editor.NumberOfQuestion() - 1)
                 {
-                    Text = "Следующий вопрос",
-                    BackColor = Color.FromArgb(18, 136, 235),
-                    FlatStyle = FlatStyle.Flat,
-                    ForeColor = Color.White,
-                    Cursor = System.Windows.Forms.Cursors.Hand,
-                    AutoSize = true,
-                    Top = test.QuestionList[i].IgbAnswerGroupBox.Top + test.QuestionList[i].IgbAnswerGroupBox.Height + 2,
-                    Visible = false,
-                    Parent = TIpnMain
-                };
-                test.QuestionList[i].IbtNext.Left = TIpnMain.Width / 2 
-                    - test.QuestionList[i].IbtNext.Width / 2;
-                // Лямбда кнопки.
-                test.QuestionList[i].IbtNext.Click += (s, e) =>
-                {
-                    if (MessageBox.Show("Вы уверены, что хотите перейти к следующиму вопросу?\n" +
-                        "Вы не сможете вернутся к этому вопросу.", "Сохранить ответ?",
-                        MessageBoxButtons.YesNo, MessageBoxIcon.Question)
-                        == DialogResult.Yes)
+                    test.QuestionList[i].IbtNext = new Button
+                    {
+                        Text = "Следующий вопрос",
+                        BackColor = Color.FromArgb(18, 136, 235),
+                        FlatStyle = FlatStyle.Flat,
+                        ForeColor = Color.White,
+                        Cursor = System.Windows.Forms.Cursors.Hand,
+                        AutoSize = true,
+                        Top = test.QuestionList[i].IgbAnswerGroupBox.Top + test.QuestionList[i].IgbAnswerGroupBox.Height + 2,
+                        Visible = false,
+                        Parent = TIpnMain
+                    };
+                    test.QuestionList[i].IbtNext.Left = TIpnMain.Width / 2
+                        - test.QuestionList[i].IbtNext.Width / 2;
+                    // Лямбда кнопки.
+                    test.QuestionList[i].IbtNext.Click += (s, e) =>
                     {
                         if (GTest.QuestionList[GTest.NowQuestion].Type)
                         {
@@ -791,8 +788,59 @@ namespace QuizRunner
                         }
 
                         MoveNext(GTest.NowQuestion, GTest.NowQuestion + 1, GTest);
-                    }
-                };
+                    };
+                }
+                else
+                {
+                    test.QuestionList[i].IbtNext = new Button
+                    {
+                        Text = "Завершить тест",
+                        BackColor = Color.FromArgb(18, 136, 235),
+                        FlatStyle = FlatStyle.Flat,
+                        ForeColor = Color.White,
+                        Cursor = System.Windows.Forms.Cursors.Hand,
+                        AutoSize = true,
+                        Top = test.QuestionList[i].IgbAnswerGroupBox.Top + test.QuestionList[i].IgbAnswerGroupBox.Height + 2,
+                        Visible = false,
+                        Parent = TIpnMain
+                    };
+                    test.QuestionList[i].IbtNext.Left = TIpnMain.Width / 2
+                        - test.QuestionList[i].IbtNext.Width / 2;
+                    // Лямбда кнопки.
+                    test.QuestionList[i].IbtNext.Click += (s, e) =>
+                    {
+                        if (MessageBox.Show("Вы действительно готовы завершить тест?", "Завершить тест", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
+                            == DialogResult.Yes)
+                        {
+                            if (GTest.QuestionList[GTest.NowQuestion].Type)
+                            {
+                                for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
+                                .RadioButtonList.Length; k++)
+                                {
+                                    if (GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Checked)
+                                    {
+                                        var TArgumentArray =
+                                            (String[])GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Tag;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
+                                .CheckBoxeList.Length; k++)
+                                {
+                                    if (GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Checked)
+                                    {
+                                        var TArgumentArray =
+                                            (String[])GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Tag;
+                                    }
+                                }
+                            }
+
+                            MoveNext(GTest.NowQuestion, GTest.NowQuestion + 1, GTest);
+                        }
+                    };
+                }
 
             }
             #endregion
