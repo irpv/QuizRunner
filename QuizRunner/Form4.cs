@@ -41,6 +41,7 @@ namespace QuizRunner
             public Panel IpnAnswerPanel;
             public Button IbtNext;
             public Button IbtBack;
+            public ComboBox IcbNumberOfQuestion;
         }
 
         // Структура интерффейсов теста.
@@ -602,6 +603,7 @@ namespace QuizRunner
                     ContextMenu = new ContextMenu(),
                     ShortcutsEnabled = false,
                     BorderStyle = BorderStyle.None,
+                    Visible = false,
                     Parent = IpnQuestionPanel
                 };
                 test.QuestionList[i].IrtbQuestion.LinkClicked += (s, e) =>
@@ -807,10 +809,37 @@ namespace QuizRunner
                     Parent = TIpnMain
                 };
                 test.QuestionList[i].IbtBack.Left = test.QuestionList[i].IbtNext.Left - test.QuestionList[i].IbtBack.Width - 20;
+
                 // Лямбда кнопки.
                 test.QuestionList[i].IbtBack.Click += (s, e) =>
                 {
                     MoveNext(GTest.NowQuestion, GTest.NowQuestion - 1, GTest);
+                };
+
+                // Лист с переходом к вопросу.
+                test.QuestionList[i].IcbNumberOfQuestion = new ComboBox
+                {
+                    DropDownStyle = ComboBoxStyle.DropDownList,
+                    Top = test.QuestionList[i].IbtNext.Top,
+                    Left = test.QuestionList[i].IbtNext.Left + test.QuestionList[i].IbtNext.Width + 20,
+                    Visible = false,
+                    Height = test.QuestionList[i].IbtNext.Height,
+                    Parent = TIpnMain
+                };
+
+                // Заполнение списка
+                for (var j = 0; j < editor.NumberOfQuestion(); j++)
+                {
+                    test.QuestionList[i].IcbNumberOfQuestion.Items.Add((j + 1).ToString());
+                }
+
+                // Лямбда списка
+                test.QuestionList[i].IcbNumberOfQuestion.SelectedIndexChanged += (s, e) =>
+                {
+                    if (((ComboBox)s).Visible == true)
+                    {
+                        MoveNext(GTest.NowQuestion, GTest.QuestionList[GTest.NowQuestion].IcbNumberOfQuestion.SelectedIndex, GTest);
+                    }
                 };
             }
             #endregion
@@ -865,6 +894,7 @@ namespace QuizRunner
                 test.QuestionList[oldindex].IbtNext.Visible = false;
                 test.QuestionList[oldindex].IgbAnswerGroupBox.Visible = false;
                 test.QuestionList[oldindex].IbtBack.Visible = false;
+                test.QuestionList[oldindex].IcbNumberOfQuestion.Visible = false;
                 if (test.QuestionList[oldindex].Type)
                 {
                     for (var i = 0; i < test.QuestionList[oldindex].RadioButtonList.Length; i++)
@@ -885,6 +915,8 @@ namespace QuizRunner
                 test.QuestionList[index].IrtbQuestion.Visible = true;
                 test.QuestionList[index].IbtNext.Visible = true;
                 test.QuestionList[index].IgbAnswerGroupBox.Visible = true;
+                test.QuestionList[index].IcbNumberOfQuestion.SelectedIndex = index;
+                test.QuestionList[index].IcbNumberOfQuestion.Visible = true;
                 if (index != 0)
                 {
                     test.QuestionList[index].IbtBack.Visible = true;
@@ -912,6 +944,8 @@ namespace QuizRunner
                 test.QuestionList[index].IrtbQuestion.Visible = true;
                 test.QuestionList[index].IbtNext.Visible = true;
                 test.QuestionList[index].IgbAnswerGroupBox.Visible = false;
+                test.QuestionList[index].IcbNumberOfQuestion.SelectedIndex = index;
+                test.QuestionList[index].IcbNumberOfQuestion.Visible = true;
                 if (index != 0)
                 {
                     test.QuestionList[index].IbtBack.Visible = true;
@@ -939,6 +973,7 @@ namespace QuizRunner
                 test.QuestionList[oldindex].IbtNext.Visible = false;
                 test.QuestionList[oldindex].IgbAnswerGroupBox.Visible = false;
                 test.QuestionList[oldindex].IgbAnswerGroupBox.Visible = false;
+                test.QuestionList[oldindex].IcbNumberOfQuestion.Visible = false;
                 if (test.QuestionList[oldindex].Type)
                 {
                     for (var i = 0; i < test.QuestionList[oldindex].RadioButtonList.Length; i++)
