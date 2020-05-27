@@ -225,24 +225,41 @@ namespace EditorTests
        [TestMethod]
        public void Correctness()
         {
-            string input = "(-[кто]) = [abc]+((-100))   + 60*20";
+            string input = "[abc]=5100+567+[abc]  +245";
 
             // Первый символ
             string input_wrong = "*(-[abc]) = [abc]           +((-100)       ) + 60*20";
 
-            // Знаки операция подряд
+            // Знаки операций подряд
             string input_wrong1 = "(-[abc]) = [abc]           ++((-100)       ) + 60*20";
 
             // Парные скобки
-            string input_wrong2 = "(-[abc]) = [abc]           +(((-100)       ) + 60*20"; 
+            string input_wrong2 = "[abc]=[abc]+   (-100))";
+
+            // Последний символ
+            string input_wrong3 = "[abc]=[abc]+100-";
+
+            // Наличие посторонних символов в строке вне квадратных скобок
+            string input_wrong4 = "[abc]=[abc]+100ь";
+
+            // Несколько знаков равенства
+            string input_wrong5 = "[abc]==[abcл]+100=";
             bool expected = true;
             Editor a = new Editor();
             bool actual = a.IsCorrect(input);
             bool actual1 = a.IsCorrect(input_wrong);
             bool actual2 = a.IsCorrect(input_wrong1);
+            bool actual3 = a.IsCorrect(input_wrong2);
+            bool actual4 = a.IsCorrect(input_wrong3);
+            bool actual5 = a.IsCorrect(input_wrong4);
+            bool actual6 = a.IsCorrect(input_wrong5);
             Assert.AreEqual(expected, actual);
             Assert.AreNotEqual(expected, actual1);
             Assert.AreNotEqual(expected, actual2);
+            Assert.AreNotEqual(expected, actual3);
+            Assert.AreNotEqual(expected, actual4);
+            Assert.AreNotEqual(expected, actual5);
+            Assert.AreNotEqual(expected, actual6);
         }
     }
 }
