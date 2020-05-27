@@ -542,10 +542,14 @@ namespace QuizRunner.Editor
                 {
                     // Проверка первого символа
                     if ((i == 0) && (inpt[i] == '-') 
-                        && (inpt[i + 1] >= '0') && (inpt[i + 1] <= '9')
-                        || (inpt[i + 1] == '[') || (inpt[i + 1] == '(')) 
+                        && ((inpt[i + 1] >= '0') && (inpt[i + 1] <= '9'))
+                        || (inpt[i + 1] == '[') || (inpt[i + 1] == '('))
                     {
                         flag = true;
+                    }
+                    if ((i == 0) && ((inpt[i] == '+') || (inpt[i] == '*') || (inpt[i] == '/')))
+                    {
+                        flag = false;
                     }
 
                     // Проверка операндов
