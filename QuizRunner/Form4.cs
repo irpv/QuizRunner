@@ -40,6 +40,7 @@ namespace QuizRunner
             public GroupBox IgbAnswerGroupBox;
             public Panel IpnAnswerPanel;
             public Button IbtNext;
+            public Button IbtBack;
         }
 
         // Структура интерффейсов теста.
@@ -762,31 +763,6 @@ namespace QuizRunner
                     // Лямбда кнопки.
                     test.QuestionList[i].IbtNext.Click += (s, e) =>
                     {
-                        if (GTest.QuestionList[GTest.NowQuestion].Type)
-                        {
-                            for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
-                            .RadioButtonList.Length; k++)
-                            {
-                                if (GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Checked)
-                                {
-                                    var TArgumentArray =
-                                        (String[])GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Tag;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
-                            .CheckBoxeList.Length; k++)
-                            {
-                                if (GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Checked)
-                                {
-                                    var TArgumentArray =
-                                        (String[])GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Tag;
-                                }
-                            }
-                        }
-
                         MoveNext(GTest.NowQuestion, GTest.NowQuestion + 1, GTest);
                     };
                 }
@@ -811,37 +787,31 @@ namespace QuizRunner
                     {
                         if (MessageBox.Show("Вы действительно готовы завершить тест?", "Завершить тест", MessageBoxButtons.YesNo, MessageBoxIcon.Question)
                             == DialogResult.Yes)
-                        {
-                            if (GTest.QuestionList[GTest.NowQuestion].Type)
-                            {
-                                for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
-                                .RadioButtonList.Length; k++)
-                                {
-                                    if (GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Checked)
-                                    {
-                                        var TArgumentArray =
-                                            (String[])GTest.QuestionList[GTest.NowQuestion].RadioButtonList[k].Tag;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                for (var k = 0; k < GTest.QuestionList[GTest.NowQuestion]
-                                .CheckBoxeList.Length; k++)
-                                {
-                                    if (GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Checked)
-                                    {
-                                        var TArgumentArray =
-                                            (String[])GTest.QuestionList[GTest.NowQuestion].CheckBoxeList[k].Tag;
-                                    }
-                                }
-                            }
-
+                        { 
                             MoveNext(GTest.NowQuestion, GTest.NowQuestion + 1, GTest);
                         }
                     };
                 }
 
+                // Кнопка возвращения.
+                test.QuestionList[i].IbtBack = new Button
+                {
+                    Text = "Назад",
+                    BackColor = Color.FromArgb(18, 136, 235),
+                    FlatStyle = FlatStyle.Flat,
+                    ForeColor = Color.White,
+                    Cursor = System.Windows.Forms.Cursors.Hand,
+                    AutoSize = true,
+                    Top = test.QuestionList[i].IbtNext.Top,
+                    Visible = false,
+                    Parent = TIpnMain
+                };
+                test.QuestionList[i].IbtBack.Left = test.QuestionList[i].IbtNext.Left - test.QuestionList[i].IbtBack.Width - 20;
+                // Лямбда кнопки.
+                test.QuestionList[i].IbtBack.Click += (s, e) =>
+                {
+                    MoveNext(GTest.NowQuestion, GTest.NowQuestion - 1, GTest);
+                };
             }
             #endregion
 
@@ -894,6 +864,7 @@ namespace QuizRunner
                 test.QuestionList[oldindex].IrtbQuestion.Visible = false;
                 test.QuestionList[oldindex].IbtNext.Visible = false;
                 test.QuestionList[oldindex].IgbAnswerGroupBox.Visible = false;
+                test.QuestionList[oldindex].IbtBack.Visible = false;
                 if (test.QuestionList[oldindex].Type)
                 {
                     for (var i = 0; i < test.QuestionList[oldindex].RadioButtonList.Length; i++)
@@ -914,6 +885,10 @@ namespace QuizRunner
                 test.QuestionList[index].IrtbQuestion.Visible = true;
                 test.QuestionList[index].IbtNext.Visible = true;
                 test.QuestionList[index].IgbAnswerGroupBox.Visible = true;
+                if (index != 0)
+                {
+                    test.QuestionList[index].IbtBack.Visible = true;
+                }
                 if (test.QuestionList[index].Type)
                 {
                     for (var i = 0; i < test.QuestionList[index].RadioButtonList.Length; i++)
@@ -937,6 +912,10 @@ namespace QuizRunner
                 test.QuestionList[index].IrtbQuestion.Visible = true;
                 test.QuestionList[index].IbtNext.Visible = true;
                 test.QuestionList[index].IgbAnswerGroupBox.Visible = false;
+                if (index != 0)
+                {
+                    test.QuestionList[index].IbtBack.Visible = true;
+                }
                 if (test.QuestionList[index].Type)
                 {
                     for (var i = 0; i < test.QuestionList[index].RadioButtonList.Length; i++)
@@ -958,6 +937,7 @@ namespace QuizRunner
                 // Выключаем старые интерфейсы.
                 test.QuestionList[oldindex].IrtbQuestion.Visible = false;
                 test.QuestionList[oldindex].IbtNext.Visible = false;
+                test.QuestionList[oldindex].IgbAnswerGroupBox.Visible = false;
                 test.QuestionList[oldindex].IgbAnswerGroupBox.Visible = false;
                 if (test.QuestionList[oldindex].Type)
                 {
