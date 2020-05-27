@@ -468,6 +468,8 @@ namespace QuizRunner.Editor
             int N = inpt.Length;
             int coord = -1;
             int eq = 0;
+
+            // Проверка квадратных скобок аргумента
             for (var i = 0; i < N; i++)
             {
                 if (inpt[i] == '[')
@@ -485,11 +487,16 @@ namespace QuizRunner.Editor
                             coord = j;
                         }
                     }
+
+                    // Проверка на допустимые символы
                     for (int k = i + 1; k < coord; k++)
                     {
-                        if (inpt[k] >= 'a' && inpt[k] <= 'z' || inpt[k] >= 'A' && inpt[k] <= 'Z' 
-                            || inpt[k] >= 'а' && inpt[k] <= 'я' || inpt[k] >= 'А' && inpt[k] <= 'Я' ||
-                            inpt[k] >= '0' && inpt[k] <= '9' || inpt[k] == '_') 
+                        if (((inpt[k] >= 'a') && (inpt[k] <= 'z')) 
+                            || ((inpt[k] >= 'A') && (inpt[k] <= 'Z')) 
+                            || ((inpt[k] >= 'а') && (inpt[k] <= 'я')) 
+                            || ((inpt[k] >= 'А') && (inpt[k] <= 'Я')) 
+                            || ((inpt[k] >= '0') && (inpt[k] <= '9')) 
+                            || (inpt[k] == '_')) 
                         {
                             flag = true;
                         }
@@ -505,6 +512,8 @@ namespace QuizRunner.Editor
             {
                 goto Exit;
             }
+
+            // Проверка парных скобок
             int meetings = 0;
             for (var i = 0; i < N; i++)
             {
@@ -525,17 +534,26 @@ namespace QuizRunner.Editor
             {
                 goto Exit;
             }
+
+            // Проверка на арифметические знаки
             for (var i = 0; i < N; i++)
             {
-                if (inpt[i] == '+' || inpt[i] == '-' || inpt[i] == '/' || inpt[i] == '*') 
+                if ((inpt[i] == '+') || (inpt[i] == '-') || (inpt[i] == '/') || (inpt[i] == '*')) 
                 {
-                    if (i == 0 && inpt[i] == '-' && (inpt[i + 1] >= '0' && inpt[i + 1] <= '9'
-                        || inpt[i + 1] == '[' || inpt[i + 1] == '(')) 
+                    // Проверка первого символа
+                    if ((i == 0) && (inpt[i] == '-') 
+                        && (inpt[i + 1] >= '0') && (inpt[i + 1] <= '9')
+                        || (inpt[i + 1] == '[') || (inpt[i + 1] == '(')) 
                     {
                         flag = true;
                     }
-                    if (i != 0 && i != N - 1 && (inpt[i - 1] >= '0' && inpt[i - 1] <= '9' || inpt[i - 1] == ']' || inpt[i - 1] == '(')
-                      && (inpt[i + 1] >= '0' && inpt[i + 1] <= '9' || inpt[i + 1] == '[' || inpt[i + 1] == ')')) 
+
+                    // Проверка операндов
+                    if (i != 0 && i != N - 1
+                        && ((inpt[i - 1] >= '0') && (inpt[i - 1] <= '9') 
+                        || (inpt[i - 1] == ']') || (inpt[i - 1] == '('))
+                        && ((inpt[i + 1] >= '0') && (inpt[i + 1] <= '9') 
+                        || (inpt[i + 1] == '[') || (inpt[i + 1] == ')'))) 
                     {
                         flag = true;
                     }
@@ -543,7 +561,9 @@ namespace QuizRunner.Editor
                     {
                         flag = false;
                     }
-                    if (inpt[i + 1] == '+' || inpt[i + 1] == '-' || inpt[i + 1] == '/' || inpt[i + 1] == '*')
+
+                    // Проверка на два арифметических знака подряд
+                    if ((inpt[i + 1] == '+') || (inpt[i + 1] == '-') || (inpt[i + 1] == '/') || (inpt[i + 1] == '*')) 
                     {
                         flag = false;
                     }
@@ -552,6 +572,8 @@ namespace QuizRunner.Editor
                         break;
                     }
                 }
+
+                // Проверка на количество знаков равенства
                 if (inpt[i] == '=')
                 {
                     eq++;
