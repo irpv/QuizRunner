@@ -468,6 +468,7 @@ namespace QuizRunner.Editor
             int N = inpt.Length;
             int coord = -1;
             int eq = 0;
+
             // Проверка парных скобок
             int meetings = 0;
             int meetings_ = 0;
@@ -490,8 +491,6 @@ namespace QuizRunner.Editor
                     meetings_--;
                 }
             }
-            Debug.WriteLine("[]" + meetings_.ToString() + " ");
-            Debug.WriteLine("()" + meetings.ToString() + " " + "\n");
             if ((meetings_ != 0) || (meetings != 0))
             {
                 flag = false;

@@ -269,12 +269,12 @@ namespace EditorTests
             Assert.AreNotEqual(expected, actual1);
             Assert.AreNotEqual(expected, actual2);
             Assert.AreNotEqual(expected, actual3);
-            //Assert.AreNotEqual(expected, actual4);
-            //Assert.AreNotEqual(expected, actual5);
-            //Assert.AreNotEqual(expected, actual6);
-            //Assert.AreNotEqual(expected, actual7);
-            //Assert.AreNotEqual(expected, actual8);
-            //Assert.AreNotEqual(expected, actual9);
+            Assert.AreNotEqual(expected, actual4);
+            Assert.AreNotEqual(expected, actual5);
+            Assert.AreNotEqual(expected, actual6);
+            Assert.AreNotEqual(expected, actual7);
+            Assert.AreNotEqual(expected, actual8);
+            Assert.AreNotEqual(expected, actual9);
         }
     }
 }
