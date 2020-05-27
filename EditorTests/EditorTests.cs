@@ -225,34 +225,35 @@ namespace EditorTests
        [TestMethod]
        public void Correctness()
         {
-            string input = "-100+200,9=(100)+[abc]";
+            char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
+            string input = "-100+200,9=(100)+[abc]".Replace(',', separator);
 
-            // Первый символ
+            // First symbol
             string input_wrong = "*(-[abc]) = [abc]           +((-100)       ) + 60*20";
 
-            // Знаки операций подряд
+            // Operation signs
             string input_wrong1 = "(-[abc]) = [abc]           ++((-100)       ) + 60*20";
 
-            // Парные скобки
+            // Paired brackets
             string input_wrong2 = "[abc]=[])";
 
-            // Последний символ
+            // Last symbol
             string input_wrong3 = "[abc]=[abc]+100-";
 
-            // Наличие посторонних символов в строке вне квадратных скобок
+            // Extraneous characters outside of square brackets
             string input_wrong4 = "[abc]=[abc]+100ь";
 
-            // Несколько знаков равенства
+            // Amount of equal signs
             string input_wrong5 = "[abc]==[abcл]+100=";
 
-            // Знак равенства без операнда с одной стороны
+            // The equal sign with no operand
             string input_wrong6 = "100+67=";
 
-            // Внутри квадратных скобок
+            // Inside square brackets
             string input_wrong7 = "[abc]=[abc!]";
 
-            // Несколько разделителей в числе
-            string input_wrong8 = "10,9,9+67=6";
+            // Amount of separators
+            string input_wrong8 = "10,9,9+67=6".Replace(',', separator);
             bool expected = true;
             Editor a = new Editor();
             bool actual = a.IsCorrect(input);

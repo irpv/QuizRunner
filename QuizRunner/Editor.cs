@@ -463,6 +463,7 @@ namespace QuizRunner.Editor
         }
         public bool IsCorrect(string input)
         {
+            char separator_ = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
             string inpt = input.Replace(" ", "");
             bool flag = true;
             int N = inpt.Length;
@@ -557,9 +558,8 @@ namespace QuizRunner.Editor
                 if (((inpt_[i] >= '0') && (inpt_[i] <= '9'))
                      || (inpt_[i] == '-') || (inpt_[i] == '+')
                      || (inpt_[i] == '*') || (inpt_[i] == '/')
-                     || (inpt_[i] == '=') || (inpt_[i] == '.')
-                     || (inpt_[i] == ',') || (inpt_[i] == ')')
-                     || (inpt_[i] == '(')) 
+                     || (inpt_[i] == '=') || (inpt_[i] == separator_) 
+                     || (inpt_[i] == ')') || (inpt_[i] == '(')) 
                 {
                     flag = true;
                 }
