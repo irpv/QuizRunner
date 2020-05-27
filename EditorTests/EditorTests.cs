@@ -225,7 +225,7 @@ namespace EditorTests
        [TestMethod]
        public void Correctness()
         {
-            string input = "[abc]=5100+567+[abc]  +245";
+            string input = "-100+2009=100+[abc]";
 
             // Первый символ
             string input_wrong = "*(-[abc]) = [abc]           +((-100)       ) + 60*20";
@@ -244,6 +244,12 @@ namespace EditorTests
 
             // Несколько знаков равенства
             string input_wrong5 = "[abc]==[abcл]+100=";
+
+            // Знак равенства без операнда с одной стороны
+            string input_wrong6 = "100+67=";
+
+            // Внутри квадратных скобок
+            string input_wrong7 = "[abc]=[abc!]";
             bool expected = true;
             Editor a = new Editor();
             bool actual = a.IsCorrect(input);
@@ -253,6 +259,8 @@ namespace EditorTests
             bool actual4 = a.IsCorrect(input_wrong3);
             bool actual5 = a.IsCorrect(input_wrong4);
             bool actual6 = a.IsCorrect(input_wrong5);
+            bool actual7 = a.IsCorrect(input_wrong6);
+            bool actual8 = a.IsCorrect(input_wrong7);
             Assert.AreEqual(expected, actual);
             Assert.AreNotEqual(expected, actual1);
             Assert.AreNotEqual(expected, actual2);
@@ -260,6 +268,8 @@ namespace EditorTests
             Assert.AreNotEqual(expected, actual4);
             Assert.AreNotEqual(expected, actual5);
             Assert.AreNotEqual(expected, actual6);
+            Assert.AreNotEqual(expected, actual7);
+            Assert.AreNotEqual(expected, actual8);
         }
     }
 }
