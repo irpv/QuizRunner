@@ -490,16 +490,11 @@ namespace QuizRunner.Editor
                     meetings_--;
                 }
             }
-            if (meetings_ != 0)
+            Debug.WriteLine("[]" + meetings_.ToString() + " ");
+            Debug.WriteLine("()" + meetings.ToString() + " " + "\n");
+            if ((meetings_ != 0) || (meetings != 0))
             {
                 flag = false;
-            }
-            if (meetings != 0)
-            {
-                flag = false;
-            }
-            if (flag == false)
-            {
                 goto Exit;
             }
 
@@ -524,7 +519,7 @@ namespace QuizRunner.Editor
                     }
 
                     // Проверка на допустимые символы внутри квадратных скобок
-                    for (int k = i + 1; k < coord; k++)
+                    for (var k = i + 1; k < coord; k++)
                     {
                         if (((inpt[k] >= 'a') && (inpt[k] <= 'z'))
                             || ((inpt[k] >= 'A') && (inpt[k] <= 'Z'))
@@ -563,18 +558,34 @@ namespace QuizRunner.Editor
                 if (((inpt_[i] >= '0') && (inpt_[i] <= '9'))
                      || (inpt_[i] == '-') || (inpt_[i] == '+')
                      || (inpt_[i] == '*') || (inpt_[i] == '/')
-                     || (inpt_[i] == '='))
+                     || (inpt_[i] == '=') || (inpt_[i] == '.')
+                     || (inpt_[i] == ',') || (inpt_[i] == ')')
+                     || (inpt_[i] == '(')) 
                 {
                     flag = true;
                 }
                 else
                 {
                     flag = false;
-                    break;
+                    goto Exit;
                 }
             }
 
-            for (int i = 0; i < N; i++)
+            // Проверка чисел с плавающей точкой
+            string[] separator = { "+", "=", "/", "-", "*", ")", "(" };
+            string[] Arr = inpt_.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            double result;
+            for (var i = 0; i < Arr.Length; i++)
+            {
+                if (!double.TryParse(Arr[i], out result))
+                {
+                    flag = false;
+                    goto Exit;
+                }
+            }
+
+            // Проверка по знаку равенства
+            for (var i = 0; i < N; i++)
             {
                 if (inpt[i] == '=')
                 {
@@ -601,7 +612,7 @@ namespace QuizRunner.Editor
                 goto Exit;
             }
 
-            
+
             // Проверка на арифметические знаки
             for (var i = 0; i < N; i++)
             {
@@ -620,7 +631,7 @@ namespace QuizRunner.Editor
                         flag = false;
                         break;
                     }
-                    
+
                     // Проверка последнего символа
                     if (i == N - 1)
                     {
@@ -650,7 +661,7 @@ namespace QuizRunner.Editor
                     }
                 }
             }
-            
+
         Exit:
             return flag;
         }
