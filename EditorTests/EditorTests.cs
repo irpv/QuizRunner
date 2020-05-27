@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using QuizRunner.Editor;
+using System.IO;
 
 namespace EditorTests
 {
@@ -127,7 +128,8 @@ namespace EditorTests
             string prfx = "[abc]";
             string calclt = "/100";
             string post = "%";
-            string path = @"c:\temp\2.txt";
+            Directory.CreateDirectory("temp");
+            string path = @"temp\1.txt";
             // act
             Editor a = new Editor();
             a.SetName(name);
@@ -159,6 +161,7 @@ namespace EditorTests
             Assert.AreEqual(a.GetStatPrefix(0), actual.GetStatPrefix(0));
             Assert.AreEqual(a.GetStatCalculate(0), actual.GetStatCalculate(0));
             Assert.AreEqual(a.GetStatCalculate(0), actual.GetStatCalculate(0));
+            Directory.Delete("temp", true);
         }
 
         [TestMethod]
