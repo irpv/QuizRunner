@@ -23,5 +23,10 @@ namespace QuizRunner.SaveArgs
         private string Name;
         private string[] Descrip = new string[0];
         private Question[] ListOfQuestions = new Question[0];
+
+		public void Save(string path)
+		{
+
+		}
     }
 }
