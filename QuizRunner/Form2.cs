@@ -134,6 +134,7 @@ namespace QuizRunner
             IpbResultButton.Top = this.Height / 2 - IpbResultButton.Height / 2;
             IpbResultButton.MouseEnter += MainButtons_MouseEnter;
             IpbResultButton.MouseLeave += MainButtons_MouseLeave;
+            IpbResultButton.Click += IpbResultButton_Click;
             IttMainToolTip.SetToolTip(IpbResultButton, "Просмотреть результаты");
             #endregion
 
@@ -231,6 +232,23 @@ namespace QuizRunner
             this.CanClose = true;
             new IfrTesting().Show();
             this.Close();
+        }
+
+        private void IpbResultButton_Click(object sender, EventArgs e)
+        {
+            var TIsfdOpenDialog = new OpenFileDialog
+            {
+                Title = "Загрузить результаты",
+                FileName = "Test.qrtfr",
+                Filter = "Результаты теста (*.qrtfr)|*.qrtfr|Все файлы (*.*)|*.*",
+            };
+
+            if (TIsfdOpenDialog.ShowDialog() == DialogResult.OK)
+            {
+                this.CanClose = true;
+                new IfrResult(TIsfdOpenDialog.FileName).Show();
+                this.Close();
+            }
         }
         #endregion
     }

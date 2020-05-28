@@ -81,6 +81,17 @@ namespace QuizRunner
             IpbBack.Click += IpbBack_Click;
             IttCreatorToolTip.SetToolTip(IpbBack, "Вернуться в меню");
             #endregion
+
+            var IpnMain = new Panel
+            {
+                BorderStyle = BorderStyle.None,
+                BackColor = Color.White,
+                Width = this.Width - IpnMenu.Width,
+                Height = this.Height,
+                Left = IpnMenu.Width,
+                Top = 0,
+                Parent = this
+            };
         }
 
         /// События основных графических элементов.
