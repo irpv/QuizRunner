@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Threading;
+using System.IO;
 
 namespace QuizRunner
 {
@@ -1111,6 +1112,61 @@ namespace QuizRunner
                     Parent = this.Controls[0]
                 };
                 IbtSaveResult.Left = IbtSaveResult.Parent.Width / 2 - IbtSaveResult.Width / 2;
+                IbtSaveResult.Click += (s, e) =>
+                {
+                    var TIsfdSaveDialog = new SaveFileDialog
+                    {
+                        FileName = "Test.qrtfr",
+                        Title = "Сохранить результат",
+                        Filter = "Результаты теста (*.qrtfr)|*.qrtfr|Все файлы (*.*)|*.*"
+                    };
+
+                    if (TIsfdSaveDialog.ShowDialog() == DialogResult.OK)
+                    {
+                        QuizRunner.SaveArgs.SaveArgs TSave = new QuizRunner.SaveArgs.SaveArgs
+                        {
+                            Name = GTest.IlbTestName.Text,
+                            Descrip = GEditor.GetDescription(),
+                            ListOfQuestions = new QuizRunner.SaveArgs.SaveArgs.Question[GEditor.NumberOfQuestion()]
+                        };
+
+                        for (var i = 0; i < GEditor.NumberOfQuestion(); i++)
+                        {
+                            TSave.ListOfQuestions[i].QuestionText = GEditor.GetQuestionText(i);
+                            TSave.ListOfQuestions[i].AnswType = GTest.QuestionList[i].Type;
+                            TSave.ListOfQuestions[i].AnswArr = new QuizRunner.SaveArgs.SaveArgs.Answer[GEditor.NumberOfAnswers(i)];
+
+                            for (var j = 0; j < GEditor.NumberOfAnswers(i); j++)
+                            {
+                                if (GTest.QuestionList[i].Type)
+                                {
+                                    TSave.ListOfQuestions[i].AnswArr[j].AnswerText = GTest.QuestionList[i].RadioButtonList[j].Text;
+                                    TSave.ListOfQuestions[i].AnswArr[j].Checked = GTest.QuestionList[i].RadioButtonList[j].Checked;
+                                }
+                                else
+                                {
+                                    TSave.ListOfQuestions[i].AnswArr[j].AnswerText = GTest.QuestionList[i].CheckBoxeList[j].Text;
+                                    TSave.ListOfQuestions[i].AnswArr[j].Checked = GTest.QuestionList[i].CheckBoxeList[j].Checked;
+                                }
+                            }
+                        }
+
+                        TSave.Save(TIsfdSaveDialog.FileName);
+                        StreamWriter SW = File.AppendText(TIsfdSaveDialog.FileName);
+
+                        SW.WriteLine(test.StatisticsLines.Length);
+                        
+                        for (var i = 0; i < test.StatisticsLines.Length; i++)
+                        {
+                            SW.WriteLine(test.StatisticsLines[i].Text);
+                        }
+
+                        SW.Close();
+
+                        InProcess   = false;
+                    }
+
+                };
             }
         }
     }
