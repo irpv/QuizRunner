@@ -93,6 +93,7 @@ namespace QuizRunner
                 AutoScroll = true,
                 Parent = this
             };
+
         }
 
         /// События основных графических элементов.

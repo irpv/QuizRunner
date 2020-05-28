@@ -1116,9 +1116,9 @@ namespace QuizRunner
                 {
                     var TIsfdSaveDialog = new SaveFileDialog
                     {
-                        FileName = "Test.qrtfr",
+                        FileName = "Test.qrrf",
                         Title = "Сохранить результат",
-                        Filter = "Результаты теста (*.qrtfr)|*.qrtfr|Все файлы (*.*)|*.*"
+                        Filter = "Результаты теста (*.qrrf)|*.qrrf|Все файлы (*.*)|*.*"
                     };
 
                     if (TIsfdSaveDialog.ShowDialog() == DialogResult.OK)

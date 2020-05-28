@@ -239,8 +239,8 @@ namespace QuizRunner
             var TIsfdOpenDialog = new OpenFileDialog
             {
                 Title = "Загрузить результаты",
-                FileName = "Test.qrtfr",
-                Filter = "Результаты теста (*.qrtfr)|*.qrtfr|Все файлы (*.*)|*.*",
+                FileName = "Test.qrrf",
+                Filter = "Результаты теста (*.qrrf)|*.qrrf|Все файлы (*.*)|*.*",
             };
 
             if (TIsfdOpenDialog.ShowDialog() == DialogResult.OK)
