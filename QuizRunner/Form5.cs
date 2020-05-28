@@ -191,6 +191,23 @@ namespace QuizRunner
                         };
                     }
                 }
+                else
+                {
+                    TAnswerNumber = Convert.ToInt32(SR.ReadLine());
+                    for (var j = 0; j < TAnswerNumber; j++)
+                    {
+                        var TIcbAnswer = new CheckBox
+                        {
+                            AutoSize = true,
+                            Text = SR.ReadLine(),
+                            Checked = Convert.ToBoolean(SR.ReadLine()),
+                            Left = 10,
+                            Top = 30 * j,
+                            Enabled = false,
+                            Parent = TIpnAnswer
+                        };
+                    }
+                }
 
                 TTop += 260;
             }
