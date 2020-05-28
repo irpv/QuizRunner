@@ -8,3 +8,4 @@ before_script:
   - nuget restore QuizRunner.sln
 after_script:
   - nunit-console TestEditor/bin/Release/netcoreapp3.0/TestEditor.dll
+  - nunit-console TestTesting/bin/Release/netcoreapp3.0/TestTesting.dll
