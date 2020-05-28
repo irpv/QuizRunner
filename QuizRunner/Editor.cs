@@ -461,6 +461,12 @@ namespace QuizRunner.Editor
         {
             return ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument.Length;
         }
+
+        /// <summary>
+        /// Проверяет строку на корректность
+        /// </summary>
+        /// <param name="input">строка для расчета статистики</param>
+        /// <returns>правильно или нет</returns>
         public bool IsCorrect(string input)
         {
             char separator_ = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
