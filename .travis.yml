@@ -2,3 +2,6 @@ language: csharp
 solution: QuizRunner.sln
 mono:
   - latest
+script:
+  - dotnet restore
+  - dotnet test
