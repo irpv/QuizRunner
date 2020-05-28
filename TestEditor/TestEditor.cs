@@ -1,14 +1,13 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
-using QuizRunner.Editor;
 using System.IO;
+using NUnit.Framework;
+using QuizRunner.Editor;
 
-namespace EditorTests
+namespace TestEditor
 {
-    [TestClass]
-    public class EditorTests
+    public class Tests
     {
-        [TestMethod]
+
+        [Test]
         public void SetGetName()
         {
             // arrange
@@ -21,7 +20,7 @@ namespace EditorTests
             Assert.AreEqual(name, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void SetGetDescription()
         {
             string[] desc = { "This is a new test!", "It's good." };
@@ -31,7 +30,7 @@ namespace EditorTests
             CollectionAssert.AreEqual(desc, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void SetGetQuestionText()
         {
             string[] text = { "When did Bell invent the telephone?", "Enter the year." };
@@ -42,8 +41,8 @@ namespace EditorTests
             CollectionAssert.AreEqual(text, actual);
         }
 
-        
-        [TestMethod]
+
+        [Test]
         public void SetGetAnwerType()
         {
             bool answtp = true;
@@ -54,7 +53,7 @@ namespace EditorTests
             Assert.AreEqual(answtp, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void SetGetAnswTxt()
         {
             string answ = "1876";
@@ -66,11 +65,11 @@ namespace EditorTests
             Assert.AreEqual(answ, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void SetGetAnswArgument()
         {
             string[] arg = { "[abc]", "+100" };
-            string [] expected = { "[abc]", "+100" };
+            string[] expected = { "[abc]", "+100" };
             int numOfQuestion = 1;
             int numOfAnswer = 1;
             Editor a = new Editor();
@@ -79,7 +78,7 @@ namespace EditorTests
             CollectionAssert.AreEqual(expected, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void SetGetStatistPrefix()
         {
             string prfx = "[abc]";
@@ -90,7 +89,7 @@ namespace EditorTests
             Assert.AreEqual(prfx, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void SetGetStatistCalculate()
         {
             string calclt = "/100";
@@ -101,7 +100,7 @@ namespace EditorTests
             Assert.AreEqual(calclt, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void SetGetStatistPostfix()
         {
             string post = "%";
@@ -112,7 +111,7 @@ namespace EditorTests
             Assert.AreEqual(post, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void SaveOpen()
         {
             // arrange
@@ -124,7 +123,7 @@ namespace EditorTests
             //string answ2 = "1878";
             bool answtp = true;
             string[] arg = { "[abc]", "+100" };
-            string[] arg1 = {""};
+            string[] arg1 = { "" };
             string prfx = "[abc]";
             string calclt = "/100";
             string post = "%";
@@ -164,7 +163,7 @@ namespace EditorTests
             Directory.Delete("temp", true);
         }
 
-        [TestMethod]
+        [Test]
         public void GetNumberOfQuestions()
         {
             int num = 2;
@@ -177,7 +176,7 @@ namespace EditorTests
             Assert.AreEqual(num, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void GetNumberOfAnswers()
         {
             int num = 2;
@@ -190,7 +189,7 @@ namespace EditorTests
             Assert.AreEqual(num, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void GetNumberOfStatLine()
         {
             int num = 2;
@@ -211,7 +210,7 @@ namespace EditorTests
             Assert.AreEqual(num, actual);
         }
 
-        [TestMethod]
+        [Test]
         public void GetNumberOfArgument()
         {
             int num = 2;
@@ -222,8 +221,8 @@ namespace EditorTests
             Assert.AreEqual(num, actual);
         }
 
-       [TestMethod]
-       public void Correctness()
+        [Test]
+        public void Correctness()
         {
             char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
             string input = "-100+200,9+[abc]=(100)+[abc]".Replace(',', separator);
