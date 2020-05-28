@@ -90,6 +90,7 @@ namespace QuizRunner
                 Height = this.Height,
                 Left = IpnMenu.Width,
                 Top = 0,
+                AutoScroll = true,
                 Parent = this
             };
         }
