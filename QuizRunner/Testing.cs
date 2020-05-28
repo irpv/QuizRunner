@@ -52,6 +52,11 @@ namespace QuizRunner.Testing
             return increaseValue;
         }
 
+        /// <summary>
+        /// Получает имя присваиваемой переменной из аргумента.
+        /// </summary>
+        /// <param name="arg">Аргумент</param>
+        /// <returns>Имя присваиваемой переменной</returns>
         public string GetArgumentName(string arg)
         {
             var argName = "";

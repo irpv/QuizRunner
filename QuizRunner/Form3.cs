@@ -904,7 +904,7 @@ namespace QuizRunner
             // Имена переменных
             for (var ii = 0; ii < GUserVariable.Length; ii++)
             {
-                if (!ValidVariableName(ii))
+                if (!CheckValidVariableName(ii))
                 {
                     managed = false;
                     goto ExitFromFillin;
@@ -1071,7 +1071,7 @@ namespace QuizRunner
                 Changed = true;
                 if (TItbName.Text != (TItbName.Tag.ToString()))
                 {
-                    if (ValidVariableName(TItbName.Text))
+                    if (CheckValidVariableName(TItbName.Text))
                     {
                         TItbName.ForeColor = Color.Black;
                         GUserVariable[TNow].Name = TItbName.Text;
@@ -1152,7 +1152,7 @@ namespace QuizRunner
         /// </summary>
         /// <param name="index"> Индекс пользовательской переменной.</param>
         /// <returns>Доступность.</returns>
-        private bool ValidVariableName(int index)
+        private bool CheckValidVariableName(int index)
         {
             for (var i = 0; i < GUserVariable.Length; i++)
             {
@@ -1207,7 +1207,7 @@ namespace QuizRunner
         /// </summary>
         /// <param name="name"> Индекс пользовательской переменной.</param>
         /// <returns>Доступность.</returns>
-        private bool ValidVariableName(string name)
+        private bool CheckValidVariableName(string name)
         {
             for (var i = 0; i < GUserVariable.Length; i++)
             {
