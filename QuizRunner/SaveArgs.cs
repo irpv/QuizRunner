@@ -61,6 +61,18 @@ namespace QuizRunner.SaveArgs
                 SW.Close();
                 SW = File.AppendText(path);
 
+                for (var j = 0; j < ListOfQuestions[i].AnswArr.Length; j++)
+                {
+                    // Записывает текст ответа
+                    SW.WriteLine(ListOfQuestions[i].AnswArr[j].AnswerText);
+                    SW.Close();
+                    SW = File.AppendText(path);
+
+                    // Записывает параметр Checked
+                    SW.WriteLine(ListOfQuestions[i].AnswArr[j].Checked);
+                    SW.Close();
+                    SW = File.AppendText(path);
+                }
             }
         }
     }
