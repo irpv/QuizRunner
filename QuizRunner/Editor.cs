@@ -337,23 +337,13 @@ namespace QuizRunner.Editor
                     ListOfQuestions[numOfQuest].AnswArr = new Answer[0];
                 }
             }
-
-            try
-            {
-                Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr,
-                    ListOfQuestions[numOfQuest].AnswArr.Length + 1);
-            }
-            catch(System.NullReferenceException)
-            {
-                Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, 1);
-            }
-
+            Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, 1);
             if (ListOfQuestions[numOfQuest].AnswArr.Length <= numOfAnsw)
             {
                 int TCount1 = ListOfQuestions[numOfQuest].AnswArr.Length;
                 Array.Resize<Answer>(ref ListOfQuestions[numOfQuest].AnswArr, numOfAnsw + 1);
                 for (var j = TCount1; j <= numOfAnsw; j++)
-                {
+                { 
                     ListOfQuestions[numOfQuest].AnswArr[j].AnswerText = "";
                 }
             }
@@ -471,23 +461,50 @@ namespace QuizRunner.Editor
         {
             return ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument.Length;
         }
-        
+
         /// <summary>
-        /// Возвращает валидность строки расчётов.
+        /// Проверяет строку на корректность
         /// </summary>
-        /// <param name="input">строка расчетов.</param>
-        /// <returns>валидность</returns>
+        /// <param name="input">строка для расчета статистики</param>
+        /// <returns>правильно или нет</returns>
         public bool IsCorrect(string input)
         {
+            char separator_ = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
             string inpt = input.Replace(" ", "");
-            if (input == "")
-            {
-                return true;
-            }
-            bool flag = false;
+            bool flag = true;
             int N = inpt.Length;
             int coord = -1;
             int eq = 0;
+
+            // Проверка парных скобок
+            int meetings = 0;
+            int meetings_ = 0;
+            for (var i = 0; i < N; i++)
+            {
+                if (inpt[i] == '(')
+                {
+                    meetings++;
+                }
+                else if (inpt[i] == ')')
+                {
+                    meetings--;
+                }
+                if (inpt[i] == '[')
+                {
+                    meetings_++;
+                }
+                else if (inpt[i] == ']')
+                {
+                    meetings_--;
+                }
+            }
+            if ((meetings_ != 0) || (meetings != 0))
+            {
+                flag = false;
+                goto Exit;
+            }
+
+            // Проверка квадратных скобок аргумента
             for (var i = 0; i < N; i++)
             {
                 if (inpt[i] == '[')
@@ -503,85 +520,149 @@ namespace QuizRunner.Editor
                         {
                             flag = true;
                             coord = j;
+                            break;
                         }
                     }
-                    for (int k = i + 1; k < coord; k++)
+
+                    // Проверка на допустимые символы внутри квадратных скобок
+                    for (var k = i + 1; k < coord; k++)
                     {
-                        if (inpt[k] >= 'a' && inpt[k] <= 'z' || inpt[k] >= 'A' && inpt[k] <= 'Z' 
-                            || inpt[k] >= 'а' && inpt[k] <= 'я' || inpt[k] >= 'А' && inpt[k] <= 'Я' ||
-                            inpt[k] >= '0' && inpt[k] <= '9' || inpt[k] == '_') 
+                        if (((inpt[k] >= 'a') && (inpt[k] <= 'z'))
+                            || ((inpt[k] >= 'A') && (inpt[k] <= 'Z'))
+                            || ((inpt[k] >= 'а') && (inpt[k] <= 'я'))
+                            || ((inpt[k] >= 'А') && (inpt[k] <= 'Я'))
+                            || ((inpt[k] >= '0') && (inpt[k] <= '9'))
+                            || (inpt[k] == '_'))
                         {
                             flag = true;
                         }
-                    }
-                    if (flag == false)
-                    {
-                        break;
+                        else
+                        {
+                            flag = false;
+                            break;
+                        }
                     }
                 }
-                
+
             }
             if (flag == false)
             {
                 goto Exit;
             }
-            int meetings = 0;
+
+            // Проверка посторонних символов в строке вне квадратных скобок
+            string inpt_ = inpt.Substring(0, N);
+            string tmp;
+            while (inpt_.Contains("["))
+            {
+                tmp = inpt_.Substring(inpt_.IndexOf("[") + 1, inpt_.IndexOf("]") - (inpt_.IndexOf("[") + 1));
+                inpt_ = inpt_.Replace("[" + tmp + "]", "");
+            }
+
+            for (var i = 0; i < inpt_.Length; i++)
+            {
+                if (((inpt_[i] >= '0') && (inpt_[i] <= '9'))
+                     || (inpt_[i] == '-') || (inpt_[i] == '+')
+                     || (inpt_[i] == '*') || (inpt_[i] == '/')
+                     || (inpt_[i] == '=') || (inpt_[i] == separator_) 
+                     || (inpt_[i] == ')') || (inpt_[i] == '(')) 
+                {
+                    flag = true;
+                }
+                else
+                {
+                    flag = false;
+                    goto Exit;
+                }
+            }
+
+            // Проверка чисел с плавающей точкой
+            string[] separator = { "+", "=", "/", "-", "*", ")", "(" };
+            string[] Arr = inpt_.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            double result;
+            for (var i = 0; i < Arr.Length; i++)
+            {
+                if (!double.TryParse(Arr[i], out result))
+                {
+                    flag = false;
+                    goto Exit;
+                }
+            }
+
+            // Проверка по знаку равенства
             for (var i = 0; i < N; i++)
             {
-                if (inpt[i] == '(')
-                {
-                    meetings++;
-                }
-                else if (inpt[i] == ')')
-                {
-                    meetings--;
-                }
-            }
-            if (meetings < 0)
-            {
-                flag = false;
-            }
-            if (flag == false)
-            {
-                goto Exit;
-            }
-            for (var i = 0; i < N; i++)
-            {
-                if (inpt[i] == '+' || inpt[i] == '-' || inpt[i] == '/' || inpt[i] == '*') 
-                {
-                    if (i == 0 && inpt[i] == '-' && (inpt[i + 1] >= '0' && inpt[i + 1] <= '9'
-                        || inpt[i + 1] == '[' || inpt[i + 1] == '(')) 
-                    {
-                        flag = true;
-                    }
-                    if (i != 0 && i != N - 1 && (inpt[i - 1] >= '0' && inpt[i - 1] <= '9' || inpt[i - 1] == ']' || inpt[i - 1] == '(')
-                      && (inpt[i + 1] >= '0' && inpt[i + 1] <= '9' || inpt[i + 1] == '[' || inpt[i + 1] == ')')) 
-                    {
-                        flag = true;
-                    }
-                    if (i == N - 1)
-                    {
-                        flag = false;
-                    }
-                    if (inpt[i + 1] == '+' || inpt[i + 1] == '-' || inpt[i + 1] == '/' || inpt[i + 1] == '*')
-                    {
-                        flag = false;
-                    }
-                    if (flag == false)
-                    {
-                        break;
-                    }
-                }
                 if (inpt[i] == '=')
                 {
                     eq++;
-                }
-                if (eq > 1)
-                {
-                    flag = false;
-                    break;
+                    if ((i == 0) || (i == N - 1))
+                    {
+                        flag = false;
+                        goto Exit;
+                    }
+                    if (!(((inpt[i + 1] >= '0') && (inpt[i + 1] <= '9'))
+                        || (inpt[i + 1] == '[') || (inpt[i + 1] == '(')))
+                    {
+                        flag = false;
+                        goto Exit;
+                    }
                 }
             }
+            if (eq != 1)
+            {
+                flag = false;
+                goto Exit;
+            }
+          
+            // Проверка на арифметические знаки
+            for (var i = 0; i < N; i++)
+            {
+                if ((inpt[i] == '+') || (inpt[i] == '-') || (inpt[i] == '/') || (inpt[i] == '*'))
+                {
+                    // Проверка первого символа
+                    if ((i == 0) && (inpt[i] == '-')
+                        && (((inpt[i + 1] >= '0') && (inpt[i + 1] <= '9'))
+                        || (inpt[i + 1] == '[') || (inpt[i + 1] == '(')))
+                    {
+                        flag = true;
+                    }
+
+                    if ((i == 0) && (inpt[i] != '-'))
+                    {
+                        flag = false;
+                        break;
+                    }
+
+                    // Проверка последнего символа
+                    if (i == N - 1)
+                    {
+                        flag = false;
+                        break;
+                    }
+
+                    // Проверка операндов с двух сторон
+                    if ((i != 0) && (i != N - 1)
+                        && !((inpt[i - 1] >= '0') && (inpt[i - 1] <= '9')
+                        || (inpt[i - 1] == ']') || (inpt[i - 1] == '('))
+                        && !((inpt[i + 1] >= '0') && (inpt[i + 1] <= '9')
+                        || (inpt[i + 1] == '[') || (inpt[i + 1] == ')')))
+                    {
+                        flag = false;
+                    }
+
+                    // Проверка на два арифметических знака подряд
+                    if ((i < N - 1) && (inpt[i + 1] == '+') || (inpt[i + 1] == '-') || (inpt[i + 1] == '/') || (inpt[i + 1] == '*'))
+                    {
+                        flag = false;
+                        break;
+                    }
+                    if (flag == false)
+                    {
+                        break;
+                    }
+                }
+            }
+
         Exit:
             return flag;
         }

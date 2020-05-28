@@ -1,6 +1,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using QuizRunner.Editor;
+using System.IO;
 
 namespace EditorTests
 {
@@ -127,7 +128,8 @@ namespace EditorTests
             string prfx = "[abc]";
             string calclt = "/100";
             string post = "%";
-            string path = @"c:\temp\2.txt";
+            Directory.CreateDirectory("temp");
+            string path = @"temp\1.txt";
             // act
             Editor a = new Editor();
             a.SetName(name);
@@ -159,6 +161,7 @@ namespace EditorTests
             Assert.AreEqual(a.GetStatPrefix(0), actual.GetStatPrefix(0));
             Assert.AreEqual(a.GetStatCalculate(0), actual.GetStatCalculate(0));
             Assert.AreEqual(a.GetStatCalculate(0), actual.GetStatCalculate(0));
+            Directory.Delete("temp", true);
         }
 
         [TestMethod]
@@ -222,15 +225,57 @@ namespace EditorTests
        [TestMethod]
        public void Correctness()
         {
-            string input = "(-[êòî]) = [abc]+((-100)) + 60*20";
-            string input_wrong = "(-[abc]) = [abc]           ++(((-100)       ) + 60*20";
+            char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
+            string input = "-100+200,9+[abc]=(100)+[abc]".Replace(',', separator);
+
+            // First symbol
+            string input_wrong = "*(-[abc]) = [abc]           +((-100)       ) + 60*20";
+
+            // Operation signs
+            string input_wrong1 = "(-[abc]) = [abc]           ++((-100)       ) + 60*20";
+
+            // Paired brackets
+            string input_wrong2 = "[abc]=[])";
+
+            // Last symbol
+            string input_wrong3 = "[abc]=[abc]+100-";
+
+            // Extraneous characters outside of square brackets
+            string input_wrong4 = "[abc]=[abc]+100ü";
+
+            // Amount of equal signs
+            string input_wrong5 = "[abc]==[abcë]+100=";
+
+            // The equal sign with no operand
+            string input_wrong6 = "100+67=";
+
+            // Inside square brackets
+            string input_wrong7 = "[abc]=[abc!]";
+
+            // Amount of separators
+            string input_wrong8 = "10,9,9+67=6".Replace(',', separator);
             bool expected = true;
             Editor a = new Editor();
             bool actual = a.IsCorrect(input);
             bool actual1 = a.IsCorrect(input_wrong);
+            bool actual2 = a.IsCorrect(input_wrong1);
+            bool actual3 = a.IsCorrect(input_wrong2);
+            bool actual4 = a.IsCorrect(input_wrong3);
+            bool actual5 = a.IsCorrect(input_wrong4);
+            bool actual6 = a.IsCorrect(input_wrong5);
+            bool actual7 = a.IsCorrect(input_wrong6);
+            bool actual8 = a.IsCorrect(input_wrong7);
+            bool actual9 = a.IsCorrect(input_wrong8);
             Assert.AreEqual(expected, actual);
             Assert.AreNotEqual(expected, actual1);
+            Assert.AreNotEqual(expected, actual2);
+            Assert.AreNotEqual(expected, actual3);
+            Assert.AreNotEqual(expected, actual4);
+            Assert.AreNotEqual(expected, actual5);
+            Assert.AreNotEqual(expected, actual6);
+            Assert.AreNotEqual(expected, actual7);
+            Assert.AreNotEqual(expected, actual8);
+            Assert.AreNotEqual(expected, actual9);
         }
-        
     }
 }
