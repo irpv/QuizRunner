@@ -1163,7 +1163,7 @@ namespace QuizRunner
 
                         SW.Close();
 
-                        InProcess   = false;
+                        InProcess = false;
                     }
 
                 };
