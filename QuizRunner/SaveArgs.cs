@@ -43,6 +43,25 @@ namespace QuizRunner.SaveArgs
             // Записывает количество вопросов
             SW.WriteLine(ListOfQuestions.Length.ToString());
 
+            for (var i = 0; i < ListOfQuestions.Length; i++)
+            {
+                // Записывает размер вопроса
+                SW.WriteLine(ListOfQuestions[i].QuestionText.Length.ToString());
+                SW.Close();
+
+                // Записывает текст вопроса
+                File.AppendAllLines(path, ListOfQuestions[i].QuestionText);
+                SW = File.AppendText(path);
+
+                // Записывает тип вопроса
+                SW.WriteLine(ListOfQuestions[i].AnswType.ToString());
+
+                // Записывает количество ответов
+                SW.WriteLine(ListOfQuestions[i].AnswArr.Length.ToString());
+                SW.Close();
+                SW = File.AppendText(path);
+
+            }
         }
     }
 }
