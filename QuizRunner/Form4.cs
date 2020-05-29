@@ -676,7 +676,7 @@ namespace QuizRunner
                 if (test.QuestionList[i].Type)
                 {
                     // Радиобаттаны
-                    if (editGetor.NumberOfAnswers(i) > 0)
+                    if (editor.GetNumberOfAnswers(i) > 0)
                     {
                         test.QuestionList[i].RadioButtonList = new RadioButton[1];
                         test.QuestionList[i].RadioButtonList[0] = new RadioButton
@@ -690,7 +690,7 @@ namespace QuizRunner
                             Visible = false,
                             Parent = test.QuestionList[i].IpnAnswerPanel
                         };
-                        for (var j = 1; j < editGetor.NumberOfAnswers(i); j++)
+                        for (var j = 1; j < editor.GetNumberOfAnswers(i); j++)
                         {
                             Array.Resize<RadioButton>(ref test.QuestionList[i].RadioButtonList,
                                 test.QuestionList[i].RadioButtonList.Length + 1);
@@ -712,7 +712,7 @@ namespace QuizRunner
                 else
                 {
                     // Чекбоксы
-                    if (editGetor.NumberOfAnswers(i) > 0)
+                    if (editor.GetNumberOfAnswers(i) > 0)
                     {
                         test.QuestionList[i].CheckBoxeList = new CheckBox[1];
                         test.QuestionList[i].CheckBoxeList[0] = new CheckBox
@@ -726,7 +726,7 @@ namespace QuizRunner
                             Visible = false,
                             Parent = test.QuestionList[i].IpnAnswerPanel
                         };
-                        for (var j = 1; j < editGetor.NumberOfAnswers(i); j++)
+                        for (var j = 1; j < editor.GetNumberOfAnswers(i); j++)
                         {
                             Array.Resize<CheckBox>(ref test.QuestionList[i].CheckBoxeList,
                                 test.QuestionList[i].CheckBoxeList.Length + 1);
@@ -859,8 +859,8 @@ namespace QuizRunner
             #endregion
 
             /// Строки статистики.
-            #regionGet
-            if (editor.NumberOfStatLine() > 0)
+            #region
+            if (editor.GetNumberOfStatLine() > 0)
             {
                 test.StatisticsLines = new Label[1];
                 test.StatisticsLines[0] = new Label
@@ -872,7 +872,7 @@ namespace QuizRunner
                     Parent = TIpnMain
                 };
 
-                forGet (var i = 1; i < editor.NumberOfStatLine(); i++)
+                for (var i = 1; i < editor.GetNumberOfStatLine(); i++)
                 {
                     Array.Resize<Label>(ref test.StatisticsLines, test.StatisticsLines.Length + 1);
                     test.StatisticsLines[i] = new Label
@@ -1134,9 +1134,9 @@ namespace QuizRunner
                         {
                             TSave.ListOfQuestions[i].QuestionText = GEditor.GetQuestionText(i);
                             TSave.ListOfQuestions[i].AnswType = GTest.QuestionList[i].Type;
-                            TSave.ListOfQuestions[i].AnswArr = new QuizRunner.SaveArgs.SaveArGetgs.Answer[GEditor.NumberOfAnswers(i)];
+                            TSave.ListOfQuestions[i].AnswArr = new QuizRunner.SaveArgs.SaveArgs.Answer[GEditor.GetNumberOfAnswers(i)];
 
-                            for (var jGet = 0; j < GEditor.NumberOfAnswers(i); j++)
+                            for (var j = 0; j < GEditor.GetNumberOfAnswers(i); j++)
                             {
                                 if (GTest.QuestionList[i].Type)
                                 {
