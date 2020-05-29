@@ -252,15 +252,15 @@ namespace TestEditor
 
             bool expected = true;
             Editor a = new Editor();
-            boolCheck actual = a.IsCorrect(input);
-            bool Checkactual1 = a.IsCorrect(input_wrong);
-            bool Checkactual2 = a.IsCorrect(input_wrong1);
-            bool Checkactual3 = a.IsCorrect(input_wrong2);
-            bool Checkactual4 = a.IsCorrect(input_wrong3);
-            bool Checkactual5 = a.IsCorrect(input_wrong4);
-            bool Checkactual6 = a.IsCorrect(input_wrong5);
-            bool Checkactual7 = a.IsCorrect(input_wrong6);
-            bool Checkactual8 = a.IsCorrect(input_wrong7);
+            bool actual = a.CheckIsCorrect(input);
+            bool actual1 = a.CheckIsCorrect(input_wrong);
+            bool actual2 = a.CheckIsCorrect(input_wrong1);
+            bool actual3 = a.CheckIsCorrect(input_wrong2);
+            bool actual4 = a.CheckIsCorrect(input_wrong3);
+            bool actual5 = a.CheckIsCorrect(input_wrong4);
+            bool actual6 = a.CheckIsCorrect(input_wrong5);
+            bool actual7 = a.CheckIsCorrect(input_wrong6);
+            bool actual8 = a.CheckIsCorrect(input_wrong7);
             Assert.AreEqual(expected, actual);
             Assert.AreNotEqual(expected, actual1);
             Assert.AreNotEqual(expected, actual2);
