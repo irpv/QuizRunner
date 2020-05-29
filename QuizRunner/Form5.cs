@@ -101,151 +101,159 @@ namespace QuizRunner
 
             /// Загрузка тестов.
             #region
-
-            var IlbName = new Label
+            try
             {
-                AutoSize = false,
-                ForeColor = Color.FromArgb(18, 136, 235),
-                Font = new Font("Verdana", 25, FontStyle.Bold),
-                Text = SR.ReadLine(),
-                TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
-                Width = IpnMain.Width,
-                Height = 45,
-                Top = 5,
-                Parent = IpnMain
-            };
+                var IlbName = new Label
+                {
+                    AutoSize = false,
+                    ForeColor = Color.FromArgb(18, 136, 235),
+                    Font = new Font("Verdana", 25, FontStyle.Bold),
+                    Text = SR.ReadLine(),
+                    TextAlign = System.Drawing.ContentAlignment.MiddleCenter,
+                    Width = IpnMain.Width,
+                    Height = 45,
+                    Top = 5,
+                    Parent = IpnMain
+                };
 
 
 
-            var IrtbDescription = new RichTextBox
-            {
-                BackColor = Color.White,
-                Width = IpnMain.Width - 40,
-                Height = 150,
-                BorderStyle = BorderStyle.None,
-                Font = new Font("Verdana", 20, FontStyle.Bold),
-                SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center,
-                ReadOnly = true,
-                Left = 20,
-                Top = 55,
-                Enabled = false,
-                DetectUrls = false,
-                Parent = IpnMain
-            };
-
-            var TNumber = Convert.ToInt32(SR.ReadLine());
-
-            for (var i = 0; i < TNumber; i++)
-            {
-                IrtbDescription.Text += SR.ReadLine() + "\n";
-            }
-
-            TNumber = Convert.ToInt32(SR.ReadLine());
-
-            var TTop = 210;
-
-            for (var i = 0; i < TNumber; i++)
-            {
-                var TIrtbQuestion = new RichTextBox
+                var IrtbDescription = new RichTextBox
                 {
                     BackColor = Color.White,
-                    Width = IpnMain.Width - 60,
-                    Height = 100,
+                    Width = IpnMain.Width - 40,
+                    Height = 150,
                     BorderStyle = BorderStyle.None,
-                    Font = new Font("Verdana", 15, FontStyle.Bold),
+                    Font = new Font("Verdana", 20, FontStyle.Bold),
                     SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center,
                     ReadOnly = true,
-                    Left = 30,
-                    Top = TTop,
+                    Left = 20,
+                    Top = 55,
                     Enabled = false,
+                    DetectUrls = false,
                     Parent = IpnMain
                 };
 
-                var TAnswerNumber = Convert.ToInt32(SR.ReadLine());
+                var TNumber = Convert.ToInt32(SR.ReadLine());
 
-                for (var j = 0; j < TAnswerNumber; j++)
+                for (var i = 0; i < TNumber; i++)
                 {
-                    TIrtbQuestion.Text += SR.ReadLine() + "\n";
+                    IrtbDescription.Text += SR.ReadLine() + "\n";
                 }
 
-                var TIpnAnswer = new Panel
+                TNumber = Convert.ToInt32(SR.ReadLine());
+
+                var TTop = 210;
+
+                for (var i = 0; i < TNumber; i++)
                 {
-                    BorderStyle = BorderStyle.None,
-                    BackColor = Color.FromArgb(240, 240, 240),
-                    Width = IpnMain.Width - 60,
+                    var TIrtbQuestion = new RichTextBox
+                    {
+                        BackColor = Color.White,
+                        Width = IpnMain.Width - 60,
+                        Height = 100,
+                        BorderStyle = BorderStyle.None,
+                        Font = new Font("Verdana", 15, FontStyle.Bold),
+                        SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center,
+                        ReadOnly = true,
+                        Left = 30,
+                        Top = TTop,
+                        Enabled = false,
+                        Parent = IpnMain
+                    };
+
+                    var TAnswerNumber = Convert.ToInt32(SR.ReadLine());
+
+                    for (var j = 0; j < TAnswerNumber; j++)
+                    {
+                        TIrtbQuestion.Text += SR.ReadLine() + "\n";
+                    }
+
+                    var TIpnAnswer = new Panel
+                    {
+                        BorderStyle = BorderStyle.None,
+                        BackColor = Color.FromArgb(240, 240, 240),
+                        Width = IpnMain.Width - 60,
+                        Height = 150,
+                        Left = 30,
+                        Top = TTop + 105,
+                        AutoScroll = true,
+                        Parent = IpnMain
+                    };
+
+                    if (Environment.OSVersion.Platform == PlatformID.Unix)
+                    {
+                        TIpnAnswer.BackColor = Color.FromArgb(255, 255, 255);
+                    }
+
+                    if (Convert.ToBoolean(SR.ReadLine()))
+                    {
+                        TAnswerNumber = Convert.ToInt32(SR.ReadLine());
+                        for (var j = 0; j < TAnswerNumber; j++)
+                        {
+                            var TIrbAnswer = new RadioButton
+                            {
+                                AutoSize = true,
+                                Text = SR.ReadLine(),
+                                Checked = Convert.ToBoolean(SR.ReadLine()),
+                                Left = 10,
+                                Top = 30 * j,
+                                Enabled = false,
+                                Parent = TIpnAnswer
+                            };
+                        }
+                    }
+                    else
+                    {
+                        TAnswerNumber = Convert.ToInt32(SR.ReadLine());
+                        for (var j = 0; j < TAnswerNumber; j++)
+                        {
+                            var TIcbAnswer = new CheckBox
+                            {
+                                AutoSize = true,
+                                Text = SR.ReadLine(),
+                                Checked = Convert.ToBoolean(SR.ReadLine()),
+                                Left = 10,
+                                Top = 30 * j,
+                                Enabled = false,
+                                Parent = TIpnAnswer
+                            };
+                        }
+                    }
+
+                    TTop += 260;
+                }
+
+                TNumber = Convert.ToInt32(SR.ReadLine());
+
+                var IrtbStatistic = new RichTextBox
+                {
+                    BackColor = Color.White,
+                    Width = IpnMain.Width - 40,
                     Height = 150,
-                    Left = 30,
-                    Top = TTop + 105,
-                    AutoScroll = true,
+                    BorderStyle = BorderStyle.None,
+                    Font = new Font("Verdana", 20, FontStyle.Bold),
+                    SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center,
+                    ReadOnly = true,
+                    Left = 20,
+                    Top = TTop + 5,
+                    Enabled = false,
+                    DetectUrls = false,
                     Parent = IpnMain
                 };
 
-                if (Environment.OSVersion.Platform == PlatformID.Unix)
+                for (var i = 0; i < TNumber; i++)
                 {
-                    TIpnAnswer.BackColor = Color.FromArgb(255, 255, 255);
+                    IrtbStatistic.Text += SR.ReadLine() + "\n";
                 }
-
-                if (Convert.ToBoolean(SR.ReadLine()))
-                {
-                    TAnswerNumber = Convert.ToInt32(SR.ReadLine());
-                    for (var j = 0; j < TAnswerNumber; j++)
-                    {
-                        var TIrbAnswer = new RadioButton
-                        {
-                            AutoSize = true,
-                            Text = SR.ReadLine(),
-                            Checked = Convert.ToBoolean(SR.ReadLine()),
-                            Left = 10,
-                            Top = 30 * j,
-                            Enabled = false,
-                            Parent = TIpnAnswer
-                        };
-                    }
-                }
-                else
-                {
-                    TAnswerNumber = Convert.ToInt32(SR.ReadLine());
-                    for (var j = 0; j < TAnswerNumber; j++)
-                    {
-                        var TIcbAnswer = new CheckBox
-                        {
-                            AutoSize = true,
-                            Text = SR.ReadLine(),
-                            Checked = Convert.ToBoolean(SR.ReadLine()),
-                            Left = 10,
-                            Top = 30 * j,
-                            Enabled = false,
-                            Parent = TIpnAnswer
-                        };
-                    }
-                }
-
-                TTop += 260;
             }
-
-            TNumber = Convert.ToInt32(SR.ReadLine());
-
-            var IrtbStatistic = new RichTextBox
+            catch(Exception exp)
             {
-                BackColor = Color.White,
-                Width = IpnMain.Width - 40,
-                Height = 150,
-                BorderStyle = BorderStyle.None,
-                Font = new Font("Verdana", 20, FontStyle.Bold),
-                SelectionAlignment = System.Windows.Forms.HorizontalAlignment.Center,
-                ReadOnly = true,
-                Left = 20,
-                Top = TTop + 5,
-                Enabled = false,
-                DetectUrls = false,
-                Parent = IpnMain
-            };
-
-            for (var i = 0; i < TNumber; i++)
-            {
-                IrtbStatistic.Text += SR.ReadLine() + "\n";
+                MessageBox.Show("Похоже во время загрузки произошел сбой.\nВозможно файл имел не верный формат."
+                + "\n" + exp.Message, "Ошибка при загрузке результатов.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                new IfrStartPage().Show();
+                this.Close();
             }
-
             #endregion
 
             SR.Close();
