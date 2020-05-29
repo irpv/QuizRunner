@@ -7,4 +7,6 @@ before_install:
 before_script:
   - nuget restore QuizRunner.sln
 after_script:
+  - echo -en 'travis_fold:start:after_script\\r'
   - nunit-console TestEditor/bin/Release/net46/TestEditor.dll TestTesting/bin/Release/net46/TestTesting.dll
+  - echo -en 'travis_fold:end:after_script\\r'
