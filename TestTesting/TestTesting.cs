@@ -6,8 +6,6 @@ namespace TestTesting
 {
     public class Tests
     {
-        public int _closingBracket = 0;
-
         [Test]
         public void ToSimplifyArg()
         {
@@ -17,6 +15,7 @@ namespace TestTesting
             Testing t = new Testing();
 
             Assert.AreEqual(t.SimplifyArg(arg), actual);
+            Assert.AreEqual(t.SimplifyArg("[] = [] + 1"), "[]=[]+1");
         }
 
         [Test]
@@ -27,10 +26,12 @@ namespace TestTesting
 
             Testing t = new Testing();
 
-            Assert.AreEqual(t.GetArgumentName(arg), actual);
+            Assert.AreEqual(t.GetArgumentName(arg), actual); 
+            Assert.AreEqual(t.GetArgumentName("[] = [] + 1"), " ");
         }
 
-        /*public void GetCmpte()
+        /*[Test]
+        public void GetCmpte()
         {
             string arg;
             Dictionary<string, double> D;
@@ -39,7 +40,6 @@ namespace TestTesting
             Testing t = new Testing();
 
             Assert.AreEqual(t.GetCompute(arg, D), actual);
-
         }*/
     }
 }
