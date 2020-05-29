@@ -21,19 +21,25 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_51AB876CFC34470B92D9AF5BC727456D"
+        "MsmKey" = "8:_0A271CB5878F4891AF31778215DC2EE7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_91B3B8EDFA53431C9962AF7BC40172F3"
+        "MsmKey" = "8:_4D295672A7244839AFC6323944617631"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A0D8175C633D4CB5AABAFDB2BB8AD932"
+        "MsmKey" = "8:_70A67CA466BA4C0693741E8DA17A9B60"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D11DCF5A49594219B55D9BD0ADDB052A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -46,7 +52,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_51AB876CFC34470B92D9AF5BC727456D"
+        "OwnerKey" = "8:_0A271CB5878F4891AF31778215DC2EE7"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -164,20 +170,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_51AB876CFC34470B92D9AF5BC727456D"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0A271CB5878F4891AF31778215DC2EE7"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:QuizRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_51AB876CFC34470B92D9AF5BC727456D"
+                    "_0A271CB5878F4891AF31778215DC2EE7"
                     {
                     "Name" = "8:QuizRunner.exe"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.exe"
+            "SourcePath" = "8:..\\QuizRunner\\bin\\Release\\QuizRunner.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
@@ -195,10 +201,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_91B3B8EDFA53431C9962AF7BC40172F3"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4D295672A7244839AFC6323944617631"
             {
-            "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.pdb"
-            "TargetName" = "8:QuizRunner.pdb"
+            "SourcePath" = "8:..\\QuizRunner\\bin\\Release\\TRPO.qrtf"
+            "TargetName" = "8:TRPO.qrtf"
             "Tag" = "8:"
             "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
             "Condition" = "8:"
@@ -215,10 +221,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A0D8175C633D4CB5AABAFDB2BB8AD932"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_70A67CA466BA4C0693741E8DA17A9B60"
             {
-            "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.exe.config"
+            "SourcePath" = "8:..\\QuizRunner\\bin\\Release\\QuizRunner.exe.config"
             "TargetName" = "8:QuizRunner.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D11DCF5A49594219B55D9BD0ADDB052A"
+            {
+            "SourcePath" = "8:..\\QuizRunner\\bin\\Release\\QuizRunner.pdb"
+            "TargetName" = "8:QuizRunner.pdb"
             "Tag" = "8:"
             "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
             "Condition" = "8:"
@@ -268,7 +294,7 @@
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_51AB876CFC34470B92D9AF5BC727456D"
+                "Command" = "8:_0A271CB5878F4891AF31778215DC2EE7"
                 }
                 "Verbs"
                 {
@@ -291,7 +317,7 @@
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_51AB876CFC34470B92D9AF5BC727456D"
+                "Command" = "8:_0A271CB5878F4891AF31778215DC2EE7"
                 }
                 "Verbs"
                 {
@@ -358,7 +384,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QuizRunnerSetup"
         "ProductCode" = "8:{9C59C602-E637-44C6-A937-F91509C5DCB7}"
-        "PackageCode" = "8:{637AA321-75B7-41C6-B9B4-F2AEE8C299EA}"
+        "PackageCode" = "8:{7CCF6B1B-EFBB-40B6-B024-DCC862BCF646}"
         "UpgradeCode" = "8:{FEF4DD50-3869-4108-A92F-8D65B5313CB5}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
