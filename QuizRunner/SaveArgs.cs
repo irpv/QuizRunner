@@ -4,7 +4,7 @@ namespace QuizRunner.SaveArgs
 {
     public class SaveArgs
     {
-        private struct Answer
+        public struct Answer
         {
             public string AnswerText;
 
@@ -13,16 +13,16 @@ namespace QuizRunner.SaveArgs
             public bool Checked;
         }
 
-        private struct Question
+        public struct Question
         {
             public string[] QuestionText;
             public bool AnswType;
             public Answer[] AnswArr;
         }
 
-        private string Name;
-        private string[] Descrip = new string[0];
-        private Question[] ListOfQuestions = new Question[0];
+        public string Name;
+        public string[] Descrip = new string[0];
+        public Question[] ListOfQuestions = new Question[0];
 
         public void Save(string path)
         {
@@ -74,6 +74,8 @@ namespace QuizRunner.SaveArgs
                     SW = File.AppendText(path);
                 }
             }
+
+            SW.Close();
         }
     }
 }
