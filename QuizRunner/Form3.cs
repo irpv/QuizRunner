@@ -901,7 +901,45 @@ namespace QuizRunner
 
             /// Проверка параметров на доступность для сохранения.
             #region
-            // Имена переменных
+
+            // Минимальное колличество вопросов.
+
+            if (TItbTabControl.TabPages.Count <= 2)
+            {
+                this.LoadingProcess = false;
+                MessageBox.Show("Тест должен содержать хотя бы один вопрос.", "Ошибка при сохранении",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                managed = false;
+                goto ExitFromFillin;
+            }
+
+            // Минимальное колличество ответов.
+            for (var ii = 1; ii < TItbTabControl.TabPages.Count - 1; ii++)
+            {
+                var TAnswerArray = (Answer[])TItbTabControl.TabPages[ii].Tag;
+                if (TAnswerArray.Length < 1)
+                {
+                    this.LoadingProcess = false;
+                    MessageBox.Show("Каждый вопрос должен содеражть хотя бы один ответ.", "Ошибка при сохранении",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    managed = false;
+                    TItbTabControl.SelectedIndex = ii;
+                    goto ExitFromFillin;
+                }
+            }
+
+            // Минимальное колличество строк статистики.
+            if (GStatisticsLines.Length < 1)
+            {
+                this.LoadingProcess = false;
+                MessageBox.Show("Тест должен содержать хотя бы одину строку статистики.", "Ошибка при сохранении",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                managed = false;
+                TItbTabControl.SelectedIndex = TItbTabControl.TabPages.Count - 1;
+                goto ExitFromFillin;
+            }
+
+            // Имена переменных.
             for (var ii = 0; ii < GUserVariable.Length; ii++)
             {
                 if (!CheckValidVariableName(ii))
@@ -914,7 +952,7 @@ namespace QuizRunner
             // Аргументы вопросов.
             if (TItbTabControl.TabPages.Count > 2)
             {
-                for (var ii = 1; ii<TItbTabControl.TabPages.Count -1; ii++)
+                for (var ii = 1; ii < TItbTabControl.TabPages.Count -1; ii++)
                 {
                     var TAnswerArray = (Answer[])TItbTabControl.TabPages[ii].Tag;
                     for (var ij = 0; ij < TAnswerArray.Length; ij++)
