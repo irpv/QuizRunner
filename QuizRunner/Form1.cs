@@ -29,9 +29,18 @@ namespace QuizRunner
             this.Hide();
             if (GArgs.Length > 0)
             {
-                var ITestingPage = new IfrTesting();
-                ITestingPage.Show();
-                ITestingPage.Open(GArgs[0]);
+                string TFile = GArgs[0].Substring(GArgs[0].LastIndexOf('.') + 1);
+                if (TFile == "qrrf")
+                {
+                    var IResultPage = new IfrResult(GArgs[0]);
+                    IResultPage.Show();
+                }
+                else
+                {
+                    var ITestingPage = new IfrTesting();
+                    ITestingPage.Show();
+                    ITestingPage.Open(GArgs[0]);
+                }
             }
             else
             {
