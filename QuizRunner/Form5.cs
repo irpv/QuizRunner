@@ -124,6 +124,7 @@ namespace QuizRunner
                 Left = 20,
                 Top = 55,
                 Enabled = false,
+                DetectUrls = false,
                 Parent = IpnMain
             };
 
@@ -226,6 +227,7 @@ namespace QuizRunner
                 Left = 20,
                 Top = TTop + 5,
                 Enabled = false,
+                DetectUrls = false,
                 Parent = IpnMain
             };
 
