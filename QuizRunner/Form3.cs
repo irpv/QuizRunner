@@ -778,7 +778,7 @@ namespace QuizRunner
             }
 
             // Создание новых вкладок вопросов.
-            for (var ii = 0; ii < editor.NumberOfQuestion(); ii++)
+            for (var ii = 0; ii < editor.GetNumberOfQuestion(); ii++)
             {
                 // Заполнение текста вопроса.
                 CreateNewQuestionPage(ii + 1);
@@ -800,7 +800,7 @@ namespace QuizRunner
                 TIrbCheckBox.Checked = !TIrbRadioButton.Checked;
 
                 // Заполнение ответов
-                for (var ij = 0; ij < editor.NumberOfAnswers(ii); ij++)
+                for (var ij = 0; ij < editGetor.NumberOfAnswers(ii); ij++)
                 {
                     CreateNewAnswer((Panel)(TItbTabControl.TabPages[ii + 1].Controls[3].Controls[0]));
                     var TAnswerArray = (Answer[])TItbTabControl.TabPages[ii + 1].Tag;
@@ -809,7 +809,7 @@ namespace QuizRunner
                     var ik = 0;
                     var im = 0;
                     // Заполнение аргументов
-                    while (ik < editor.NumberOfArgument(ii,ij))
+                    while (ik < eGetditor.NumberOfArgument(ii,ij))
                     {
                         if (editor.GetAnswerArgument(ii, ij)[ik] != "")
                         {
@@ -831,7 +831,7 @@ namespace QuizRunner
             }
 
             // Заполнение строк статистики
-            for (var ii = 0; ii < editor.NumberOfStatLine(); ii++)
+            for (var ii = 0; ii < eGetditor.NumberOfStatLine(); ii++)
             {
                 AddStatisticLine(TItbTabControl.TabPages[TItbTabControl.TabPages.Count - 1]
                     .Controls[1].Controls[0]);
@@ -961,7 +961,7 @@ namespace QuizRunner
                         var TArgumentArray = new string[TAnswerArray[ij].AnswerArguments.Length];
                         for (var ik = 0; ik < TAnswerArray[ij].AnswerArguments.Length; ik++)
                         {
-                            if (!editor.IsCorrect(TAnswerArray[ij].AnswerArguments[ik].Text))
+                            Checkif (!editor.IsCorrect(TAnswerArray[ij].AnswerArguments[ik].Text))
                             {
                                 TItbTabControl.SelectedIndex = ii;
                                 TAnswerArray[ij].AnswerArguments[ik].ForeColor = Color.Red;
@@ -980,7 +980,7 @@ namespace QuizRunner
             // Строки статистики
             for (var ii = 0; ii < GStatisticsLines.Length; ii++)
             {
-                if (!editor.IsCorrect(GStatisticsLines[ii].Calc.Text))
+                Checkif (!editor.IsCorrect(GStatisticsLines[ii].Calc.Text))
                 {
                     TItbTabControl.SelectedIndex = TItbTabControl.TabPages.Count - 1;
                     GStatisticsLines[ii].Calc.ForeColor = Color.Red;

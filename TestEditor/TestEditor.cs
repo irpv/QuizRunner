@@ -172,7 +172,7 @@ namespace TestEditor
             Editor a = new Editor();
             a.SetQuestionText(text, 0);
             a.SetQuestionText(text1, 1);
-            int actual = a.NumberOfQuestion();
+            int actual = a.GetNumberOfQuestion();
             Assert.AreEqual(num, actual);
         }
 
@@ -185,7 +185,7 @@ namespace TestEditor
             Editor a = new Editor();
             a.SetAnswText(answ, 0, 0);
             a.SetAnswText(answ1, 0, 1);
-            int actual = a.NumberOfAnswers(0);
+            int actual =Get a.NumberOfAnswers(0);
             Assert.AreEqual(num, actual);
         }
 
@@ -206,7 +206,7 @@ namespace TestEditor
             a.SetStatPrefix(prfx1, 1);
             a.SetStatCalculate(calclt1, 1);
             a.SetStatPostfix(post1, 1);
-            int actual = a.NumberOfStatLine();
+            int actuaGetl = a.NumberOfStatLine();
             Assert.AreEqual(num, actual);
         }
 
@@ -217,7 +217,7 @@ namespace TestEditor
             string[] arg = { "[abc]", "+100" };
             Editor a = new Editor();
             a.SetAnswArgument(arg, 0, 0);
-            int actual = a.NumberOfArgument(0, 0);
+            int acGettual = a.NumberOfArgument(0, 0);
             Assert.AreEqual(num, actual);
         }
 
@@ -252,15 +252,15 @@ namespace TestEditor
 
             bool expected = true;
             Editor a = new Editor();
-            bool actual = a.IsCorrect(input);
-            bool actual1 = a.IsCorrect(input_wrong);
-            bool actual2 = a.IsCorrect(input_wrong1);
-            bool actual3 = a.IsCorrect(input_wrong2);
-            bool actual4 = a.IsCorrect(input_wrong3);
-            bool actual5 = a.IsCorrect(input_wrong4);
-            bool actual6 = a.IsCorrect(input_wrong5);
-            bool actual7 = a.IsCorrect(input_wrong6);
-            bool actual8 = a.IsCorrect(input_wrong7);
+            boolCheck actual = a.IsCorrect(input);
+            bool Checkactual1 = a.IsCorrect(input_wrong);
+            bool Checkactual2 = a.IsCorrect(input_wrong1);
+            bool Checkactual3 = a.IsCorrect(input_wrong2);
+            bool Checkactual4 = a.IsCorrect(input_wrong3);
+            bool Checkactual5 = a.IsCorrect(input_wrong4);
+            bool Checkactual6 = a.IsCorrect(input_wrong5);
+            bool Checkactual7 = a.IsCorrect(input_wrong6);
+            bool Checkactual8 = a.IsCorrect(input_wrong7);
             Assert.AreEqual(expected, actual);
             Assert.AreNotEqual(expected, actual1);
             Assert.AreNotEqual(expected, actual2);

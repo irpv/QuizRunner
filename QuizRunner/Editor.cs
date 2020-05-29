@@ -436,7 +436,7 @@ namespace QuizRunner.Editor
         /// Возвращает количество вопросов.
         /// </summary>
         /// <returns>количество вопросов</returns>
-        public int NumberOfQuestion()
+        public int GetNumberOfQuestion()
         {
             return ListOfQuestions.Length;
         }
@@ -446,7 +446,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="numOfQuest">номер вопроса</param>
         /// <returns>количество ответов</returns>
-        public int NumberOfAnswers(int numOfQuest)
+        public int GetNumberOfAnswers(int numOfQuest)
         {
             return ListOfQuestions[numOfQuest].AnswArr.Length;
         }
@@ -455,7 +455,7 @@ namespace QuizRunner.Editor
         /// Возвращает количество строк статистики.
         /// </summary>
         /// <returns>количество строк статистики</returns>
-        public int NumberOfStatLine()
+        public int GetNumberOfStatLine()
         {
             return StaticsLines.Length;
         }
@@ -466,7 +466,7 @@ namespace QuizRunner.Editor
         /// <param name="numOfQuest">номер вопроса</param>
         /// <param name="numOfAnsw">номер ответа</param>
         /// <returns>количество аргументов</returns>
-        public int NumberOfArgument(int numOfQuest, int numOfAnsw)
+        public int GetNumberOfArgument(int numOfQuest, int numOfAnsw)
         {
             return ListOfQuestions[numOfQuest].AnswArr[numOfAnsw].Argument.Length;
         }
@@ -476,7 +476,7 @@ namespace QuizRunner.Editor
         /// </summary>
         /// <param name="input">строка для расчета статистики</param>
         /// <returns>правильно или нет</returns>
-        public bool IsCorrect(string input)
+        public bool CheckIsCorrect(string input)
         {
             string inpt = input.Replace(" ", "");
             bool flag = true;

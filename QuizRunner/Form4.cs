@@ -587,7 +587,7 @@ namespace QuizRunner
             /// Вопросы
             #region
             test.QuestionList = new Question[0];
-            for (var i = 0; i < editor.NumberOfQuestion(); i++)
+            for (var i = 0; i < editor.GetNumberOfQuestion(); i++)
             {
                 Array.Resize<Question>(ref test.QuestionList, test.QuestionList.Length + 1);
 
@@ -676,7 +676,7 @@ namespace QuizRunner
                 if (test.QuestionList[i].Type)
                 {
                     // Радиобаттаны
-                    if (editor.NumberOfAnswers(i) > 0)
+                    if (editGetor.NumberOfAnswers(i) > 0)
                     {
                         test.QuestionList[i].RadioButtonList = new RadioButton[1];
                         test.QuestionList[i].RadioButtonList[0] = new RadioButton
@@ -690,7 +690,7 @@ namespace QuizRunner
                             Visible = false,
                             Parent = test.QuestionList[i].IpnAnswerPanel
                         };
-                        for (var j = 1; j < editor.NumberOfAnswers(i); j++)
+                        for (var j = 1; j < editGetor.NumberOfAnswers(i); j++)
                         {
                             Array.Resize<RadioButton>(ref test.QuestionList[i].RadioButtonList,
                                 test.QuestionList[i].RadioButtonList.Length + 1);
@@ -712,7 +712,7 @@ namespace QuizRunner
                 else
                 {
                     // Чекбоксы
-                    if (editor.NumberOfAnswers(i) > 0)
+                    if (editGetor.NumberOfAnswers(i) > 0)
                     {
                         test.QuestionList[i].CheckBoxeList = new CheckBox[1];
                         test.QuestionList[i].CheckBoxeList[0] = new CheckBox
@@ -726,7 +726,7 @@ namespace QuizRunner
                             Visible = false,
                             Parent = test.QuestionList[i].IpnAnswerPanel
                         };
-                        for (var j = 1; j < editor.NumberOfAnswers(i); j++)
+                        for (var j = 1; j < editGetor.NumberOfAnswers(i); j++)
                         {
                             Array.Resize<CheckBox>(ref test.QuestionList[i].CheckBoxeList,
                                 test.QuestionList[i].CheckBoxeList.Length + 1);
@@ -748,7 +748,7 @@ namespace QuizRunner
                 }
 
                 // Кнопка перехода.
-                if (i != editor.NumberOfQuestion() - 1)
+                if (i != editor.GetNumberOfQuestion() - 1)
                 {
                     test.QuestionList[i].IbtNext = new Button
                     {
@@ -830,7 +830,7 @@ namespace QuizRunner
                 };
 
                 // Заполнение списка
-                for (var j = 0; j < editor.NumberOfQuestion(); j++)
+                for (var j = 0; j < editor.GetNumberOfQuestion(); j++)
                 {
                     test.QuestionList[i].IcbNumberOfQuestion.Items.Add((j + 1).ToString());
                 }
@@ -847,7 +847,7 @@ namespace QuizRunner
                 // Лейбл количества вопросов.
                 test.QuestionList[i].IlbNumbersOfQuestion = new Label
                 {
-                    Text = $"/{editor.NumberOfQuestion()}",
+                    Text = $"/{editor.GetNumberOfQuestion()}",
                     ForeColor = Color.FromArgb(18, 136, 235),
                     Font = new Font("Verdana", 15, FontStyle.Bold),
                     Top = test.QuestionList[i].IbtNext.Top,
@@ -859,7 +859,7 @@ namespace QuizRunner
             #endregion
 
             /// Строки статистики.
-            #region
+            #regionGet
             if (editor.NumberOfStatLine() > 0)
             {
                 test.StatisticsLines = new Label[1];
@@ -872,7 +872,7 @@ namespace QuizRunner
                     Parent = TIpnMain
                 };
 
-                for (var i = 1; i < editor.NumberOfStatLine(); i++)
+                forGet (var i = 1; i < editor.NumberOfStatLine(); i++)
                 {
                     Array.Resize<Label>(ref test.StatisticsLines, test.StatisticsLines.Length + 1);
                     test.StatisticsLines[i] = new Label
@@ -1127,16 +1127,16 @@ namespace QuizRunner
                         {
                             Name = GTest.IlbTestName.Text,
                             Descrip = GEditor.GetDescription(),
-                            ListOfQuestions = new QuizRunner.SaveArgs.SaveArgs.Question[GEditor.NumberOfQuestion()]
+                            ListOfQuestions = new QuizRunner.SaveArgs.SaveArgs.Question[GEditor.GetNumberOfQuestion()]
                         };
 
-                        for (var i = 0; i < GEditor.NumberOfQuestion(); i++)
+                        for (var i = 0; i < GEditor.GetNumberOfQuestion(); i++)
                         {
                             TSave.ListOfQuestions[i].QuestionText = GEditor.GetQuestionText(i);
                             TSave.ListOfQuestions[i].AnswType = GTest.QuestionList[i].Type;
-                            TSave.ListOfQuestions[i].AnswArr = new QuizRunner.SaveArgs.SaveArgs.Answer[GEditor.NumberOfAnswers(i)];
+                            TSave.ListOfQuestions[i].AnswArr = new QuizRunner.SaveArgs.SaveArGetgs.Answer[GEditor.NumberOfAnswers(i)];
 
-                            for (var j = 0; j < GEditor.NumberOfAnswers(i); j++)
+                            for (var jGet = 0; j < GEditor.NumberOfAnswers(i); j++)
                             {
                                 if (GTest.QuestionList[i].Type)
                                 {
