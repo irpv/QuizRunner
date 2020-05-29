@@ -224,8 +224,7 @@ namespace TestEditor
         [Test]
         public void Correctness()
         {
-            char separator = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
-            string input = "-100+200,9+[abc]=(100)+[abc]".Replace(',', separator);
+            string input = "-100+2009+[abc]=(100)+[abc]";
 
             // First symbol
             string input_wrong = "*(-[abc]) = [abc]           +((-100)       ) + 60*20";
@@ -251,8 +250,6 @@ namespace TestEditor
             // Inside square brackets
             string input_wrong7 = "[abc]=[abc!]";
 
-            // Amount of separators
-            string input_wrong8 = "10,9,9+67=6".Replace(',', separator);
             bool expected = true;
             Editor a = new Editor();
             bool actual = a.IsCorrect(input);
@@ -264,7 +261,6 @@ namespace TestEditor
             bool actual6 = a.IsCorrect(input_wrong5);
             bool actual7 = a.IsCorrect(input_wrong6);
             bool actual8 = a.IsCorrect(input_wrong7);
-            bool actual9 = a.IsCorrect(input_wrong8);
             Assert.AreEqual(expected, actual);
             Assert.AreNotEqual(expected, actual1);
             Assert.AreNotEqual(expected, actual2);
@@ -274,7 +270,6 @@ namespace TestEditor
             Assert.AreNotEqual(expected, actual6);
             Assert.AreNotEqual(expected, actual7);
             Assert.AreNotEqual(expected, actual8);
-            Assert.AreNotEqual(expected, actual9);
         }
     }
 }

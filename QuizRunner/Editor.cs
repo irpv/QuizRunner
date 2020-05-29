@@ -478,7 +478,6 @@ namespace QuizRunner.Editor
         /// <returns>правильно или нет</returns>
         public bool IsCorrect(string input)
         {
-            char separator_ = System.Globalization.CultureInfo.CurrentCulture.NumberFormat.CurrencyDecimalSeparator[0];
             string inpt = input.Replace(" ", "");
             bool flag = true;
             int N = inpt.Length;
@@ -573,25 +572,12 @@ namespace QuizRunner.Editor
                 if (((inpt_[i] >= '0') && (inpt_[i] <= '9'))
                      || (inpt_[i] == '-') || (inpt_[i] == '+')
                      || (inpt_[i] == '*') || (inpt_[i] == '/')
-                     || (inpt_[i] == '=') || (inpt_[i] == separator_) 
-                     || (inpt_[i] == ')') || (inpt_[i] == '(')) 
+                     || (inpt_[i] == '=') || (inpt_[i] == ')') 
+                     || (inpt_[i] == '(')) 
                 {
                     flag = true;
                 }
                 else
-                {
-                    flag = false;
-                    goto Exit;
-                }
-            }
-
-            // Проверка чисел с плавающей точкой
-            string[] separator = { "+", "=", "/", "-", "*", ")", "(" };
-            string[] Arr = inpt_.Split(separator, StringSplitOptions.RemoveEmptyEntries);
-            double result;
-            for (var i = 0; i < Arr.Length; i++)
-            {
-                if (!double.TryParse(Arr[i], out result))
                 {
                     flag = false;
                     goto Exit;
