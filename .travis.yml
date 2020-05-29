@@ -6,7 +6,5 @@ before_install:
   - sudo apt-get install nunit-console
 before_script:
   - nuget restore QuizRunner.sln
-script:
-  - echo "travis_fold:start:SCRIPT folding starts"
+after_script:
   - nunit-console TestEditor/bin/Release/net46/TestEditor.dll TestTesting/bin/Release/net46/TestTesting.dll
-  - echo "travis_fold:end:SCRIPT folding ends"
