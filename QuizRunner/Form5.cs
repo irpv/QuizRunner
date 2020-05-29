@@ -94,6 +94,11 @@ namespace QuizRunner
                 Parent = this
             };
 
+            if (Environment.OSVersion.Platform == PlatformID.Unix)
+            {
+                IpnMain.BackColor = Color.FromArgb(255, 255, 255);
+            }
+
             /// Загрузка тестов.
             #region
 
@@ -174,6 +179,11 @@ namespace QuizRunner
                     AutoScroll = true,
                     Parent = IpnMain
                 };
+
+                if (Environment.OSVersion.Platform == PlatformID.Unix)
+                {
+                    TIpnAnswer.BackColor = Color.FromArgb(255, 255, 255);
+                }
 
                 if (Convert.ToBoolean(SR.ReadLine()))
                 {
