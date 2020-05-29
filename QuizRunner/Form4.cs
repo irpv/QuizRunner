@@ -1029,51 +1029,67 @@ namespace QuizRunner
                     this.Controls[0].Controls[i].Visible = false;
                 }
 
-                
+
 
                 // Подсчитываем все аргументы. 
 
-                for (var i = 0; i < GTest.QuestionList.Length; i++)
-                {
-                    if (GTest.QuestionList[i].Type)
-                    {
-                        for (var k = 0; k < GTest.QuestionList[i]
-                        .RadioButtonList.Length; k++)
-                        {
-                            if (GTest.QuestionList[i].RadioButtonList[k].Checked)
-                            {
-                                var TArgumentArray =
-                                    (String[])GTest.QuestionList[i].RadioButtonList[k].Tag;
 
-                                for (var l = 0; l < TArgumentArray.Length; l++)
-                                {
-                                    QuizRunner.Testing.Testing TTesting = new QuizRunner.Testing.Testing();
-                                    TArgumentArray[l] = TTesting.SimplifyArg(TArgumentArray[l]);
-                                    GTest.UserVariables[TTesting.GetArgumentName(TArgumentArray[l])]
-                                        = Convert.ToDouble(TTesting.GetCompute(TArgumentArray[l], GTest.UserVariables));
-                                }
-                            }
-                        }
-                    }
-                    else
+                try
+                {
+                    for (var i = 0; i < GTest.QuestionList.Length; i++)
                     {
-                        for (var k = 0; k < GTest.QuestionList[i]
-                        .CheckBoxeList.Length; k++)
+                        if (GTest.QuestionList[i].Type)
                         {
-                            if (GTest.QuestionList[i].CheckBoxeList[k].Checked)
+                            for (var k = 0; k < GTest.QuestionList[i]
+                            .RadioButtonList.Length; k++)
                             {
-                                var TArgumentArray =
-                                    (String[])GTest.QuestionList[i].CheckBoxeList[k].Tag;
-                                for (var l = 0; l < TArgumentArray.Length; l++)
+                                if (GTest.QuestionList[i].RadioButtonList[k].Checked)
                                 {
-                                    QuizRunner.Testing.Testing TTesting = new QuizRunner.Testing.Testing();
-                                    TArgumentArray[l] = TTesting.SimplifyArg(TArgumentArray[l]);
-                                    GTest.UserVariables[TTesting.GetArgumentName(TArgumentArray[l])]
-                                        = Convert.ToDouble(TTesting.GetCompute(TArgumentArray[l], GTest.UserVariables));
+                                    var TArgumentArray =
+                                        (String[])GTest.QuestionList[i].RadioButtonList[k].Tag;
+
+                                    for (var l = 0; l < TArgumentArray.Length; l++)
+                                    {
+                                        QuizRunner.Testing.Testing TTesting = new QuizRunner.Testing.Testing();
+                                        TArgumentArray[l] = TTesting.SimplifyArg(TArgumentArray[l]);
+                                        GTest.UserVariables[TTesting.GetArgumentName(TArgumentArray[l])]
+                                            = Convert.ToDouble(TTesting.GetCompute(TArgumentArray[l], GTest.UserVariables));
+                                    }
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (var k = 0; k < GTest.QuestionList[i]
+                            .CheckBoxeList.Length; k++)
+                            {
+                                if (GTest.QuestionList[i].CheckBoxeList[k].Checked)
+                                {
+                                    var TArgumentArray =
+                                        (String[])GTest.QuestionList[i].CheckBoxeList[k].Tag;
+                                    for (var l = 0; l < TArgumentArray.Length; l++)
+                                    {
+                                        QuizRunner.Testing.Testing TTesting = new QuizRunner.Testing.Testing();
+                                        TArgumentArray[l] = TTesting.SimplifyArg(TArgumentArray[l]);
+                                        GTest.UserVariables[TTesting.GetArgumentName(TArgumentArray[l])]
+                                            = Convert.ToDouble(TTesting.GetCompute(TArgumentArray[l], GTest.UserVariables));
+                                    }
                                 }
                             }
                         }
                     }
+                }
+                catch(KeyNotFoundException)
+                {
+                    MessageBox.Show("При расчете аргументов возникла ошибка. Кажется, была использована не" +
+                        " проинициализированная переменная.\nВы сможете сохранить ваши ответы, однако, результаты могут отличаться" +
+                        " от действительных.", "Ошибка подсчётов.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                catch(Exception exp)
+                {
+                    MessageBox.Show("При расчете аргументов возникла ошибка.\n" + exp.Message + 
+                        "\nВы сможете сохранить ваши ответы, однако результаты могут отличаться" +
+                        " от действительных.", "Ошибка подсчётов.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
 
                 // Лейбл завершения теста.
@@ -1092,9 +1108,28 @@ namespace QuizRunner
                 // Заполняем строки статистики
                 for (var i = 0; i < test.StatisticsLines.Length; i++)
                 {
-                    test.StatisticsLines[i].Text = $"{GEditor.GetStatPrefix(i)}  " +
-                        $"{String.Format("{0:0.00}", new QuizRunner.Testing.Testing().GetCompute(GEditor.GetStatCalculate(i), GTest.UserVariables))}" +
-                        $"{GEditor.GetStatPostfix(i)}";
+                    try
+                    {
+                        test.StatisticsLines[i].Text = $"{GEditor.GetStatPrefix(i)}  " +
+                            $"{String.Format("{0:0.00}", new QuizRunner.Testing.Testing().GetCompute(GEditor.GetStatCalculate(i), GTest.UserVariables))}" +
+                            $"{GEditor.GetStatPostfix(i)}";
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        MessageBox.Show("При расчете cтатистики возникла ошибка. Кажется, была использована не" +
+                            " проинициализированная переменная.\nВы сможете сохранить ваши ответы, однако, результаты могут отличаться" +
+                            " от действительных.", "Ошибка подсчётов.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        test.StatisticsLines[i].Text = "Ошибка при расчетах!";
+                        test.StatisticsLines[i].ForeColor = Color.Red;
+                    }
+                    catch (Exception exp)
+                    {
+                        MessageBox.Show("При расчете статистики возникла ошибка.\n" + exp.Message +
+                            "\nВы сможете сохранить ваши ответы, однако результаты могут отличаться" +
+                            " от действительных.", "Ошибка подсчётов.", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        test.StatisticsLines[i].Text = "Ошибка при расчетах!";
+                        test.StatisticsLines[i].ForeColor = Color.Red;
+                    }
                     test.StatisticsLines[i].Left = test.StatisticsLines[i].Parent.Width / 2
                         - test.StatisticsLines[i].Width / 2;
                     if (i == 0)
