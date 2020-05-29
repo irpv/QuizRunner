@@ -7,5 +7,4 @@ before_install:
 before_script:
   - nuget restore QuizRunner.sln
 after_script:
-  - nunit-console TestEditor/bin/Release/net46/TestEditor.dll
-  - nunit-console TestTesting/bin/Release/net46/TestTesting.dll
+  - nunit-console TestEditor/bin/Release/net46/TestEditor.dll TestTesting/bin/Release/net46/TestTesting.dll
