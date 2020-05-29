@@ -532,7 +532,7 @@ namespace QuizRunner
         {
             if (Changed)
             {
-                if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
+                if (MessageBox.Show("Есть несохранённые данные, при продолжении " +
                         "действия они будут потеряны.\nЖелаете продолжить?", "Выход в меню", MessageBoxButtons.YesNo,
                         MessageBoxIcon.Exclamation) == DialogResult.Yes)
                 {
@@ -654,7 +654,7 @@ namespace QuizRunner
             {
                 if (Changed)
                 {
-                    if (MessageBox.Show("Есть не сохранённые данные, при продолжении " +
+                    if (MessageBox.Show("Есть несохранённые данные, при продолжении " +
                         "действия они будут потеряны.\nЖелаете продолжить?", "Открыть", MessageBoxButtons.YesNo,
                         MessageBoxIcon.Exclamation) == DialogResult.Yes)
                     {
@@ -1764,8 +1764,8 @@ namespace QuizRunner
             TAnswerArray[TAnswerArray.Length - 1].AddAnswerArgumets = TIlbAddAnswerArgumets;
             TIlbAddAnswerArgumets.Click += (s, e) =>
             {
-                MessageBox.Show("Будьте внимательны, не нужные строки аргументов нельзя удалить." +
-                    "\nЕсли строка аргумента стала вам не нужна, оставьте её пустой.",
+                MessageBox.Show("Будьте внимательны, ненужные строки аргументов нельзя удалить." +
+                    "\nЕсли строка аргумента стала Вам не нужна, оставьте её пустой.",
                     "Добавить аргумент.", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 CreateNewAnswerArgument((int)TIlbAddAnswerArgumets.Tag);
             };
