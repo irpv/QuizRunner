@@ -1,3 +1,7 @@
+<h1>QuizRunner</h1>
+<p><b>Статус проекта:</b></p>
+<p>23.03.2020 - Начало проекта</p>
+<p>29.05.2020 - Завершение</p>
 [![Build Status](https://travis-ci.org/irpv/QuizRunner.svg?branch=master)](https://travis-ci.org/irpv/QuizRunner)
 <h2><a href="https://github.com/irpv/QuizRunner/wiki/%D0%A2%D0%97">ТЗ</a></h1>
 <h1>О проекте</h1>
