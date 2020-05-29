@@ -185,7 +185,7 @@ namespace TestEditor
             Editor a = new Editor();
             a.SetAnswText(answ, 0, 0);
             a.SetAnswText(answ1, 0, 1);
-            int actual =Get a.NumberOfAnswers(0);
+            int actual =a.GetNumberOfAnswers(0);
             Assert.AreEqual(num, actual);
         }
 
@@ -206,7 +206,7 @@ namespace TestEditor
             a.SetStatPrefix(prfx1, 1);
             a.SetStatCalculate(calclt1, 1);
             a.SetStatPostfix(post1, 1);
-            int actuaGetl = a.NumberOfStatLine();
+            int actual = a.GetNumberOfStatLine();
             Assert.AreEqual(num, actual);
         }
 
@@ -217,7 +217,7 @@ namespace TestEditor
             string[] arg = { "[abc]", "+100" };
             Editor a = new Editor();
             a.SetAnswArgument(arg, 0, 0);
-            int acGettual = a.NumberOfArgument(0, 0);
+            int actual = a.GetNumberOfArgument(0, 0);
             Assert.AreEqual(num, actual);
         }
 
