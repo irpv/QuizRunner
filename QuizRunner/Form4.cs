@@ -819,15 +819,31 @@ namespace QuizRunner
                 };
 
                 // Лист с переходом к вопросу.
-                test.QuestionList[i].IcbNumberOfQuestion = new ComboBox
+
+                if (Environment.OSVersion.Platform == PlatformID.Unix)
                 {
-                    DropDownStyle = ComboBoxStyle.DropDownList,
-                    Top = test.QuestionList[i].IbtNext.Top,
-                    Left = test.QuestionList[i].IbtNext.Left + test.QuestionList[i].IbtNext.Width + 20,
-                    Visible = false,
-                    Height = test.QuestionList[i].IbtNext.Height,
-                    Parent = TIpnMain
-                };
+                    test.QuestionList[i].IcbNumberOfQuestion = new ComboBox
+                    {
+                        DropDownStyle = ComboBoxStyle.DropDownList,
+                        Top = test.QuestionList[i].IbtNext.Top,
+                        Left = test.QuestionList[i].IbtNext.Left + test.QuestionList[i].IbtNext.Width + 80,
+                        Visible = false,
+                        Height = test.QuestionList[i].IbtNext.Height,
+                        Parent = TIpnMain
+                    };
+                }
+                else
+                {
+                    test.QuestionList[i].IcbNumberOfQuestion = new ComboBox
+                    {
+                        DropDownStyle = ComboBoxStyle.DropDownList,
+                        Top = test.QuestionList[i].IbtNext.Top,
+                        Left = test.QuestionList[i].IbtNext.Left + test.QuestionList[i].IbtNext.Width + 20,
+                        Visible = false,
+                        Height = test.QuestionList[i].IbtNext.Height,
+                        Parent = TIpnMain
+                    };
+                }
 
                 // Заполнение списка
                 for (var j = 0; j < editor.GetNumberOfQuestion(); j++)
