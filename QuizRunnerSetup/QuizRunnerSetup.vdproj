@@ -86,6 +86,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
         "Release"
@@ -110,6 +118,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -207,11 +223,6 @@
             "AssemblyAsmDisplayName" = "8:QuizRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_30E3FBB72DF74680A2EAD527E441FEF0"
-                    {
-                    "Name" = "8:QuizRunner.exe"
-                    "Attributes" = "3:512"
-                    }
                 }
             "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.exe"
             "TargetName" = "8:"
@@ -298,7 +309,7 @@
             {
             "Name" = "8:QuizRunner Test File"
             "Description" = "8:"
-            "Extensions" = "8:qrft"
+            "Extensions" = "8:qrtf"
             "MIME" = "8:"
             "Icon" = "8:_DE7775AAD649481A8BBB0231C776305D"
             "IconIndex" = "3:0"
@@ -394,7 +405,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:QuizRunnerSetup"
         "ProductCode" = "8:{9C59C602-E637-44C6-A937-F91509C5DCB7}"
-        "PackageCode" = "8:{DFBA098C-26C9-48DE-95B2-0AD793A796F2}"
+        "PackageCode" = "8:{637AA321-75B7-41C6-B9B4-F2AEE8C299EA}"
         "UpgradeCode" = "8:{FEF4DD50-3869-4108-A92F-8D65B5313CB5}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"
