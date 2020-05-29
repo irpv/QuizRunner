@@ -15,37 +15,25 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_03F40C8BC7944B63B4DFDCB52B405539"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_09A7EEC5DA1A40349482F9803176FDED"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_252A90CC95AD442E9370B4E6BFBDB523"
+        "MsmKey" = "8:_0B38FC5750FF4C6D8A160EB7C9BE9CAF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_30E3FBB72DF74680A2EAD527E441FEF0"
+        "MsmKey" = "8:_40EE9A6419D04632A8CD13EF8FC489A7"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_5917CC01B0D542E0B556010D279DAB0F"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_623F733326B34A21B0ED8244E70A1E72"
+        "MsmKey" = "8:_D8FDD8452C61455F93907752596F3965"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -58,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_30E3FBB72DF74680A2EAD527E441FEF0"
+        "OwnerKey" = "8:_D8FDD8452C61455F93907752596F3965"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -156,26 +144,6 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_03F40C8BC7944B63B4DFDCB52B405539"
-            {
-            "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.application"
-            "TargetName" = "8:QuizRunner.application"
-            "Tag" = "8:"
-            "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_09A7EEC5DA1A40349482F9803176FDED"
             {
             "SourcePath" = "8:..\\QuizRunner\\ico2.ico"
@@ -196,7 +164,7 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_252A90CC95AD442E9370B4E6BFBDB523"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0B38FC5750FF4C6D8A160EB7C9BE9CAF"
             {
             "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.pdb"
             "TargetName" = "8:QuizRunner.pdb"
@@ -216,56 +184,41 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_30E3FBB72DF74680A2EAD527E441FEF0"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_40EE9A6419D04632A8CD13EF8FC489A7"
+            {
+            "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.exe.config"
+            "TargetName" = "8:QuizRunner.exe.config"
+            "Tag" = "8:"
+            "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D8FDD8452C61455F93907752596F3965"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:QuizRunner, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
+                    "_D8FDD8452C61455F93907752596F3965"
+                    {
+                    "Name" = "8:QuizRunner.exe"
+                    "Attributes" = "3:512"
+                    }
                 }
             "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.exe"
             "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5917CC01B0D542E0B556010D279DAB0F"
-            {
-            "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.exe.manifest"
-            "TargetName" = "8:QuizRunner.exe.manifest"
-            "Tag" = "8:"
-            "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_623F733326B34A21B0ED8244E70A1E72"
-            {
-            "SourcePath" = "8:..\\QuizRunner\\bin\\Debug\\QuizRunner.exe.config"
-            "TargetName" = "8:QuizRunner.exe.config"
             "Tag" = "8:"
             "Folder" = "8:_23CE7FC6FD9E4DAA9E86AE5F606817B4"
             "Condition" = "8:"
@@ -315,7 +268,6 @@
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_30E3FBB72DF74680A2EAD527E441FEF0"
                 }
                 "Verbs"
                 {
@@ -338,7 +290,6 @@
             "IconIndex" = "3:0"
                 "Command"
                 {
-                "Command" = "8:_30E3FBB72DF74680A2EAD527E441FEF0"
                 }
                 "Verbs"
                 {
