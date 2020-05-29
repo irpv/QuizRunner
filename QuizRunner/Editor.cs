@@ -297,8 +297,10 @@ namespace QuizRunner.Editor
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
                 for(var i = TCount; i <= numOfQuest; i++)
                 {
-                    ListOfQuestions[i] = new Question();
-                    ListOfQuestions[i].QuestionText = new string[0];
+                    ListOfQuestions[i] = new Question
+                    {
+                        QuestionText = new string[0]
+                    };
                 }
                 
             }
@@ -365,8 +367,10 @@ namespace QuizRunner.Editor
                 Array.Resize<Question>(ref ListOfQuestions, numOfQuest + 1);
                 for (var i = TCount; i <= numOfQuest; i++)
                 {
-                    ListOfQuestions[i] = new Question();
-                    ListOfQuestions[i].AnswArr = new Answer[0];
+                    ListOfQuestions[i] = new Question
+                    {
+                        AnswArr = new Answer[0]
+                    };
                 }
             }
             if (ListOfQuestions[numOfQuest].AnswArr.Length <= numOfAnsw)
@@ -608,7 +612,7 @@ namespace QuizRunner.Editor
                     }
                 }
             }
-            if (eq != 1)
+            if (eq > 1)
             {
                 flag = false;
                 goto Exit;
